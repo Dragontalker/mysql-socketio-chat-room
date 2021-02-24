@@ -4,7 +4,8 @@
   "description": "The group project 2 for coding bootcamp",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/Dragontalker/BootCamp_Project2/issues"
   },
-  "homepage": "https://github.com/Dragontalker/BootCamp_Project2#readme"
+  "homepage": "https://github.com/Dragontalker/BootCamp_Project2#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
