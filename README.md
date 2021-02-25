@@ -9,3 +9,6 @@ By the end of this unit, you will be able to:
 
 ## To-Do
 - [ ] Determine which new library to be used in this project.
+- [ ] Set up LINTING, Airbnb style.
+- [ ] Set up dotenv package.
+- [ ] Define data model for RESTful API.
