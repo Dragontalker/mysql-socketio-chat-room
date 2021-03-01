@@ -1,0 +1,1 @@
+INSERT INTO userinfo (username, password, accessKey, isadmin) VALUES ('admin','admin','admin',1);
