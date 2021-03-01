@@ -8,13 +8,13 @@ router.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 })
 
-// TO-DO: registration request
-
-// TO-DO: login request
-
 // access chatroom
 router.get('/chatroom', (req, res) => {
     res.sendFile(__dirname + '/public/chatroom.html');
 })
+
+// TO-DO: registration request
+
+// TO-DO: login request
 
 module.exports = router;
