@@ -1,0 +1,29 @@
+.home-container {
+	max-width: 500px;
+	margin: 80px auto;
+}
+
+.home-header {
+	text-align: center;
+	padding: 20px;
+	background: rgb(75, 188, 226);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.home-main {
+	padding: 30px 40px;
+	background: lightblue; 
+}
+
+.home-main .btn {
+	margin-top: 20px;
+	width: 100%;
+}
+
+.home-main input[type='text'] {
+	font-size: 16px;
+	padding: 5px;
+	height: 40px;
+	width: 100%;
+}

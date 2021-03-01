@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FluxIM: Chatroom</title>
+  <link rel="stylesheet" href="assets/CSS/chatroom.css" />
 </head>
+
 <body>
+
+  <div class="container">
+    <div>Room name</div>
+    <ul class="msg-list" id="msgList">
+      <li>Test Message</li>
+    </ul>
+
+    <form class="msg-form" id="msgForm">
+      <span>Username</span>
+      <input type="text" id="msg" placeholder="Type message here" />
+      <button class="send-btn" id="sendBtn">Send</button>
+    </form>
+  </div>
+
   <script src="assets/JavaScript/socket.io.js"></script>
   <script src="assets/JavaScript/chatroom.js"></script>
+
 </body>
+
 </html>
