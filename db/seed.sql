@@ -12,7 +12,7 @@ INSERT INTO login_info (user_email, user_password)
 VALUES ('richard.yang@flux.com','guestPassword3');
 
 
--- For tablee: user_info
+-- For table: user_info
 INSERT INTO user_info (login_id, first_name, last_name, display_name)
 VALUES (1, 'Chang', 'Xiao', 'Adminstrator');
 
@@ -24,3 +24,20 @@ VALUES (3, 'Micheal', 'Wong', 'Guest 2');
 
 INSERT INTO user_info (login_id, first_name, last_name, display_name)
 VALUES (4, 'Richard', 'Yang', 'Guest 3');
+
+
+-- For table: user_message
+INSERT INTO user_messages (user_id, channel_id, message_body)
+VALUES (1, 1, 'Hello everybody!');
+
+INSERT INTO user_messages (user_id, channel_id, message_body)
+VALUES (2, 1, 'Hello Chang!');
+
+INSERT INTO user_messages (user_id, channel_id, message_body)
+VALUES (3, 1, 'Morning guys!');
+
+INSERT INTO user_messages (user_id, channel_id, message_body)
+VALUES (4, 1, 'Hey people, how is it going?');
+
+INSERT INTO user_messages (user_id, channel_id, message_body)
+VALUES (1, 1, 'Good! We can start our project now!');
