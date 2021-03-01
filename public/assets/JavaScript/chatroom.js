@@ -16,4 +16,5 @@ function sendMsg(e) {
 socket.on('receivedMsg', (data) => {
   msgList = document.querySelector('#msgList');
   console.log(data);
+  msgList.innerHTML += `<li>${data.user}: ${data.msg}</li>`;
 })
