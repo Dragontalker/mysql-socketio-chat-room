@@ -12,7 +12,7 @@ INSERT INTO login_info (user_email, user_password)
 VALUES ('richard.yang@flux.com','guestPassword3');
 
 
--- For table: user_info
+-- For table: users
 INSERT INTO users (login_id, first_name, last_name, display_name)
 VALUES (1, 'Chang', 'Xiao', 'Adminstrator');
 
@@ -43,7 +43,7 @@ INSERT INTO messages (user_id, channel_id, message_body)
 VALUES (1, 1, 'Good! We can start our project now!');
 
 
--- For table: 
+-- For table: channels
 INSERT INTO channels (channel_name)
 VALUES ('Main Room');
 
