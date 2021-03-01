@@ -25,7 +25,7 @@ CREATE TABLE user_info (
 CREATE TABLE user_messages (
   id INTEGER AUTO_INCREMENT NOT NULL,
   user_id INTEGER NOT NULL,
-  channel_name VARCHAR(30),
+  channel_id INTEGER NOT NULL,
   message_body VARCHAR(300),
   PRIMARY KEY(id)
 );
