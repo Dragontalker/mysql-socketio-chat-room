@@ -1,4 +1,4 @@
-var socketIO = function (socket) {
+var socketIO = function (io, socket) {
   // connect to server
   console.log('a user connected', socket.id);
 
