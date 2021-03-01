@@ -1,6 +1,6 @@
 {
   "name": "project2-fullstack",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "The group project 2 for coding bootcamp",
   "main": "server.js",
   "scripts": {
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "socket-io": "^1.0.0"
   }
 }
