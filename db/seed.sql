@@ -26,7 +26,7 @@ INSERT INTO users (login_id, first_name, last_name, display_name)
 VALUES (4, 'Richard', 'Yang', 'Guest 3');
 
 
--- For table: user_message
+-- For table: messages
 INSERT INTO messages (user_id, channel_id, message_body)
 VALUES (1, 1, 'Hello everybody!');
 
@@ -39,5 +39,16 @@ VALUES (3, 1, 'Morning guys!');
 INSERT INTO messages (user_id, channel_id, message_body)
 VALUES (4, 1, 'Hey people, how is it going?');
 
-INSERT INTO user_messages (user_id, channel_id, message_body)
+INSERT INTO messages (user_id, channel_id, message_body)
 VALUES (1, 1, 'Good! We can start our project now!');
+
+
+-- For table: 
+INSERT INTO channels (channel_name)
+VALUES ('Main Room');
+
+INSERT INTO channels (channel_name)
+VALUES ('Coding');
+
+INSERT INTO channels (channel_name)
+VALUES ('Meeting');
