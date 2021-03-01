@@ -13,7 +13,7 @@ CREATE TABLE login_info (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE user_info (
+CREATE TABLE users (
   id INTEGER AUTO_INCREMENT NOT NULL,
   login_id INTEGER NOT NULL,
   first_name VARCHAR(30),
@@ -22,11 +22,18 @@ CREATE TABLE user_info (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE user_messages (
+CREATE TABLE messages (
   id INTEGER AUTO_INCREMENT NOT NULL,
-  user_id INTEGER NOT NULL,
-  channel_id INTEGER NOT NULL,
-  message_body VARCHAR(300),
+  login_id INTEGER NOT NULL,
+  first_name VARCHAR(30),
+  last_name VARCHAR(30),
+  display_name VARCHAR(30),
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE channels (
+  id INTEGER AUTO_INCREMENT NOT NULL,
+  channel_name VARCHAR(50),
   PRIMARY KEY(id)
 );
 
