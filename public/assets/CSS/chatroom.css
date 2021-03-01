@@ -1,0 +1,34 @@
+body {
+  box-sizing: border-box;
+  background-color: rgb(50,50,50);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  margin: 0;
+  background-color: rgb(100,100,100);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  max-width: 900px;
+  height: 98vh;
+  position: relative;
+}
+
+.msg-list {
+  list-style-type: none;
+  height: calc(98vh - 3rem);
+  background-color: aqua;
+  width: inherit;
+}
+
+.msg-form {
+  background-color: rgb(80,80,80);
+  position: absolute;
+  height: 3rem;
+  width: inherit;
+  bottom: 0;
+}
