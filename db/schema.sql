@@ -22,3 +22,11 @@ CREATE TABLE user_info (
   PRIMARY KEY(id)
 );
 
+CREATE TABLE user_messages (
+  id INTEGER AUTO_INCREMENT NOT NULL,
+  user_id INTEGER NOT NULL,
+  channel_name VARCHAR(30),
+  message_body VARCHAR(300),
+  PRIMARY KEY(id)
+);
+
