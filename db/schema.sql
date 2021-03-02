@@ -36,4 +36,3 @@ CREATE TABLE channels (
   channel_name VARCHAR(50),
   PRIMARY KEY(id)
 );
-
