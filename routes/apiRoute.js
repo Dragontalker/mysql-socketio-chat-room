@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 function routes(app, onlineUsers) {
     // access index
     app.get('/', (req, res) => {
@@ -14,31 +17,46 @@ function routes(app, onlineUsers) {
     //userlist - SAM
     app.get('/api/usercheck/:username', async (req, res) => {
         if( true ){
-        res.status(202).send( {code: 202, message:"continue to avatar choices."} );
+            res.status(202).send( {code: 202, message:'continue to avatar choices.'} );
         } else {
-        res.status(404).send( {code: 404, message: "username already taken."});
+            res.status(404).send( {code: 404, message: 'username already taken.'});
         }
     })
+
+    //avatarlist - SAM
+    //avatar into array
+    app.get("/api/avatars", async (req, res) => { 
+        const avatars = fs.readdirSync('./public/assets/avatars');
+        res.status(202).send(avatars);
+    });
+
+
 
     // registration request
     app.post('/api/register', async (req, res) => {
         console.log(`POST REQUEST: trying to add new user ${req.body.user}, pass: ${req.body.pw}, avatar: ${req.body.avatar}`);
         // ORM command to search for user
-        if (/* user exists */ false) res.send({ message: 'failed' });
-        else res.send({ message: 'success', accessKey: '1234' });
+        if (/* user exists */ false) {
+            res.send({ message: 'failed' });
+        } else {
+            res.send({ message: 'success', accessKey: '1234' });
+        }
     })
 
     // login request
     app.get('/api/login', async (req, res) => {
         console.log(`GET REQUEST: trying to login as user ${req.headers.user}, pass: ${req.headers.pw}`);
         // ORM command to search for user
-        if (/* user exists */ true) res.send({ message: 'success', accessKey: '1234' });
-        else res.send({ message: 'failed' });
+        if (/* user exists */ true) {
+            res.send({ message: 'success', accessKey: '1234' });
+        } else {
+            res.send({ message: 'failed' });
+        }
     })
 
     // request room list
     app.get('/api/rooms', async (req, res) => {
-        console.log(`GET REQUEST: fetching rooms information`);
+        console.log('GET REQUEST: fetching rooms information');
         const data = /* ORM command */[{}];
         res.send({ data });
     })
