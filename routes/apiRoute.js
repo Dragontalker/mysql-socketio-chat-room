@@ -16,7 +16,7 @@ router.get('/:page', (req, res) => {
 
 // registration request
 router.post('/api/register', async (req,res) => {
-    console.log(`POST REQUEST: trying to add new user ${req.headers.user}, pass: ${req.headers.pw}`);
+    console.log(`POST REQUEST: trying to add new user ${req.body.user}, pass: ${req.body.pw}, avatar: ${req.body.avatar}`);
     // ORM command to search for user
     if (/* user exists */ false) res.send({ message: 'failed' });
     else res.send({ message: 'success', accessKey: '1234' });

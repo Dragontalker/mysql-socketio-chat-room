@@ -16,7 +16,10 @@ app.use(express.json());
 app.use(require('./routes/apiRoute.js'));
 
 // connecting to socketIO routing
-io.on('connection', (socket) => require('./routes/socketRoute.js')(io, socket));
+io.on('connection', (socket) => require('./routes/socketRoute.js')(io, socket, userList));
+
+// server-side array for keeping track of users in a room
+let userList = [];
 
 // start server
 http.listen(PORT, () => {
