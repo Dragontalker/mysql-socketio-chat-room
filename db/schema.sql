@@ -24,10 +24,9 @@ CREATE TABLE users (
 
 CREATE TABLE messages (
   id INTEGER AUTO_INCREMENT NOT NULL,
-  login_id INTEGER NOT NULL,
-  first_name VARCHAR(30),
-  last_name VARCHAR(30),
-  display_name VARCHAR(30),
+  user_id INTEGER NOT NULL,
+  channel_id INTEGER NOT NULL,
+  message_body VARCHAR(300),
   PRIMARY KEY(id)
 );
 
@@ -36,4 +35,3 @@ CREATE TABLE channels (
   channel_name VARCHAR(50),
   PRIMARY KEY(id)
 );
-
