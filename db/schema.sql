@@ -19,6 +19,7 @@ CREATE TABLE users (
   first_name VARCHAR(30),
   last_name VARCHAR(30),
   display_name VARCHAR(30),
+  avatar_dirct VARCHAR(30),
   PRIMARY KEY(id)
 );
 
