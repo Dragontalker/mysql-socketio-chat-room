@@ -5,16 +5,43 @@ var router = express.Router();
 // access index
 router.get('/', (req, res) => {
     console.log('GET REQUEST: index');
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile('index.html', { root: './public'});
 })
 
-// access chatroom
-router.get('/chatroom', (req, res) => {
-    res.sendFile(__dirname + '/public/chatroom.html');
+// access HTML pages
+router.get('/:page', (req, res) => {
+    console.log('GET REQUEST: HTML page', req.params.page);
+    res.sendFile(`${req.params.page}.html`, { root: './public'});
 })
 
-// TO-DO: registration request
+// registration request
+router.post('/api/register', async (req,res) => {
+    console.log(`POST REQUEST: trying to add new user ${req.headers.user}, pass: ${req.headers.pw}`);
+    // ORM command to search for user
+    if (/* user exists */ false) res.send({ message: 'failed' });
+    else res.send({ message: 'success', accessKey: '1234' });
+})
 
-// TO-DO: login request
+// login request
+router.get('/api/login', async (req,res) => {
+    console.log(`GET REQUEST: trying to login as user ${req.headers.user}, pass: ${req.headers.pw}`);
+    // ORM command to search for user
+    if (/* user exists */ true) res.send({ message: 'success', accessKey: '1234' });
+    else res.send({ message: 'failed' });
+})
+
+// request room list
+router.get('/api/rooms', async (req,res) => {
+    console.log(`GET REQUEST: fetching rooms information`);
+    const data = /* ORM command */ [{}]; 
+    res.send({ data });
+})
+
+// request previous messages
+router.get('/api/messages/:room', async (req,res) => {
+    console.log(`GET REQUEST: fetching previous messages for room ${req.params.room}`);
+    const data = /* ORM command */ [{}]; 
+    res.send({ data });
+})
 
 module.exports = router;

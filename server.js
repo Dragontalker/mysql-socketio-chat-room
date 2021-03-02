@@ -13,17 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // connecting to express routing (NOT WORKING YET)
-// app.use(require('./routes/apiRoute.js'));
-// access index
-app.get('/', (req, res) => {
-    console.log('GET REQUEST: index');
-    res.sendFile(__dirname + '/public/index.html');
-})
-
-// access chatroom
-app.get('/chatroom', (req, res) => {
-    res.sendFile(__dirname + '/public/chatroom.html');
-})
+app.use(require('./routes/apiRoute.js'));
 
 // connecting to socketIO routing
 io.on('connection', (socket) => require('./routes/socketRoute.js')(io, socket));
