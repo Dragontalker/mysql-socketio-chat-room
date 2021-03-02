@@ -29,7 +29,7 @@ var socketIO = function (io, socket, onlineUsers) {
   socket.on('disconnect', () => {
     console.log(`user ${socket.id} disconnected`);
     // delete user from online list
-    for (let i=0; i<onlineUsers.length; i++) if (onlineUsers[i].id === data.id) onlineUsers.splice(i,1);
+    for (let i=0; i<onlineUsers.length; i++) if (onlineUsers[i].id === socket.id) onlineUsers.splice(i,1);
   })
 }
 
