@@ -11,6 +11,15 @@ function routes(app, onlineUsers) {
         res.sendFile(`${req.params.page}.html`, { root: './public' });
     })
 
+    //userlist - SAM
+    app.get('/api/usercheck/:username', async (req, res) => {
+        if( true ){
+        res.status(202).send( {code: 202, message:"continue to avatar choices."} );
+        } else {
+        res.status(404).send( {code: 404, message: "username already taken."});
+        }
+    })
+
     // registration request
     app.post('/api/register', async (req, res) => {
         console.log(`POST REQUEST: trying to add new user ${req.body.user}, pass: ${req.body.pw}, avatar: ${req.body.avatar}`);

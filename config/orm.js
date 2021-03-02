@@ -17,6 +17,7 @@ const orm = {
         const query = `UPDATE ${tableName} SET ${changeQuery} WHERE ${indexQuery}`;
         await db.query(query);
     }
+
 };
 
 module.exports = orm;
