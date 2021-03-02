@@ -24,13 +24,18 @@ const user = {
         const change = `last_name = '${newLastName}'`;
         const index = `login_id = ${loginID}`;
         await orm.updateOne(this.name, change, index);
-    }
+    },
 
+    updateDisplayName: async function(loginID, newDisplayName) {
+        const change = `display_name = '${newDisplayName}'`;
+        const index = `login_id = ${loginID}`;
+        await orm.updateOne(this.name, change, index);
+    }
 };
 
 // Test
 const testApp = async () => {
-    await user.updateLastName(5, 'Olivarse');
+    await user.updateDisplayName(5, 'Teaching Assistant');
     console.log(await user.listAll());
 };
 
