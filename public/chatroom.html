@@ -6,22 +6,72 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FluxIM: Chatroom</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
   <link rel="stylesheet" href="assets/CSS/chatroom.css" />
 </head>
 
 <body>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Flux IM</a>
+      <div id="navbarNav" class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/">Log out</a>
+      </div>
+    </div>
+  </nav>
 
   <div class="container">
-    <div>Room name</div>
-    <ul class="msg-list" id="msgList">
-      <li>Test Message</li>
-    </ul>
-
-    <form class="msg-form" id="msgForm">
-      <span>Username</span>
-      <input type="text" id="msg" placeholder="Type message here" />
-      <button class="send-btn" id="sendBtn">Send</button>
-    </form>
+    <div class="row mt-2">
+      <!-- LEFT HAND SIDE (ROOMS) -->
+      <div class="col-1 col-md-2">
+        <h4 class="d-none d-sm-block">Room List</h4>
+        <ul class="d-none d-sm-block" id="roomList">
+          <li><button class="btn" id="room1">Room 1</button></li>
+          <li><button class="btn" id="room2">Room 2</button></li>
+          <li><button class="btn" id="room3">Room 3</button></li>
+        </ul>
+      </div>
+      <!-- MAIN FOCUS (MESSAGES) -->
+      <div class="col-12 col-md-8">
+        <h3>Room name</h3>
+        <ul class="msg-list" id="msgList">
+          <li>Test Message</li>
+          <li class="text-end">Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+          <li>Test Message</li>
+        </ul>
+        <!-- INPUT AREA -->
+        <form class="input-group" id="msgForm">
+          <input type="text" class="form-control" id="msg" placeholder="Type message here" />
+          <button class="btn btn-primary send-btn" id="sendBtn">Send</button>
+        </form>
+      </div>
+      <!-- RIGHT HAND SIDE (USERS) -->
+      <div class="col-1 col-md-2 text-end">
+        <h4 class="d-none d-sm-block">Online Users</h4>
+        <ul class="d-none d-sm-block" id="userList">
+          <li>Adam</li>
+          <li>Eve</li>
+        </ul>
+      </div>
+    </div>
+    
   </div>
 
   <script src="assets/JavaScript/socket.io.js"></script>
