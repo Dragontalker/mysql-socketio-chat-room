@@ -2,28 +2,36 @@ const el_username = document.querySelector('#username');
 const el_password = document.querySelector('#password');
 const el_password2 = document.querySelector('#passwordConfirm');
 const el_second = document.querySelector('#second');
+const el_error1 = document.querySelector('#error1');
 
 
 // this is a function to wrap the POST complexity
 // note you must AWAIT this response.
 // alternatively use jQuery $.post()
-function callUrl( url, data={}, method='post' ){
+function fetchJSON( url, method='get', data={} ){
     // post requires header, method + data to be sent
-    const postData = {
+    const postUser = {
         headers: { 'Content-Type': 'application/json' },
         method,
-        body: JSON.stringify( data )
     }
-    return fetch( url, postData ).then( res=>res.json() )
+    if (method === 'post'){
+        postUser.body = JSON.stringify (data)
+    }
+    return fetch( url, postUser ).then( res=>res.json() )
 }
-
-
 
 // Get the note data from the inputs, save it to the db and update the view
 async function showNext(event){
     event.preventDefault()
+    //fetch the existing username list
+    const userList = await fetchJSON('/api/register');
 
-    if ()
+    if ( userList.filter( value => {return value.username === el_username})){
+        error1.classList.remove('d-none');
+        break;
+    } else {
+
+    }
 
     const newUser = {
         username: el_username.value,
@@ -31,7 +39,7 @@ async function showNext(event){
     };
 
     // let it save the note before we trigger a re-render
-    const response = await callUrl( '/api/users', newUser )
+    const response = await callUrl( '/api/register', newUser )
     if( response.message ) {
         alert( response.message )
     }
