@@ -33,12 +33,4 @@ const user = {
     }
 };
 
-// Test
-const testApp = async () => {
-    await user.updateDisplayName(5, 'Teaching Assistant');
-    console.log(await user.listAll());
-};
-
-testApp();
-
 module.exports = user;
