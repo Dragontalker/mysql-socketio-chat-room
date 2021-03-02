@@ -18,7 +18,6 @@ const orm = {
         await db.query(query);
     }
 
-    
 };
 
 module.exports = orm;

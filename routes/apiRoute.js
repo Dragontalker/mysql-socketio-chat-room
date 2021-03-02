@@ -11,7 +11,7 @@ function routes(app, onlineUsers) {
         res.sendFile(`${req.params.page}.html`, { root: './public' });
     })
 
-    //userlist
+    //userlist - SAM
     app.get('/api/usercheck/:username', async (req, res) => {
         if( true ){
         res.status(202).send( {code: 202, message:"continue to avatar choices."} );
