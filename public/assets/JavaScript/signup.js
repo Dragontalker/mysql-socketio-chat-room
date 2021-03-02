@@ -4,6 +4,28 @@ const el_password2 = document.querySelector('#passwordConfirm');
 const el_second = document.querySelector('#second');
 const el_error1 = document.querySelector('#error1');
 
+async function checkUser(event){
+    event.preventDefault();
+    const checkUser = await fetchJSON (`/api/usercheck/${el_username.value}`);
+    console.log(checkUser.code);
+
+    if (checkUser.code === 202){
+        console.log('continuging on')
+        el_second.classList.remove('d-none')
+        showNext();
+    } else {
+        console.log ('username taken');
+        el_error1.classList.remove('d-none');
+        return;
+    }
+
+
+ 
+
+    // const result = orm.checkUserUnique( req.params.username )
+
+}
+
 
 // this is a function to wrap the POST complexity
 // note you must AWAIT this response.
@@ -20,32 +42,33 @@ function fetchJSON( url, method='get', data={} ){
     return fetch( url, postUser ).then( res=>res.json() )
 }
 
+
+
 // Get the note data from the inputs, save it to the db and update the view
 async function showNext(event){
-    event.preventDefault()
-    //fetch the existing username list
-    const userList = await fetchJSON('/api/register');
+    console.log( 'next');
+    el_second.scrollIntoView();
 
-    if ( userList.filter( value => {return value.username === el_username})){
-        error1.classList.remove('d-none');
-        break;
-    } else {
 
-    }
+}
 
-    const newUser = {
+async function register(event) {
+    event.preventDefault();
+    let newUser = {
         username: el_username.value,
-        password: (el_password.value === el_password2.value ? el_password : 
+        password: el_password.value,
+        avatar: 
     };
 
-    // let it save the note before we trigger a re-render
-    const response = await callUrl( '/api/register', newUser )
+    const response = await fetchJSON( '/api/register', 'post', newUser )
     if( response.message ) {
         alert( response.message )
     }
-
-    loadAndDisplayNotes()
 }
+
+
+
+
 
 // async function handleNoteDelete( event, noteId ){
 //     event.preventDefault()

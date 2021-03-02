@@ -35,7 +35,7 @@
         <div class="form-group">
           <label for="username">Username:</label>
           <br>
-          <input id="username" type="text" placeholder="Username"><span id="error1" class="d-none">Username already taken</span>
+          <input id="username" type="text" placeholder="Username"><span id="error1" class="d-none">Username already taken!</span>
         </div>
         <div class="form-group mt-3">
           <label for="password">Password:</label>
@@ -48,11 +48,15 @@
           <input id="passwordConfirm" type="text" placeholder="Password">
         </div>
       </form>
-      <a id="first" href="#second"><button type="button" onClick="showNext()">Continue</button></a>
+      <button type="button" onClick="checkUser(event)">Continue</button>
     </main>
 
   </div>
-  <div id="second" class="container-fluid">
+  <div id="second" class="container-fluid d-none">
+
+    <div class="row">
+      <h1>Avatar Choices</h1>
+    </div>
       <!-- button for register -->
   </div>
 </body>
