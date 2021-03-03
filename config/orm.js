@@ -16,7 +16,8 @@ const orm = {
 
     async findOne(tableName, targetQuery, indexQuery) {
         const query = `SELECT ${targetQuery} FROM ${tableName} WHERE ${indexQuery}`;
-        await db.query(query);
+        const table = await db.query(query);
+        return table;
     },
 
     async insertOne(tableName, variableQuery, dataQuery) {
