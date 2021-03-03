@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const Login = require('../models/login_info');
 
 function routes(app, onlineUsers) {
     // access index
@@ -42,10 +43,24 @@ function routes(app, onlineUsers) {
 
     // login request
     app.post('/api/login', async (req, res) => {
-        console.log(`GET REQUEST: trying to login as user ${req.body.username}, pass: ${req.body.password}`);
+        const inputUser = req.body.username;
+        const inputPassword =req.body.password
+        console.log(`GET REQUEST: trying to login as user ${inputUser}, pass: ${inputPassword}`);
         // ORM command to search for user
+<<<<<<< HEAD
         if (/* user exists */ true) res.send({ status: "success", message: "", accessKey:"pass123"});
         else res.send({ status: "fail", message: 'failed' });
+=======
+        Login.matchPassword(inputUser, inputPassword)
+            .then(result => {
+                if (result) {
+                    res.send({ message: 'Login Successed!', accessKey: '1234' });
+                } else {
+                    res.send({ message: 'Incorret Password!' });
+                }
+            })
+            .catch(err => res.json(err));
+>>>>>>> 2515506b6c0b3f037144296a816d54484ab17bac
     })
 
     // request room list

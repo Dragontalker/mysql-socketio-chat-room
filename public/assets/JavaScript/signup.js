@@ -61,7 +61,6 @@ async function checkUser(event){
         return;
     }
     el_second.classList.remove('d-none');
-    
     showAvatars();
     showNext();
 }
