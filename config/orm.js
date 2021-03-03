@@ -29,9 +29,6 @@ const orm = {
         const query = `UPDATE ${tableName} SET ${changeQuery} WHERE ${indexQuery}`;
         await db.query(query);
     },
-    async registerUser(username, password, avatar){
-        return true;
-    }
 };
 
 module.exports = orm;
