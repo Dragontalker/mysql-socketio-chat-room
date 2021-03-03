@@ -1,4 +1,5 @@
 const socket = io();
+let currentRoom = null;
 
 document.querySelector('#msgForm').addEventListener('click', sendMsg);
 
@@ -11,15 +12,15 @@ roomList();
 function roomList() {
   document.querySelector('#roomList').innerHTML = '';
   // GET REQUEST: room list
-  const rooms = [{id:'r1', displayName:'Room 1'},{id:'r2', displayName:'Room 2'},{id:'r3', displayName:'Room 3'}];
+  const rooms = [{id:1, displayName:'Room 1'},{id:2, displayName:'Room 2'},{id:3, displayName:'Room 3'}];
   // print rooms to room list
   for (let i=0; i<rooms.length; i++) {
     document.querySelector('#roomList').innerHTML +=
-    `<li><button class="btn" id="${rooms[i].id}">${rooms[i].displayName}</button></li>`;
+    `<li><button class="btn" id="room-${rooms[i].id}">${rooms[i].displayName}</button></li>`;
   }
   // add event listeners
   for (let i=0; i<rooms.length; i++) {
-    document.querySelector(`#${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
+    document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
   }
 }
 
@@ -49,7 +50,10 @@ async function prevMsgs() {
 
 // joining a room
 function joinRoom(room) {
+  // leave old room
+  if (currentRoom) leaveRoom(currentRoom);
   socket.emit('join', {room:room.id, user:'User1', id: socket.id});
+  currentRoom = room;
   document.querySelector('#roomName').innerHTML = room.displayName;
   userList();
   prevMsgs();
@@ -73,7 +77,7 @@ socket.on('receivedMsg', (data) => {
 
 //leave room
 function leaveRoom(room) {
-  socket.emit('leave', {room: room, user: 'User1', id: socket.id});
+  socket.emit('leave', {room: room.id, user: 'User1', id: socket.id});
 }
 
 // receive disconnect event from server
