@@ -61,6 +61,7 @@ async function checkUser(event){
         return;
     }
     el_second.classList.remove('d-none');
+    document.querySelector('#continue').classList.add('d-none');
     showAvatars();
     showNext();
 }
@@ -82,7 +83,7 @@ async function showNext(){
     el_username.setAttribute('readonly', true);
     el_password.setAttribute('readonly', true);
     el_password2.setAttribute('readonly', true);
-    document.querySelector('#continue').classList.add('d-none');
+
 }
 
 function getAvatar(image){
