@@ -50,9 +50,9 @@ function routes(app, onlineUsers) {
         Login.matchPassword(inputUser, inputPassword)
             .then(result => {
                 if (result) {
-                    res.send({ message: 'success', accessKey: '1234' });
+                    res.send({ message: 'Login Successed!', accessKey: '1234' });
                 } else {
-                    res.send({ message: 'failed' });
+                    res.send({ message: 'Incorret Password!' });
                 }
             })
             .catch(err => res.json(err));
