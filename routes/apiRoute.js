@@ -33,6 +33,8 @@ function routes(app, onlineUsers) {
     app.post('/api/register', async (req, res) => {
         console.log(`POST REQUEST: trying to add new user ${req.body.username}, pass: ${req.body.password}, avatar: ${req.body.avatar}`);
         // ORM command to search for user
+        const result = orm.register(req.body.username, req.body.password, req.body.avatar)
+
         if (/* user exists */ false) {
             res.send({ message: 'Registration failed' });
         } else {

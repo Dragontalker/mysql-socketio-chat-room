@@ -28,6 +28,9 @@ const orm = {
     async updateOne(tableName, changeQuery, indexQuery) {
         const query = `UPDATE ${tableName} SET ${changeQuery} WHERE ${indexQuery}`;
         await db.query(query);
+    },
+    async registerUser(username, password, avatar){
+        return true;
     }
 };
 
