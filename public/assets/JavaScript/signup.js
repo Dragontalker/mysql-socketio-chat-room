@@ -1,35 +1,14 @@
 const el_username = document.querySelector('#username');
 const el_password = document.querySelector('#password');
 const el_password2 = document.querySelector('#passwordConfirm');
+let el_avatar;
+const el_first = document.querySelector('#first');
 const el_second = document.querySelector('#second');
 const el_error1 = document.querySelector('#error1');
+const el_error2 = document.querySelector('#error2');
+const el_error3 = document.querySelector('#error3');
+const el_noerror1 = document.querySelector('#noerror1');
 
-async function checkUser(event){
-    event.preventDefault();
-    const checkUser = await fetchJSON (`/api/usercheck/${el_username.value}`);
-    console.log(checkUser.code);
-
-    if (checkUser.code === 202){
-        console.log('continuging on')
-        el_second.classList.remove('d-none')
-        showNext();
-    } else {
-        console.log ('username taken');
-        el_error1.classList.remove('d-none');
-        return;
-    }
-
-
- 
-
-    // const result = orm.checkUserUnique( req.params.username )
-
-}
-
-
-// this is a function to wrap the POST complexity
-// note you must AWAIT this response.
-// alternatively use jQuery $.post()
 function fetchJSON( url, method='get', data={} ){
     // post requires header, method + data to be sent
     const postUser = {
@@ -42,14 +21,76 @@ function fetchJSON( url, method='get', data={} ){
     return fetch( url, postUser ).then( res=>res.json() )
 }
 
+async function checkUsername(){
+    if (el_username.value === ''){
+        el_error2.classList.remove('d-none');
+        el_noerror1.classList.add('d-none');
+        return;
+    }
+    const checkUser = await fetchJSON (`/api/usercheck/${el_username.value}`);
+    console.log('the response code: ', checkUser.code);
 
+    if (checkUser.code === 202){
+        console.log('Good to choose your avatar...');
+        el_error2.classList.add('d-none');
+        el_error1.classList.add('d-none');
+        el_noerror1.classList.remove('d-none')
+    } else {
+        console.log ('Username already taken...');
+        el_noerror1.classList.add('d-none')
+        el_error1.classList.remove('d-none');
+    }
+}
+
+async function checkUser(event){
+    event.preventDefault();
+    el_error2.classList.add('d-none');
+    el_error3.classList.add('d-none');
+
+    if (el_username.value === ''){
+        el_error2.classList.remove('d-none');
+        el_noerror1.classList.add('d-none');
+    }
+    if (el_password.value !== el_password2.value){
+        el_error3.classList.remove('d-none');
+    }
+    if (el_password.value === ''){
+        el_error3.classList.remove('d-none');
+    }
+    if (!(el_error1.classList.contains('d-none')) || !(el_error2.classList.contains('d-none')) || !(el_error3.classList.contains('d-none'))){
+        return;
+    }
+    el_second.classList.remove('d-none');
+    
+    showAvatars();
+    showNext();
+}
+
+// make an array of avatar URL paths
+async function showAvatars() {
+    document.querySelector('#avatars').innerHTML = ''; //empty the section first
+    const checkUser = await fetchJSON ('/api/avatars'); //picture array fetching
+    console.log(checkUser);
+    checkUser.forEach(image => {
+        document.querySelector('#avatars').innerHTML += `<a id="${image}" onClick="getAvatar(this.id)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" /></a>`
+    });
+}
 
 // Get the note data from the inputs, save it to the db and update the view
-async function showNext(event){
-    console.log( 'next');
+async function showNext(){
+    console.log( 'next...no going back...');
     el_second.scrollIntoView();
+    el_username.setAttribute('readonly', true);
+    el_password.setAttribute('readonly', true);
+    el_password2.setAttribute('readonly', true);
+    document.querySelector('#continue').classList.add('d-none');
+}
 
-
+function getAvatar(image){
+    console.log('chosen image: ', image);
+    el_avatar = `${image}`;
+    document.querySelector('#avatars').innerHTML = `<a id="${image}" onClick="getAvatar(this.id)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" /></a>`;
+    document.querySelector('#register').classList.remove('d-none');
 }
 
 async function register(event) {
@@ -57,98 +98,10 @@ async function register(event) {
     let newUser = {
         username: el_username.value,
         password: el_password.value,
-        avatar: 
+        avatar: el_avatar,
     };
-
     const response = await fetchJSON( '/api/register', 'post', newUser )
     if( response.message ) {
         alert( response.message )
     }
 }
-
-
-
-
-
-// async function handleNoteDelete( event, noteId ){
-//     event.preventDefault()
-
-//     // prevents the click listener for the list from being called when the button inside of it is clicked
-//     if( !confirm('Are you sure you want to delete this?') ) {
-//         return
-//     }
-
-//     // delete the note
-//     const response = await callUrl( `/api/notes/${noteId}`, {}, 'delete' )
-//     if( response.message ) {
-//         alert( response.message )
-//     }
-
-//     if( activeNote.id === noteId ){
-//     // oops deleting the actively showing card!
-//         activeNote = {}
-//         updateActiveCard()
-//     }
-
-//     // get and display the cards
-//     loadAndDisplayNotes();
-// }
-
-// // Sets the activeNote and displays it
-// function handleShowNote( event ){
-//     event.preventDefault();
-//     const id = event.currentTarget.id;
-//     console.log( `[handleShowNote] two ways: id='${id}' dataset: `, event.currentTarget.dataset )
-//     activeNote = {
-//         id,
-//         title: event.currentTarget.dataset.title,
-//         text: event.currentTarget.dataset.text
-//     }
-//     updateActiveCard();
-// }
-
-// // Sets the activeNote to and empty object and allows the user to enter a new note
-// function handleCreateNewNote( event ){
-//     event.preventDefault();
-//     console.log( '[handleCreateNewNote]', event )
-
-//     activeNote = {}
-//     updateActiveCard();
-// }
-
-// // if anything typed, we enable the save button
-// const handleShowSaveBtn = function ( event ) {
-//     console.log( '[handleShowSaveBtn]')
-//     // if it's an already-created note, then can't edit!
-//     if( activeNote.id || (el_noteTitle.value.trim()==='' && el_noteText.value.trim()==='') ){
-//         el_saveNoteBtn.classList.add('d-none')
-//     } else {
-//         console.log( ' ... showing the save button!' )
-//         el_saveNoteBtn.classList.remove('d-none')
-//     }
-// };
-
-// // Gets notes from the db and renders them to the sidebar
-// async function loadAndDisplayNotes(){
-//     const notes = await fetch( '/api/notes' ).then( r=>r.json() )
-
-//     const el_noteList = document.querySelector('#noteList');
-
-//     // clear the list
-//     el_noteList.innerHTML = '';
-
-//     if( notes.length===0 ){
-//         el_noteList.innerHTML = '<li class=\'list-group-item\'><span>No save Notes</span></li>'
-//         return
-//     }
-
-//     notes.forEach( (note) => {
-//         el_noteList.innerHTML += `
-//       <li onClick="handleShowNote(event)" id='${note.id}' data-title="${note.title}" data-text="${note.text}" class='list-group-item'><span>${note.title}</span>
-//       <small onClick="handleNoteDelete(event,'${note.id}')" class='badge bg-secondary float-right'><i class='fas fa-trash-alt icon-resize-small'></i></small>
-//       `
-//     });
-// }
-
-// // Gets and renders the initial list of notes
-// loadAndDisplayNotes();

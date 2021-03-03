@@ -31,12 +31,8 @@ CREATE TABLE messages (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE channels (
+CREATE TABLE rooms (
   id INTEGER AUTO_INCREMENT NOT NULL,
-  channel_name VARCHAR(50),
+  room_name VARCHAR(50),
   PRIMARY KEY(id)
-<<<<<<< HEAD
 );
-=======
-);
->>>>>>> 5cf508e3653ac8d7b21985c0ed274def6a7f6b01
