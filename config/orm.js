@@ -8,6 +8,12 @@ const orm = {
         return table;
     },
 
+    async selectWhich(tableName, variableQuery) {
+        const query = `SELECT ${variableQuery} FROM ${tableName}`;
+        const table = await db.query(query);
+        return table;
+    },
+
     async insertOne(tableName, variableQuery, dataQuery) {
         const query = `INSERT INTO ${tableName} ${variableQuery} VALUES ${dataQuery}`;
         await db.query(query);
