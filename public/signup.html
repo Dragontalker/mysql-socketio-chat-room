@@ -31,7 +31,7 @@
       <h1>Sign Up</h1>
     </header>
     <main class="home-main">
-      <form class="login">
+      <form class="login mb-2">
         <div class="form-group">
           <label for="username">Username:</label>
           <br>
@@ -48,7 +48,7 @@
           <input id="passwordConfirm" type="text" placeholder="Password"><span id="error3" class="d-none">Passwords do not match or are blank.</span>
         </div>
       </form>
-      <button type="button" onClick="checkUser(event)">Continue</button>
+      <div class="text-center"><button type="button" onClick="checkUser(event)">Continue</button></div>
     </main>
 
   </div>
@@ -59,7 +59,7 @@
       <div id="avatars" class="col-12 text-center">
         <!-- <img src="..." class="img-thumbnail" alt="..."> -->
       </div>
-      <div class="text-center">
+      <div id="register" class="text-center d-none">
       <button type="button" onClick="register(event)">Register</button>
       <span id="error4" class="d-none">Choose an avatar to register.</span>
       </div>

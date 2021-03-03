@@ -63,19 +63,21 @@ async function showAvatars() {
     const checkUser = await fetchJSON ('/api/avatars'); //picture array fetching
     console.log(checkUser);
     checkUser.forEach(image => {
-        document.querySelector('#avatars').innerHTML += `<a id="${image}" onClick="getAvatar(event)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" /></a>`
+        document.querySelector('#avatars').innerHTML += `<a id="${image}" onClick="getAvatar(this.id)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" /></a>`
     });
 }
 
 // Get the note data from the inputs, save it to the db and update the view
-async function showNext(event){
+async function showNext(){
     console.log( 'next...no going back...');
     el_second.scrollIntoView();
 }
 
-function getAvatar(){
-    console.log("hiehi");
-    // `../avatars/${image}`
+function getAvatar(image){
+    console.log("chosen image: ", image);
+    el_avatar = `../avatars/${image}`;
+    document.querySelector('#avatars').innerHTML = `<a id="${image}" onClick="getAvatar(this.id)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" /></a>`;
+    document.querySelector('#register').classList.remove('d-none');
 }
 
 async function register(event) {
