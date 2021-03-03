@@ -1,16 +1,19 @@
 const socket = io();
-let currentRoom = null;
+let currentRoomId = null;
+let userInfo = { id:null, displayName:null, avatar:null };
 
 document.querySelector('#msgForm').addEventListener('click', sendMsg);
 
 // INITIALIZATION OF CHATROOM
 checkAccessKey();
 roomList();
+toggleRoomlistOverlay();
 
 async function checkAccessKey() {
   // redirect to noaccess if no accesskey
   // if (!sessionStorage.accessKey) window.location.replace('/noaccess');
   // TO-DO: grab user info using accessKey
+  userInfo = { id:1, displayName:'Adam', avatar:'user.png' };
 }
 
 function roomList() {
@@ -28,11 +31,15 @@ function roomList() {
   }
 }
 
+function toggleRoomlistOverlay() {
+  // document.querySelector('#roomOverlay').toggle();
+}
+
 async function userList() {
   // TO-DO: load online users list (#userList)
   document.querySelector('#userList').innerHTML = '';
   // GET REQUEST: users list
-  const users = [{user:'Adam', id:'1234'}, {user:'Eve', id:'4321'}];
+  const users = [{user:userInfo.displayName, id:userInfo.id}, {user:'Eve', id:'4321'}];
   // print users to user list
   for (let i=0; i<users.length; i++) {
     document.querySelector('#userList').innerHTML +=
@@ -53,12 +60,12 @@ async function prevMsgs() {
 }
 
 // joining a room
-function joinRoom(room) {
+async function joinRoom(room) {
   // leave old room
-  if (currentRoom) socket.emit('leave', {room: room.id, user: 'User1', id: socket.id});
+  if (currentRoomId) socket.emit('leave', {room:currentRoomId.id, user:userInfo.id, id:socket.id});
   // join new room
-  socket.emit('join', {room:room.id, user:'User1', id: socket.id});
-  currentRoom = room;
+  socket.emit('join', {room:room.id, user:userInfo.id, id:socket.id});
+  currentRoomId = room;
   // print new elements to UI
   document.querySelector('#roomName').innerHTML = room.displayName;
   userList();
@@ -70,9 +77,10 @@ function sendMsg(e) {
   e.preventDefault();
   const msg = document.querySelector('#msg').value;
   if (msg) {
-    socket.emit('message', {room:'room1', user:'User1', msg:msg, id:socket.id});
+    socket.emit('message', {room:currentRoomId, user:userInfo.id, msg:msg, id:socket.id});
     document.querySelector('#msg').value = '';
   }
+  //TO-DO: save message to DB
 }
 
 // receive message from server

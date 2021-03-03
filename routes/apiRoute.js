@@ -47,6 +47,10 @@ function routes(app, onlineUsers) {
         const inputPassword =req.body.password
         console.log(`GET REQUEST: trying to login as user ${inputUser}, pass: ${inputPassword}`);
         // ORM command to search for user
+<<<<<<< HEAD
+        if (/* user exists */ true) res.send({ status: "success", message: "", accessKey:"pass123"});
+        else res.send({ status: "fail", message: 'failed' });
+=======
         Login.matchPassword(inputUser, inputPassword)
             .then(result => {
                 if (result) {
@@ -56,8 +60,8 @@ function routes(app, onlineUsers) {
                 }
             })
             .catch(err => res.json(err));
+>>>>>>> 2515506b6c0b3f037144296a816d54484ab17bac
     })
-
 
     // request room list
     app.get('/api/rooms', async (req, res) => {
