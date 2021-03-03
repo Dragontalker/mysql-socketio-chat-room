@@ -22,6 +22,11 @@ function fetchJSON( url, method='get', data={} ){
 }
 
 async function checkUsername(){
+    if (el_username.value === ''){
+        el_error2.classList.remove('d-none');
+        el_noerror1.classList.add('d-none');
+        return;
+    }
     const checkUser = await fetchJSON (`/api/usercheck/${el_username.value}`);
     console.log('the response code: ', checkUser.code);
 
@@ -34,9 +39,6 @@ async function checkUsername(){
         console.log ('Username already taken...');
         el_noerror1.classList.add('d-none')
         el_error1.classList.remove('d-none');
-    }
-    if (el_username === ''){
-        el_error2.classList.remove('d-none');
     }
 }
 
@@ -59,6 +61,7 @@ async function checkUser(event){
         return;
     }
     el_second.classList.remove('d-none');
+    
     showAvatars();
     showNext();
 }
@@ -85,7 +88,7 @@ async function showNext(){
 
 function getAvatar(image){
     console.log('chosen image: ', image);
-    el_avatar = `../avatars/${image}`;
+    el_avatar = `${image}`;
     document.querySelector('#avatars').innerHTML = `<a id="${image}" onClick="getAvatar(this.id)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" /></a>`;
     document.querySelector('#register').classList.remove('d-none');
 }
