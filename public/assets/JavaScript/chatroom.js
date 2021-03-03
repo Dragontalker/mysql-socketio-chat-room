@@ -60,10 +60,10 @@ async function prevMsgs() {
 // joining a room
 async function joinRoom(room) {
   // leave old room
-  if (currentRoomId) socket.emit('leave', {room:currentRoomId.id, user:userInfo.id, id:socket.id});
+  if (currentRoomId) socket.emit('leave', {room:currentRoomId, user:userInfo.id, id:socket.id});
   // join new room
   socket.emit('join', {room:room.id, user:userInfo.id, id:socket.id});
-  currentRoomId = room;
+  currentRoomId = room.id;
   // hide room overlay
   hideRoomOverlay();
   // print new elements to UI
