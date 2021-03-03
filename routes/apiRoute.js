@@ -58,7 +58,6 @@ function routes(app, onlineUsers) {
             .catch(err => res.json(err));
     })
 
-
     // request room list
     app.get('/api/rooms', async (req, res) => {
         console.log('GET REQUEST: fetching rooms information');

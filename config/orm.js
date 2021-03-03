@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const db = require('./connection')('flux_db', process.env.SQL_PASSWORD);
 
 const orm = {
@@ -28,7 +28,7 @@ const orm = {
     async updateOne(tableName, changeQuery, indexQuery) {
         const query = `UPDATE ${tableName} SET ${changeQuery} WHERE ${indexQuery}`;
         await db.query(query);
-    }
+    },
 };
 
 module.exports = orm;
