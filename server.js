@@ -17,6 +17,7 @@ app.use(express.json());
 // connecting to routing file
 require('./routes/apiRoute.js')(app, userList);
 
+
 // connecting to socketIO routing
 io.on('connection', (socket) => require('./routes/socketRoute.js')(io, socket, userList));
 
