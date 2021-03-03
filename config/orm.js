@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const db = require('./connection')('flux_db', process.env.SQL_PASSWORD);
 
 const orm = {

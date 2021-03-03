@@ -7,7 +7,6 @@ document.querySelector('#msgForm').addEventListener('click', sendMsg);
 // INITIALIZATION OF CHATROOM
 checkAccessKey();
 roomList();
-toggleRoomlistOverlay();
 
 async function checkAccessKey() {
   // redirect to noaccess if no accesskey
@@ -24,15 +23,14 @@ function roomList() {
   for (let i=0; i<rooms.length; i++) {
     document.querySelector('#roomList').innerHTML +=
     `<li><button class="btn" id="room-${rooms[i].id}">${rooms[i].displayName}</button></li>`;
+    document.querySelector('#overlayRoomList').innerHTML +=
+    `<li><button class="btn" id="overlayRoom-${rooms[i].id}">${rooms[i].displayName}</button></li>`;
   }
   // add event listeners
   for (let i=0; i<rooms.length; i++) {
     document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
+    document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
   }
-}
-
-function toggleRoomlistOverlay() {
-  // document.querySelector('#roomOverlay').toggle();
 }
 
 async function userList() {
@@ -66,10 +64,18 @@ async function joinRoom(room) {
   // join new room
   socket.emit('join', {room:room.id, user:userInfo.id, id:socket.id});
   currentRoomId = room;
+  // hide room overlay
+  hideRoomOverlay();
   // print new elements to UI
   document.querySelector('#roomName').innerHTML = room.displayName;
   userList();
   prevMsgs();
+}
+
+function hideRoomOverlay() {
+  if (!document.querySelector('#roomOverlay').classList.contains('d-none')) {
+    document.querySelector('#roomOverlay').classList.add('d-none');
+  }
 }
 
 // send message to server
