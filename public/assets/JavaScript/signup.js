@@ -35,6 +35,9 @@ async function checkUsername(){
         el_noerror1.classList.add('d-none')
         el_error1.classList.remove('d-none');
     }
+    if (el_username === ''){
+        el_error2.classList.remove('d-none');
+    }
 }
 
 async function checkUser(event){
@@ -46,7 +49,10 @@ async function checkUser(event){
         el_error2.classList.remove('d-none');
         el_noerror1.classList.add('d-none');
     }
-    if (el_password.value !== el_password2.value || ''){
+    if (el_password.value !== el_password2.value){
+        el_error3.classList.remove('d-none');
+    }
+    if (el_password.value === ''){
         el_error3.classList.remove('d-none');
     }
     if (!(el_error1.classList.contains('d-none')) || !(el_error2.classList.contains('d-none')) || !(el_error3.classList.contains('d-none'))){
