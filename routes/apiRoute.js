@@ -38,7 +38,6 @@ function routes(app, onlineUsers) {
             res.send({ message: 'Registration failed' });
         } else {
             res.send({ message: 'Registration successful' });
-            res.redirect('/')
         }
     })
 
