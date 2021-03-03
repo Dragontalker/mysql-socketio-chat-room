@@ -1,20 +1,83 @@
-// setup router
-var express = require('express');
-var router = express.Router();
+const fs = require('fs');
+const path = require('path');
+const Login = require('../models/login_info');
 
-// access index
-router.get('/', (req, res) => {
-    console.log('GET REQUEST: index');
-    res.sendFile(__dirname + '/public/index.html');
-})
+function routes(app, onlineUsers) {
+    // access index
+    app.get('/', (req, res) => {
+        console.log('GET REQUEST: index');
+        res.sendFile('index.html', { root: './public' });
+    })
 
-// access chatroom
-router.get('/chatroom', (req, res) => {
-    res.sendFile(__dirname + '/public/chatroom.html');
-})
+    // access HTML pages
+    app.get('/:page', (req, res) => {
+        console.log('GET REQUEST: HTML page', req.params.page);
+        res.sendFile(`${req.params.page}.html`, { root: './public' });
+    })
 
-// TO-DO: registration request
+    //userlist - SAM
+    app.get('/api/usercheck/:username', async (req, res) => {
+        if( true ){
+            res.status(202).send( {code: 202, message:'continue to avatar choices.'} );
+        } else {
+            res.status(404).send( {code: 404, message: 'username already taken.'});
+        }
+    })
 
-// TO-DO: login request
+    //avatarlist - SAM
+    app.get("/api/avatars", async (req, res) => { 
+        const avatars = fs.readdirSync('./public/assets/avatars');
+        res.status(202).send(avatars);
+    });
 
-module.exports = router;
+    // registration request
+    app.post('/api/register', async (req, res) => {
+        console.log(`POST REQUEST: trying to add new user ${req.body.username}, pass: ${req.body.password}, avatar: ${req.body.avatar}`);
+        // ORM command to search for user
+        if (/* user exists */ false) {
+            res.send({ message: 'Registration failed' });
+        } else {
+            res.send({ message: 'Registration successful' });
+        }
+    })
+
+    // login request
+    app.post('/api/login', async (req, res) => {
+        const inputUser = req.body.username;
+        const inputPassword =req.body.password
+        console.log(`GET REQUEST: trying to login as user ${inputUser}, pass: ${inputPassword}`);
+        // ORM command to search for user
+        Login.matchPassword(inputUser, inputPassword)
+            .then(result => {
+                if (result) {
+                    res.send({ message: 'Login Successed!', accessKey: '1234' });
+                } else {
+                    res.send({ message: 'Incorret Password!' });
+                }
+            })
+            .catch(err => res.json(err));
+    })
+
+    // request room list
+    app.get('/api/rooms', async (req, res) => {
+        console.log('GET REQUEST: fetching rooms information');
+        const data = /* ORM command */[{}];
+        res.send({ data });
+    })
+
+    // request previous messages
+    app.get('/api/messages/:room', async (req, res) => {
+        console.log(`GET REQUEST: fetching previous messages for room ${req.params.room}`);
+        const data = /* ORM command */[{}];
+        res.send({ data });
+    })
+
+    // request online users array
+    app.get('/api/online/:room', async (req, res) => {
+        console.log(`GET REQUEST: fetching list of online users for room ${req.params.room}`);
+        // TO-DO: filter out users with same room as input
+        res.send(onlineUsers);
+    })
+}
+
+module.exports = routes;

@@ -5,6 +5,8 @@ const PORT = process.env.PORT || 8080;
 // socketIO implementation
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+// server-side array for keeping track of users in a room
+let userList = [];
 
 // for GETTING html pages + static files (CSS, images, etc)
 app.use( express.static('public') );
@@ -12,21 +14,12 @@ app.use( express.static('public') );
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// connecting to express routing (NOT WORKING YET)
-// app.use(require('./routes/apiRoute.js'));
-// access index
-app.get('/', (req, res) => {
-    console.log('GET REQUEST: index');
-    res.sendFile(__dirname + '/public/index.html');
-})
+// connecting to routing file
+require('./routes/apiRoute.js')(app, userList);
 
-// access chatroom
-app.get('/chatroom', (req, res) => {
-    res.sendFile(__dirname + '/public/chatroom.html');
-})
 
 // connecting to socketIO routing
-io.on('connection', (socket) => require('./routes/socketRoute.js')(io, socket));
+io.on('connection', (socket) => require('./routes/socketRoute.js')(io, socket, userList));
 
 // start server
 http.listen(PORT, () => {

@@ -43,12 +43,12 @@ INSERT INTO messages (user_id, channel_id, message_body)
 VALUES (1, 1, 'Good! We can start our project now!');
 
 
--- For table: channels
-INSERT INTO channels (channel_name)
+-- For table: rooms
+INSERT INTO rooms (room_name)
 VALUES ('Main Room');
 
-INSERT INTO channels (channel_name)
+INSERT INTO rooms (room_name)
 VALUES ('Coding');
 
-INSERT INTO channels (channel_name)
+INSERT INTO rooms (room_name)
 VALUES ('Meeting');
