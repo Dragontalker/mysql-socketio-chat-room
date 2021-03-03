@@ -26,7 +26,7 @@
     </div>
   </nav>
 
-  <div class="home-container">
+  <div id="first" class="home-container">
     <header class="home-header">
       <h1>Sign Up</h1>
     </header>
@@ -35,7 +35,7 @@
         <div class="form-group">
           <label for="username">Username:</label>
           <br>
-          <input id="username" type="text" placeholder="Username"><span id="error1" class="d-none">Username already taken!</span>
+          <input id="username" type="text" onblur="checkUsername()" placeholder="Username"><span id="error1" class="d-none">Username already taken!</span><span id="error2" class="d-none">You must type in a username.</span><span id="noerror1" class="d-none">The username is available.</span>
         </div>
         <div class="form-group mt-3">
           <label for="password">Password:</label>
@@ -45,7 +45,7 @@
         <div class="form-group mt-3">
           <label for="passwordConfirm">Confirm Password:</label>
           <br>
-          <input id="passwordConfirm" type="text" placeholder="Password">
+          <input id="passwordConfirm" type="text" placeholder="Password"><span id="error3" class="d-none">Passwords do not match or are blank.</span>
         </div>
       </form>
       <button type="button" onClick="checkUser(event)">Continue</button>
@@ -56,8 +56,11 @@
 
     <div class="row">
       <h1 class="text-center">Avatar Choices</h1>
-      <div id="avatars" class="col-12 list-group list-group-flush">
+      <div id="avatars" class="col-12">
         <!-- <img src="..." class="img-thumbnail" alt="..."> -->
+      </div>
+      <div>
+      <button type="button" onClick="register(event)">Continue</button>
       </div>
     </div>
     

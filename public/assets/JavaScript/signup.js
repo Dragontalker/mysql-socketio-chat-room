@@ -1,8 +1,12 @@
 const el_username = document.querySelector('#username');
 const el_password = document.querySelector('#password');
 const el_password2 = document.querySelector('#passwordConfirm');
+const el_first = document.querySelector('#first');
 const el_second = document.querySelector('#second');
 const el_error1 = document.querySelector('#error1');
+const el_error2 = document.querySelector('#error2');
+const el_error3 = document.querySelector('#error3');
+const el_noerror1 = document.querySelector('#noerror1');
 
 function fetchJSON( url, method='get', data={} ){
     // post requires header, method + data to be sent
@@ -16,46 +20,56 @@ function fetchJSON( url, method='get', data={} ){
     return fetch( url, postUser ).then( res=>res.json() )
 }
 
-
-// const el_avatar = document.querySelector('#avatar');
-
-// make an array of avatar URL paths
-async function showAvatars() {
-    const avatarArray =[];
-    const checkUser = await fetchJSON (`/api/avatars`);
-    console.log(checkUser);
-};
-// let picturesURL = ["bird.png", "dolphin.png"]; //Define array pictures
-// picturesURL.forEach(image => {document.querySelector('#avatars').innerHTML += `<img src="./assets/avatars/${image}" class="img-thumbnail me-2 col-3 col-md" alt="avatar image">`});
-
-
-
-async function checkUser(event){
-    event.preventDefault();
+async function checkUsername(){
     const checkUser = await fetchJSON (`/api/usercheck/${el_username.value}`);
-    console.log(checkUser.code);
+    console.log('the response code: ', checkUser.code);
 
     if (checkUser.code === 202){
-        console.log('continuging on')
-        el_second.classList.remove('d-none');
-        showAvatars();
-        showNext();
+        console.log('Good to choose your avatar...');
+        el_error2.classList.add('d-none');
+        el_error1.classList.add('d-none');
+        el_noerror1.classList.remove('d-none')
     } else {
-        console.log ('username taken');
+        console.log ('Username already taken...');
+        el_noerror1.classList.add('d-none')
         el_error1.classList.remove('d-none');
-        return;
     }
 }
 
+async function checkUser(event){
+    event.preventDefault();
+    el_error2.classList.add('d-none');
+    el_error3.classList.add('d-none');
 
+    if (el_username.value === ''){
+        el_error2.classList.remove('d-none');
+        el_noerror1.classList.add('d-none');
+    }
+    if (el_password.value !== el_password2.value || ''){
+        el_error3.classList.remove('d-none');
+    }
+    if (!(el_error1.classList.contains('d-none')) || !(el_error2.classList.contains('d-none')) || !(el_error3.classList.contains('d-none'))){
+        return;
+    }
+    el_second.classList.remove('d-none');
+    showAvatars();
+    showNext();
+}
+
+// make an array of avatar URL paths
+async function showAvatars() {
+    document.querySelector('#avatars').innerHTML = ''; //empty the section first
+    const checkUser = await fetchJSON ('/api/avatars'); //picture array fetching
+    console.log(checkUser);
+    checkUser.forEach(image => {
+        document.querySelector('#avatars').innerHTML += `<img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" onClick="getavatar()" />`
+    });
+}
 
 // Get the note data from the inputs, save it to the db and update the view
 async function showNext(event){
-    console.log( 'next');
-    showAvatars();
+    console.log( 'next...no going back...');
     el_second.scrollIntoView();
-
-
 }
 
 async function register(event) {

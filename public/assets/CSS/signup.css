@@ -38,3 +38,11 @@ html {
     height: 1000px;
     background: #999;
 }
+
+span {
+    color: red;
+}
+
+#noerror1 {
+    color: green;
+}

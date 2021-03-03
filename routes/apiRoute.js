@@ -30,8 +30,6 @@ function routes(app, onlineUsers) {
         res.status(202).send(avatars);
     });
 
-
-
     // registration request
     app.post('/api/register', async (req, res) => {
         console.log(`POST REQUEST: trying to add new user ${req.body.user}, pass: ${req.body.pw}, avatar: ${req.body.avatar}`);
