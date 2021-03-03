@@ -1,14 +1,14 @@
 -- For table: login_info
-INSERT INTO login_info (user_email, user_password, isAdmin) 
+INSERT INTO login_info (user_name, user_password, isAdmin) 
 VALUES ('chang.xiao@flux.com','adminPassword', true);
 
-INSERT INTO login_info (user_email, user_password) 
+INSERT INTO login_info (user_name, user_password) 
 VALUES ('sam.kim@flux.com','guessPassword1');
 
-INSERT INTO login_info (user_email, user_password) 
+INSERT INTO login_info (user_name, user_password) 
 VALUES ('micheal.wong@flux.com','guessPassword2');
 
-INSERT INTO login_info (user_email, user_password) 
+INSERT INTO login_info (user_name, user_password) 
 VALUES ('richard.yang@flux.com','guestPassword3');
 
 
@@ -44,11 +44,11 @@ VALUES (1, 1, 'Good! We can start our project now!');
 
 
 -- For table: rooms
-INSERT INTO rooms (rooms_name)
+INSERT INTO rooms (room_name)
 VALUES ('Main Room');
 
-INSERT INTO rooms (rooms_name)
+INSERT INTO rooms (room_name)
 VALUES ('Coding');
 
-INSERT INTO rooms (rooms_name)
+INSERT INTO rooms (room_name)
 VALUES ('Meeting');

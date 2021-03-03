@@ -7,6 +7,12 @@ const messages = {
         const result = await orm.selectAll(this.name)
         return result;
     }
+
+    // find all messages for 1 room output: [{ user, channel, msg },{},{}];
+
+    // add message output: { user, channel, msg }
+
+    // delete all messages for 1 room output: { message: 'success' or 'failure' }
 };
 
 // Test

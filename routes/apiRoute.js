@@ -54,8 +54,9 @@ function routes(app, onlineUsers) {
                 } else {
                     res.send({ message: 'Incorret Password!' });
                 }
-            })
-            .catch(err => res.json(err));
+            }).catch(err => res.json(err));
+        // Request for accessKey
+        res.send( { message: 'Login Successed!', accessKey:'1234'} );
     })
 
     // request room list
@@ -76,8 +77,14 @@ function routes(app, onlineUsers) {
     app.get('/api/online/:room', async (req, res) => {
         console.log(`GET REQUEST: fetching list of online users for room ${req.params.room}`);
         // TO-DO: filter out users with same room as input
-        res.send(onlineUsers);
+        res.send(onlineUsers); // <-- {userid, displayname, roomid}
     })
+
+    // TO-DO: add message to DB
+
+    // TO-DO: add rooms
+
+    // TO-DO: delete rooms
 }
 
 module.exports = routes;

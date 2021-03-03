@@ -31,6 +31,11 @@ const user = {
         const index = `login_id = ${loginID}`;
         await orm.updateOne(this.name, change, index);
     }
+
+    /* SAM TO-DO
+    new function: new user INPUT: login_info id
+    add login_id = login_info id, displayname = username, avatar = avatar;
+    */
 };
 
 module.exports = user;
