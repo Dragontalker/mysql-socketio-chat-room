@@ -4,10 +4,14 @@ let currentRoom = null;
 document.querySelector('#msgForm').addEventListener('click', sendMsg);
 
 // INITIALIZATION OF CHATROOM
-// if (!sessionStorage.accessKey) window.location.replace('/noaccess');
-// TO-DO: grab user info using accessKey
-// -----> if fail, redirect
+checkAccessKey();
 roomList();
+
+async function checkAccessKey() {
+  // redirect to noaccess if no accesskey
+  // if (!sessionStorage.accessKey) window.location.replace('/noaccess');
+  // TO-DO: grab user info using accessKey
+}
 
 function roomList() {
   document.querySelector('#roomList').innerHTML = '';
@@ -51,9 +55,11 @@ async function prevMsgs() {
 // joining a room
 function joinRoom(room) {
   // leave old room
-  if (currentRoom) leaveRoom(currentRoom);
+  if (currentRoom) socket.emit('leave', {room: room.id, user: 'User1', id: socket.id});
+  // join new room
   socket.emit('join', {room:room.id, user:'User1', id: socket.id});
   currentRoom = room;
+  // print new elements to UI
   document.querySelector('#roomName').innerHTML = room.displayName;
   userList();
   prevMsgs();
@@ -68,17 +74,13 @@ function sendMsg(e) {
     document.querySelector('#msg').value = '';
   }
 }
+
 // receive message from server
 socket.on('receivedMsg', (data) => {
   msgList = document.querySelector('#msgList');
   console.log(data);
   msgList.innerHTML += `<li>${data.user}: ${data.msg}</li>`;
 })
-
-//leave room
-function leaveRoom(room) {
-  socket.emit('leave', {room: room.id, user: 'User1', id: socket.id});
-}
 
 // receive disconnect event from server
 socket.on('disconnected', (data) => {
