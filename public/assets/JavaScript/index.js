@@ -22,7 +22,7 @@ async function login(){
     if (result.message === 'Login Successed!'){
         sessionStorage.accesskey = result.accesskey
         console.log('login valid')
-        window.location.replace("/chatroom.html");
+        window.location.replace("/chatroom");
     }
     // An alert will pop up for 5 seconds if the server sends back a fail match
     else{

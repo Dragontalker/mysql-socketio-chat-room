@@ -104,5 +104,5 @@ async function register(event) {
     if( response.message ) {
         alert( response.message )
     }
-    window.location.replace( '/index.html' );
+    window.location.replace( '/' );
 }
