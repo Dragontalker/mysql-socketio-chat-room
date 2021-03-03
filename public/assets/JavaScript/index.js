@@ -19,7 +19,7 @@ async function login(){
     const result = await fetchJSON( `/api/login`, 'post', apiLogin );
 
     // When server sends back a success message, user will be redirected to the chatroom and given a accesskey
-    if (result.status === 'success'){
+    if (result.message === 'Login Successed!'){
         sessionStorage.accesskey = result.accesskey
         console.log('login valid')
         window.location.replace("/chatroom.html");
