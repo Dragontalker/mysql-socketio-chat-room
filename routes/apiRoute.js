@@ -31,12 +31,12 @@ function routes(app, onlineUsers) {
 
     // registration request
     app.post('/api/register', async (req, res) => {
-        console.log(`POST REQUEST: trying to add new user ${req.body.user}, pass: ${req.body.pw}, avatar: ${req.body.avatar}`);
+        console.log(`POST REQUEST: trying to add new user ${req.body.username}, pass: ${req.body.password}, avatar: ${req.body.avatar}`);
         // ORM command to search for user
         if (/* user exists */ false) {
             res.send({ message: 'Registration failed' });
         } else {
-            res.send({ message: 'Registration successful', accessKey: '1234' });
+            res.send({ message: 'Registration successful' });
         }
     })
 
