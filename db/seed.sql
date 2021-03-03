@@ -44,11 +44,11 @@ VALUES (1, 1, 'Good! We can start our project now!');
 
 
 -- For table: rooms
-INSERT INTO rooms (channel_name)
+INSERT INTO rooms (rooms_name)
 VALUES ('Main Room');
 
-INSERT INTO rooms (channel_name)
+INSERT INTO rooms (rooms_name)
 VALUES ('Coding');
 
-INSERT INTO rooms (channel_name)
+INSERT INTO rooms (rooms_name)
 VALUES ('Meeting');

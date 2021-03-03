@@ -33,6 +33,6 @@ CREATE TABLE messages (
 
 CREATE TABLE rooms (
   id INTEGER AUTO_INCREMENT NOT NULL,
-  rooms_name VARCHAR(50),
+  room_name VARCHAR(50),
   PRIMARY KEY(id)
 );
