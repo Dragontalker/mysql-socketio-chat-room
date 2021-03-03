@@ -1,6 +1,7 @@
 const el_username = document.querySelector('#username');
 const el_password = document.querySelector('#password');
 const el_password2 = document.querySelector('#passwordConfirm');
+let el_avatar;
 const el_first = document.querySelector('#first');
 const el_second = document.querySelector('#second');
 const el_error1 = document.querySelector('#error1');
@@ -62,7 +63,7 @@ async function showAvatars() {
     const checkUser = await fetchJSON ('/api/avatars'); //picture array fetching
     console.log(checkUser);
     checkUser.forEach(image => {
-        document.querySelector('#avatars').innerHTML += `<img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" onClick="getavatar()" />`
+        document.querySelector('#avatars').innerHTML += `<a id="${image}" onClick="getAvatar(event)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" /></a>`
     });
 }
 
@@ -72,14 +73,18 @@ async function showNext(event){
     el_second.scrollIntoView();
 }
 
+function getAvatar(){
+    console.log("hiehi");
+    // `../avatars/${image}`
+}
+
 async function register(event) {
     event.preventDefault();
     let newUser = {
         username: el_username.value,
         password: el_password.value,
-        // avatar: el_avatar;
+        avatar: el_avatar,
     };
-
     const response = await fetchJSON( '/api/register', 'post', newUser )
     if( response.message ) {
         alert( response.message )

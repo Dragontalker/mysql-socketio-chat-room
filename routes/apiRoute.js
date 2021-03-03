@@ -24,7 +24,6 @@ function routes(app, onlineUsers) {
     })
 
     //avatarlist - SAM
-    //avatar into array
     app.get("/api/avatars", async (req, res) => { 
         const avatars = fs.readdirSync('./public/assets/avatars');
         res.status(202).send(avatars);
@@ -35,9 +34,9 @@ function routes(app, onlineUsers) {
         console.log(`POST REQUEST: trying to add new user ${req.body.user}, pass: ${req.body.pw}, avatar: ${req.body.avatar}`);
         // ORM command to search for user
         if (/* user exists */ false) {
-            res.send({ message: 'failed' });
+            res.send({ message: 'Registration failed' });
         } else {
-            res.send({ message: 'success', accessKey: '1234' });
+            res.send({ message: 'Registration successful', accessKey: '1234' });
         }
     })
 
