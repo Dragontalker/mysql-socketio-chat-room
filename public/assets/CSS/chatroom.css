@@ -1,3 +1,7 @@
+.navbar {
+  z-index: 20;
+}
+
 .container {
   height: 83vh;
 }
@@ -30,10 +34,11 @@ ul {
 .room-overlay {
   z-index: 10;
   position: fixed;
-  top: 55px;
+  bottom: 0;
   left: 0;
   width: 100vw;
-  height: 83vh;
+  height: 100vh;
   background-color: rgb(204, 233, 238);
   padding: 0 200px;
+  padding-top: 60px;
 }
