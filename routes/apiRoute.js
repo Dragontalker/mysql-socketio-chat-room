@@ -44,18 +44,9 @@ function routes(app, onlineUsers) {
     app.post('/api/login', async (req, res) => {
         console.log(`GET REQUEST: trying to login as user ${req.body.username}, pass: ${req.body.password}`);
         // ORM command to search for user
-<<<<<<< HEAD
         if (/* user exists */ true) res.send({ status: "success", message: "", accessKey:"pass123"});
         else res.send({ status: "fail", message: 'failed' });
-=======
-        if (/* user exists */ true) {
-            res.send({ message: 'success', accessKey: '1234' });
-        } else {
-            res.send({ message: 'failed' });
-        }
->>>>>>> d3bcb67298bc5657bac8220d3fd73495fe1e5512
     })
-
 
     // request room list
     app.get('/api/rooms', async (req, res) => {

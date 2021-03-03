@@ -26,3 +26,14 @@ ul {
   padding: 0.5rem 0.2rem;
   border-bottom: 1px solid rgb(10,10,10);
 }
+
+.room-overlay {
+  z-index: 10;
+  position: fixed;
+  top: 55px;
+  left: 0;
+  width: 100vw;
+  height: 83vh;
+  background-color: rgb(204, 233, 238);
+  padding: 0 200px;
+}
