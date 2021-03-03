@@ -71,6 +71,10 @@ async function showAvatars() {
 async function showNext(){
     console.log( 'next...no going back...');
     el_second.scrollIntoView();
+    el_username.setAttribute('readonly', true);
+    el_password.setAttribute('readonly', true);
+    el_password2.setAttribute('readonly', true);
+    document.querySelector('#continue').classList.add('d-none');
 }
 
 function getAvatar(image){
