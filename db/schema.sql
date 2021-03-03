@@ -31,8 +31,8 @@ CREATE TABLE messages (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE channels (
+CREATE TABLE rooms (
   id INTEGER AUTO_INCREMENT NOT NULL,
-  channel_name VARCHAR(50),
+  room_name VARCHAR(50),
   PRIMARY KEY(id)
 );
