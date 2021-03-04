@@ -7,7 +7,8 @@ let el_avatar;
 const el_first = document.querySelector('#first');
 const el_second = document.querySelector('#second');
 const el_error1 = document.querySelector('#error1');
-const el_error2 = document.querySelector('#error2');
+const el_error1b = document.querySelector('#error1b');
+const el_error1c = document.querySelector('#error1c');
 const el_error3 = document.querySelector('#error3');
 const el_error4 = document.querySelector('#error4');
 const el_error5 = document.querySelector('#error5');
@@ -27,8 +28,14 @@ function fetchJSON( url, method='get', data={} ){
 
 // onblur function on username input box...
 async function checkUsername(){
+    if (el_username.value.includes(" ")){
+        el_error1c.classList.remove('d-none');
+        return;
+    } else {
+        el_error1c.classList.add('d-none');
+    }
     if (el_username.value === ''){
-        el_error2.classList.remove('d-none');
+        el_error1b.classList.remove('d-none');
         el_noerror1.classList.add('d-none');
         el_error1.classList.add('d-none');
         return;
@@ -38,13 +45,13 @@ async function checkUsername(){
 
     if (checkUser.code === 202){
         console.log(checkUser.message);
-        el_error2.classList.add('d-none');
+        el_error1b.classList.add('d-none');
         el_error1.classList.add('d-none');
         el_noerror1.classList.remove('d-none')
     } else {
         console.log(checkUser.message);
         el_noerror1.classList.add('d-none')
-        el_error2.classList.add('d-none');
+        el_error1b.classList.add('d-none');
         el_error1.classList.remove('d-none');
     }
 }
@@ -52,13 +59,13 @@ async function checkUsername(){
 //When user clicks "continue" button...
 async function checkUser(event){
     event.preventDefault();
-    el_error2.classList.add('d-none');
+    el_error1b.classList.add('d-none');
     el_error3.classList.add('d-none');
     el_error4.classList.add('d-none');
     el_error5.classList.add('d-none');
 
     if (el_username.value === ''){
-        el_error2.classList.remove('d-none');
+        el_error1b.classList.remove('d-none');
         el_noerror1.classList.add('d-none');
     }
     if (el_firstname.value === ''){
@@ -73,7 +80,7 @@ async function checkUser(event){
     if (el_password.value === ''){
         el_error3.classList.remove('d-none');
     }
-    if ( !(el_error1.classList.contains('d-none')) || !(el_error2.classList.contains('d-none')) || !(el_error3.classList.contains('d-none')) || !(el_error4.classList.contains('d-none')) || !(el_error5.classList.contains('d-none')) ){
+    if ( !(el_error1.classList.contains('d-none')) || !(el_error1b.classList.contains('d-none')) || !(el_error1c.classList.contains('d-none')) || !(el_error3.classList.contains('d-none')) || !(el_error4.classList.contains('d-none')) || !(el_error5.classList.contains('d-none')) ){
         return;
     }
     el_second.classList.remove('d-none');
