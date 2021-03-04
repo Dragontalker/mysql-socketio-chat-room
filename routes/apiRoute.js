@@ -28,7 +28,7 @@ function routes(app, onlineUsers) {
     })
 
     //avatarlist
-    app.get("/api/avatars", async (req, res) => { 
+    app.get('/api/avatars', async (req, res) => {
         const avatars = fs.readdirSync('./public/assets/avatars');
         res.status(202).send(avatars);
     });
@@ -43,6 +43,7 @@ function routes(app, onlineUsers) {
         console.log(`POST REQUEST: Adding [NEW USER]: username ${username}, firstname: ${firstname}, lastname: ${lastname}, password: ${password}, avatar: ${avatar}`);
         await login.addNew(username, password);
         const loginID = await login.matchWithUser(username); // find id # of table login_id
+        console.log('loginid', loginID);
         await user.addNew(loginID.id, firstname, lastname, username, avatar)
         res.send({ message: 'Registration successful' });
     })
@@ -51,10 +52,15 @@ function routes(app, onlineUsers) {
     app.post('/api/login', async (req, res) => {
         const inputUser = req.body.username;
         const inputPassword = req.body.password;
-        console.log(`GET REQUEST: trying to login as user ${inputUser}, pass: ${inputPassword}`);
+        console.log(`GET REQUEST: trying to login as username: ${inputUser}, password: ${inputPassword}`);
         // ORM command to search for user & return username as accesskey
-        if (true /* IF you get back a result */) res.send( { message: 'Login successful', accesskey:'1234'} );
-        else res.send({ message: 'Login failed' });
+        const loginID = await login.matchWithUser(inputUser); // search for existing username
+        console.log('this is loginid', loginID);
+        if (loginID /* IF you get back a result */){
+            res.send( { code: 202, accesskey:`${inputUser}`} )
+        } else {
+            res.send({ code: 404 });
+        }
     })
 
     // request room list -- SAM
@@ -68,7 +74,7 @@ function routes(app, onlineUsers) {
     app.get('/api/messages/:room', async (req, res) => {
 
         console.log(`GET REQUEST: fetching previous messages for room ${req.params.room}`);
-        const data = /* ORM command */[{displayName:'Adam', msg:'Test'}, {displayName:'Eve', msg:'Test 2'}];;
+        const data = /* ORM command */[{displayName:'Adam', msg:'Test'}, {displayName:'Eve', msg:'Test 2'}];
         res.send(data);
     })
 
@@ -88,7 +94,7 @@ function routes(app, onlineUsers) {
     app.get('/api/users/:accesskey', async (req, res) => {
         console.log(`GET REQUEST: fetching userinfo using accesskey ${req.params.accesskey}`);
         // find login_id using accesskey
-        // find displayName/avatar using login_id 
+        // find displayName/avatar using login_id
         const userInfo = { id:1, displayName:'Adam', avatar:'user.png' };
         res.send(userInfo);
     })
