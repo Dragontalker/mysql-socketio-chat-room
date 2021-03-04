@@ -15,7 +15,13 @@ const login_info = {
         const exists = `(user_name = '${newUsername}')`;
         const result = await orm.findOne(this.name, column, exists);
         return result[0];
-    }
+    },
+
+    addNew: async function(username, password) {
+        const vars = '(user_name, user_password)';
+        const data = `('${username}', '${password}')`;
+        await orm.insertOne(this.name, vars, data);
+    },
 
     /* SAM TO-DO
     different function: INPUT: username + password

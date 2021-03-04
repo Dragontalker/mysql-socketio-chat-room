@@ -101,7 +101,7 @@ async function showNext(){
     el_password2.setAttribute('readonly', true);
 
 }
-
+// make the clicked avatar the only remaining image on HTML
 function getAvatar(image){
     console.log('chosen image: ', image);
     el_avatar = `${image}`;
@@ -109,6 +109,7 @@ function getAvatar(image){
     document.querySelector('#register').classList.remove('d-none');
 }
 
+//when clicking the register button...
 async function register(event) {
     event.preventDefault();
     let newUser = {

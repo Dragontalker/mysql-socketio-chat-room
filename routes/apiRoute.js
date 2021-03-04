@@ -16,7 +16,7 @@ function routes(app, onlineUsers) {
         res.sendFile(`${req.params.page}.html`, { root: './public' });
     })
 
-    //userlist - SAM
+    //check new username against existing usernames in database
     app.get('/api/usercheck/:username', async (req, res) => {
         const result = await login.checkExistingUsername(req.params.username)
         console.log(result);
@@ -27,7 +27,7 @@ function routes(app, onlineUsers) {
         }
     })
 
-    //avatarlist - SAM
+    //avatarlist
     app.get("/api/avatars", async (req, res) => { 
         const avatars = fs.readdirSync('./public/assets/avatars');
         res.status(202).send(avatars);
@@ -41,14 +41,11 @@ function routes(app, onlineUsers) {
         const password = req.body.password;
         const avatar = req.body.avatar;
         console.log(`POST REQUEST: Adding [NEW USER]: username ${username}, firstname: ${firstname}, lastname: ${lastname}, password: ${password}, avatar: ${avatar}`);
-        // ORM command to search for user
-        // const result = await db.query( `INSERT INTO login_info (user_name, user_password) VALUES (?, ?)`, [req.body.username, req.body.password])
-        const result2 = await user.addNew(loginID, firstname, lastname, username, avatar)
-        if (/* user exists */ false) {
-            res.send({ message: 'Registration failed' });
-        } else {
-            res.send({ message: 'Registration successful' });
-        }
+        // ORM command to register user
+        await login.addNew(username, password);
+        const loginID = Math.floor(Math.random() * 100); // <===NEEDS TO BE REPLACED
+        await user.addNew(loginID, firstname, lastname, username, avatar)
+        res.send({ message: 'Registration successful' });
     })
 
     // login request
