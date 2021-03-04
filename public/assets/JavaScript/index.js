@@ -2,6 +2,9 @@ const usernameInput = document.getElementById('username')
 const passwordInput = document.getElementById('password')
 const alertBox = document.querySelector('#errorBox')
 
+// INITIALIZATION
+if (window.sessionStorage.accesskey) window.location.replace('/chatroom');
+
 function fetchJSON( url, method='get', data={} ){
     const fetchOptions = {
         method,
@@ -19,7 +22,7 @@ async function login(){
     const result = await fetchJSON( `/api/login`, 'post', apiLogin );
 
     // When server sends back a success message, user will be redirected to the chatroom and given a accesskey
-    if (result.message === 'Login Successful'){
+    if (result.message === 'Login successful'){
         sessionStorage.accesskey = result.accesskey
         console.log('login valid')
         window.location.replace("/chatroom");
