@@ -115,7 +115,7 @@ async function showNext(){
 function getAvatar(image){
     console.log('chosen image: ', image);
     el_avatar = `${image}`;
-    document.querySelector('#avatars').innerHTML = `<a id="${image}" onClick="getAvatar(this.id)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" /></a>`;
+    document.querySelector('#avatars').innerHTML = `<div><a id="${image}" onClick="getAvatar(this.id)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" /></a></div>`;
     document.querySelector('#register').classList.remove('d-none');
 }
 

@@ -52,8 +52,6 @@ ul {
 	text-align: center;
 	padding: 20px;
 	background: rgb(75, 188, 226);
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
 }
 
 .chatroom-main {
@@ -61,9 +59,13 @@ ul {
 	background: rgb(209, 244, 255); 
 }
 
-.chatroom-main .btn {
+.chatroomBtn {
 	margin-top: 20px;
-	width: 100%;
+	width: 80%;
+}
+.chatroomBtnDelete {
+	margin-top: 20px;
+	width: 20%;
 }
 
 body{
@@ -72,4 +74,8 @@ body{
 
 .roomlist {
   background: rgb(150, 230, 255); 
+}
+
+.btnFeature{
+  background-color: white;
 }
