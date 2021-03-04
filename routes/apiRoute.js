@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const Login = require('../models/login_info');
+const login = require('../models/login_info');
+const user = require('../models/user');
 
 function routes(app, onlineUsers) {
     // access index
@@ -34,7 +35,8 @@ function routes(app, onlineUsers) {
     app.post('/api/register', async (req, res) => {
         console.log(`POST REQUEST: Adding [NEW USER]: username ${req.body.username}, firstname: ${req.body.firstname}, lastname: ${req.body.lastname}, password: ${req.body.password}, avatar: ${req.body.avatar}`);
         // ORM command to search for user
-        // const result = await db.query( `INSERT INTO users (id, login_id, first_name, last_name, display_name, avatar_dirct) VALUES (?, ?, ?, ?, ?, ?)`, [req.body])
+
+        // const result = await db.query( `INSERT INTO users (id, login_id, first_name, last_name, display_name, avatar_dirct) VALUES (?, ?, ?, ?, ?, ?)`, [req.body.username, req.body.firstname, req.body.lastname, req.body.password, req.body.avatar])
         if (/* user exists */ false) {
             res.send({ message: 'Registration failed' });
         } else {
