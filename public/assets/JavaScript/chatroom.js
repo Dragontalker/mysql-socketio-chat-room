@@ -6,12 +6,14 @@ document.querySelector('#msgForm').addEventListener('click', sendMsg);
 document.querySelector('#logoutBtn').addEventListener('click', logOut);
 
 // INITIALIZATION OF CHATROOM
-checkAccesskey();
-roomList();
+socket.on('connect', () => {
+  checkAccesskey();
+  roomList();
+})
 
 async function checkAccesskey() {
   // redirect to noaccess if no accesskey
-  // if (!sessionStorage.accesskey) window.location.replace('/noaccess');
+  if (!sessionStorage.accesskey) window.location.replace('/noaccess');
   // grab user info using accessKey
   const accesskey = window.sessionStorage.accesskey;
   // save user info
@@ -48,7 +50,6 @@ async function userList() {
   // GET REQUEST: users list
   const users = await fetch(`/api/online/${currentRoomId}`).then(r => r.json());
   // print users to user list
-  console.log(users);
   for (let i=0; i<users.length; i++) {
     document.querySelector('#userList').innerHTML +=
     `<li>${users[i].displayName}</li>`;

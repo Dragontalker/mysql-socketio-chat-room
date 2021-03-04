@@ -13,7 +13,6 @@ var socketIO = function (io, socket, onlineUsers) {
       io.to(data.roomId).emit('enteredRoom', onlineUsers[i]);
       break;
     }
-    console.log(onlineUsers);
   })
 
   // send/receive message

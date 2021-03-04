@@ -72,20 +72,14 @@ function routes(app, onlineUsers) {
         res.send(data);
     })
 
-<<<<<<< HEAD
     // request online users array 
     app.get('/api/online/:roomId', async (req, res) => {
         console.log(`GET REQUEST: fetching list of online users for room ${req.params.roomId}`);
-=======
-    // request online users array
-    app.get('/api/online/:room', async (req, res) => {
-        console.log(`GET REQUEST: fetching list of online users for room ${req.params.room}`);
->>>>>>> 1d033fcfa720337e76a717be33fe2ac5e82362ce
-        // TO-DO: filter out users with same room as input
+        // TO-DO: filter out users with same roomId as input
         let roomUsers = [];
         console.log(onlineUsers);
         for (let i=0; i<onlineUsers.length; i++) {
-            if (onlineUsers[i].roomId === req.params.roomId) roomUsers.push(onlineUsers[i]);
+            if (onlineUsers[i].roomId == req.params.roomId) roomUsers.push(onlineUsers[i]);
         }
         res.send(roomUsers);
     })
