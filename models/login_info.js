@@ -8,6 +8,13 @@ const login_info = {
         let index = `(user_email = '${userName}')`;
         let result = await orm.findOne(this.name, target, index);
         return result[0].user_password === inputPassword;
+    },
+
+    checkExistingUsername: async function(newUsername) {
+        const column = 'user_name';
+        const exists = `(user_name = '${newUsername}')`;
+        const result = await orm.findOne(this.name, column, exists);
+        return result[0];
     }
 
     /* SAM TO-DO

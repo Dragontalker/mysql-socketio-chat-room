@@ -30,19 +30,21 @@ async function checkUsername(){
     if (el_username.value === ''){
         el_error2.classList.remove('d-none');
         el_noerror1.classList.add('d-none');
+        el_error1.classList.add('d-none');
         return;
     }
-    const checkUser = await fetchJSON (`/api/usercheck/${el_username.value}`);
+    const checkUser = await fetchJSON (`/api/usercheck/${el_username.value.trim()}`);
     console.log('the response code: ', checkUser.code);
 
     if (checkUser.code === 202){
-        console.log('Good to choose your avatar...');
+        console.log(checkUser.message);
         el_error2.classList.add('d-none');
         el_error1.classList.add('d-none');
         el_noerror1.classList.remove('d-none')
     } else {
-        console.log ('Username already taken...');
+        console.log(checkUser.message);
         el_noerror1.classList.add('d-none')
+        el_error2.classList.add('d-none');
         el_error1.classList.remove('d-none');
     }
 }
@@ -110,9 +112,9 @@ function getAvatar(image){
 async function register(event) {
     event.preventDefault();
     let newUser = {
-        username: el_username.value,
-        firstname: el_firstname.value,
-        lastname: el_lastname.value,
+        username: el_username.value.trim(),
+        firstname: el_firstname.value.trim(),
+        lastname: el_lastname.value.trim(),
         password: el_password.value,
         avatar: el_avatar,
     };
