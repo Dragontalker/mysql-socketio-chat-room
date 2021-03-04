@@ -1,35 +1,45 @@
 var socketIO = function (io, socket, onlineUsers) {
   // connect to server
   console.log('a user connected', socket.id);
-  onlineUsers.push({id: socket.id, room: null});
+  socket.on('connectToServer', (data) => { onlineUsers.push(data); });
 
   // join rooms
   socket.on('join', (data) => {
-    console.log(`user ${data.user} has joined room ${data.room}`);
-    socket.join(data.room);
-    // update online users list for room
-    for (let i=0; i<onlineUsers.length; i++) if (onlineUsers[i].id === data.id) onlineUsers[i].room = data.room;
+    console.log(`user ${data.userId} has joined room ${data.roomId}`);
+    socket.join(data.roomId);
+    // let room know someone joined
+    for (let i=0; i<onlineUsers.length; i++) {
+      if (onlineUsers[i].socketId === data.socketId) onlineUsers[i].roomId = data.roomId;
+      io.to(data.roomId).emit('enteredRoom', onlineUsers[i]);
+      break;
+    }
   })
 
   // send/receive message
   socket.on('message', (data) => {
-    console.log(`message from room ${data.room} - ${data.user}: ${data.msg}`);
-    io.to(data.room).emit('receivedMsg', { user: data.user, msg: data.msg, id: socket.id });
+    console.log(`message from room ${data.roomId} - ${data.displayName}: ${data.msg}`);
+    io.to(data.roomId).emit('receivedMsg', { displayName: data.displayName, msg: data.msg });
   });
 
   // leave rooms
   socket.on('leave', (data) => {
-    console.log (`user ${data.user} has left room ${data.room}`);
-    socket.leave(data.room);
-    // update online users list for room
-    for (let i=0; i<onlineUsers.length; i++) if (onlineUsers[i].id === data.id) onlineUsers[i].room = null;
+    console.log (`user ${data.userId} has left room ${data.roomId}`);
+    socket.leave(data.roomId);
+    // find user info
+    for (let i=0; i<onlineUsers.length; i++) {
+      if (onlineUsers[i].socketId === data.socketId) {
+        onlineUsers[i].roomId = null;
+        io.to(data.roomId).emit('disconnected', onlineUsers[i]);
+        break;
+      }
+    }
   });
 
   // track disconnects
   socket.on('disconnect', () => {
     console.log(`user ${socket.id} disconnected`);
     // delete user from online list
-    for (let i=0; i<onlineUsers.length; i++) if (onlineUsers[i].id === socket.id) onlineUsers.splice(i,1);
+    for (let i=0; i<onlineUsers.length; i++) if (onlineUsers[i].socketId === socket.id) onlineUsers.splice(i,1);
   })
 }
 

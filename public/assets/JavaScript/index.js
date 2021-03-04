@@ -2,6 +2,9 @@ const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
 const alertBox = document.querySelector('#errorBox');
 
+// INITIALIZATION
+if (window.sessionStorage.accesskey) window.location.replace('/chatroom');
+
 function fetchJSON( url, method='get', data={} ){
     const fetchOptions = {
         method,

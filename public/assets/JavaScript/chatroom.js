@@ -1,19 +1,29 @@
 const socket = io();
 let currentRoomId = null;
-let userInfo = { id:null, displayName:null, avatar:null };
+let userInfo = { id:null, displayName:null, avatar:null, roomId:null, socketId:null};
 
 document.querySelector('#msgForm').addEventListener('click', sendMsg);
+document.querySelector('#logoutBtn').addEventListener('click', logOut);
 
 // INITIALIZATION OF CHATROOM
-checkAccesskey();
-roomList();
+socket.on('connect', () => {
+  checkAccesskey();
+  roomList();
+})
 
 async function checkAccesskey() {
-    // redirect to noaccess if no accesskey
-    // if (!sessionStorage.accesskey) window.location.replace('/noaccess');
-    // grab user info using accessKey
-    const accesskey = window.sessionStorage.accesskey;
-    userInfo = await fetch(`/api/users/${accesskey}`).then(r => r.json());
+  // redirect to noaccess if no accesskey
+  if (!sessionStorage.accesskey) window.location.replace('/noaccess');
+  // grab user info using accessKey
+  const accesskey = window.sessionStorage.accesskey;
+  // save user info
+  const {id, displayName, avatar} = await fetch(`/api/users/${accesskey}`).then(r => r.json());
+  userInfo.id = id;
+  userInfo.displayName = displayName;
+  userInfo.avatar = avatar;
+  userInfo.socketId = socket.id;
+  // send connected status to server
+  socket.emit('connectToServer', userInfo);
 }
 
 async function roomList() {
@@ -59,24 +69,24 @@ async function prevMsgs() {
     for (let i=0; i<prev.length; i++) {
         document.querySelector('#msgList').innerHTML +=
     `<li>${prev[i].displayName}: ${prev[i].msg}</li>`;
-    }
+  }
+  // scroll to bottom of message box
+  document.querySelector('#msgList').scrollTop = document.querySelector('#msgList').scrollHeight;
 }
 
 // joining a room
 async function joinRoom(room) {
-    // leave old room
-    if (currentRoomId) {
-        socket.emit('leave', {room:currentRoomId, user:userInfo.id, id:socket.id});
-    }
-    // join new room
-    socket.emit('join', {room:room.id, user:userInfo.id, id:socket.id});
-    currentRoomId = room.id;
-    // hide room overlay
-    hideRoomOverlay();
-    // print new elements to UI
-    document.querySelector('#roomName').innerHTML = room.displayName;
-    userList();
-    prevMsgs();
+  // leave old room
+  if (currentRoomId) socket.emit('leave', {roomId:currentRoomId, userId:userInfo.id, socketId:socket.id});
+  // join new room
+  socket.emit('join', {roomId:room.id, userId:userInfo.id, socketId:socket.id});
+  currentRoomId = room.id;
+  // hide room overlay
+  hideRoomOverlay();
+  // print new elements to UI
+  document.querySelector('#roomName').innerHTML = room.displayName;
+  userList();
+  prevMsgs();
 }
 
 function hideRoomOverlay() {
@@ -87,25 +97,36 @@ function hideRoomOverlay() {
 
 // send message to server
 function sendMsg(e) {
-    e.preventDefault();
-    const msg = document.querySelector('#msg').value;
-    if (msg) {
-        socket.emit('message', {room:currentRoomId, user:userInfo.displayName, msg:msg, id:socket.id});
-        document.querySelector('#msg').value = '';
-    }
-    //TO-DO: save message to DB
-    
+  e.preventDefault();
+  const msg = document.querySelector('#msg').value;
+  if (msg) {
+    socket.emit('message', {roomId:currentRoomId, displayName:userInfo.displayName, msg:msg});
+    document.querySelector('#msg').value = '';
+  }
+  //TO-DO: save message to DB
+}
+
+// logout
+function logOut() {
+  sessionStorage.clear();
+  window.location.replace('/');
 }
 
 // receive message from server
 socket.on('receivedMsg', (data) => {
-    msgList = document.querySelector('#msgList');
-    console.log(data);
-    msgList.innerHTML += `<li>${data.user}: ${data.msg}</li>`;
+  msgList = document.querySelector('#msgList');
+  console.log(data);
+  msgList.innerHTML += `<li>${data.displayName}: ${data.msg}</li>`;
+  msgList.scrollTop = msgList.scrollHeight;
+})
+
+// receive connected event from server
+socket.on('enteredRoom', (data) => {
+  msgList.innerHTML += `<li>User ${data.displayName} has entered the room</li>`;
 })
 
 // receive disconnect event from server
 socket.on('disconnected', (data) => {
-    console.log(`User ${data.user} has left the room`);
-    msgList.innerHTML += `<li>User ${data.user} has left the room</li>`;
+  console.log(`User ${data.userId} has left the room`);
+  msgList.innerHTML += `<li>User ${data.displayName} has left the room</li>`;
 })
