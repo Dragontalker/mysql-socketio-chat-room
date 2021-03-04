@@ -55,14 +55,10 @@ function routes(app, onlineUsers) {
         const inputUser = req.body.username;
         const inputPassword = req.body.password;
         console.log(`GET REQUEST: trying to login as username: ${inputUser}, password: ${inputPassword}`);
-        // ORM command to search for user & return username as accesskey
-        const loginID = await login.matchWithUser(inputUser); // search for existing username
-        console.log('this is loginid', loginID);
-        if (loginID /* IF you get back a result */){
-            res.send( { code: 202, accesskey:`${inputUser}`} )
-        } else {
-            res.send({ code: 404 });
-        }
+        const loginID = await login.getId(inputUser, inputPassword);
+        console.log('this is loginid', loginID.id);
+        if (loginID) res.send({ code: 202, accesskey:`${inputUser}` });
+        else res.send({ code: 404 });
     })
 
     // request room list
@@ -76,6 +72,7 @@ function routes(app, onlineUsers) {
     app.get('/api/messages/:roomId', async (req, res) => {
         console.log(`GET REQUEST: fetching previous messages for room ${req.params.roomId}`);
         const data = await messages.getRoomMsgs(req.params.roomId);
+        console.log(data);
         res.send(data);
     })
 
@@ -106,13 +103,13 @@ function routes(app, onlineUsers) {
         res.send({ message:'success' });
     })
 
-    // add rooms
+    // add rooms - SAM
     app.post('/api/rooms', async (req, res) => {
         console.log(`POST REQUEST: adding room to DB ${req.body}`);
         // ...
     })
 
-    // delete rooms
+    // delete rooms - SAM
     app.delete('/api/rooms/:roomId', async (req, res) => {
         console.log(`DELETE REQUEST: removing room and all messages from DB ${req.params.roomId}`);
         // ...

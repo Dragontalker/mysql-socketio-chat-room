@@ -28,6 +28,12 @@ const login_info = {
         const where = `(user_name = '${username}')`;
         const result = await orm.findOne(this.name, column, where );
         return result[0];
+    },
+
+    getId: async function(username, password) {
+        const result = await orm.findOne(this.name, 'id', `user_name = \'${username}\' AND user_password = \'${password}\'`);
+        if (result === []) return null;
+        else return result[0];
     }
 
 };
