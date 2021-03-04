@@ -3,8 +3,10 @@ const orm = require('../config/orm');
 const room = {
     name: 'rooms',
 
-    // find all rooms output: [{id, room name},{},{}]
-
+    listAll: async function() {
+        const result = await orm.selectAll(this.name)
+        return result;
+    }
     // add room output: {id, room name}
 
     // delete room output: {id, room name}

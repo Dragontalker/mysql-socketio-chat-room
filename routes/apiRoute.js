@@ -3,6 +3,7 @@ const path = require('path');
 const login = require('../models/login_info');
 const user = require('../models/user');
 const messages = require('../models/messages');
+const room = require('../models/rooms');
 
 function routes(app, onlineUsers) {
     // access index
@@ -49,7 +50,7 @@ function routes(app, onlineUsers) {
         res.send({ message: 'Registration successful' });
     })
 
-    // login request -- SAM
+    // login request
     app.post('/api/login', async (req, res) => {
         const inputUser = req.body.username;
         const inputPassword = req.body.password;
@@ -64,16 +65,15 @@ function routes(app, onlineUsers) {
         }
     })
 
-    // request room list -- SAM
+    // request room list
     app.get('/api/rooms', async (req, res) => {
         console.log('GET REQUEST: fetching rooms information');
-        const data = /* ORM command */[{id:1, displayName:'Room 1'},{id:2, displayName:'Room 2'},{id:3, displayName:'Room 3'}];
-        res.send(data);
+        const data = await room.listAll();
+        res.status(200).json(data);
     })
 
-    // request previous messages -- SAM
+    // request previous messages
     app.get('/api/messages/:roomId', async (req, res) => {
-
         console.log(`GET REQUEST: fetching previous messages for room ${req.params.roomId}`);
         const data = await messages.getRoomMsgs(roomId);
         res.send(data);
