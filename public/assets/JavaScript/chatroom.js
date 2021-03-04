@@ -5,20 +5,21 @@ let userInfo = { id:null, displayName:null, avatar:null };
 document.querySelector('#msgForm').addEventListener('click', sendMsg);
 
 // INITIALIZATION OF CHATROOM
-checkAccessKey();
+checkAccesskey();
 roomList();
 
-async function checkAccessKey() {
+async function checkAccesskey() {
   // redirect to noaccess if no accesskey
-  // if (!sessionStorage.accessKey) window.location.replace('/noaccess');
-  // TO-DO: grab user info using accessKey
-  userInfo = { id:1, displayName:'Adam', avatar:'user.png' };
+  if (!sessionStorage.accesskey) window.location.replace('/noaccess');
+  // grab user info using accessKey
+  const accesskey = window.sessionStorage.accesskey;
+  userInfo = await fetch(`/api/users/${accesskey}`).then(r => r.json());
 }
 
-function roomList() {
+async function roomList() {
   document.querySelector('#roomList').innerHTML = '';
   // GET REQUEST: room list
-  const rooms = [{id:1, displayName:'Room 1'},{id:2, displayName:'Room 2'},{id:3, displayName:'Room 3'}];
+  const rooms = await fetch('/api/rooms').then(r => r.json());
   // print rooms to room list
   for (let i=0; i<rooms.length; i++) {
     document.querySelector('#roomList').innerHTML +=
@@ -37,11 +38,11 @@ async function userList() {
   // TO-DO: load online users list (#userList)
   document.querySelector('#userList').innerHTML = '';
   // GET REQUEST: users list
-  const users = [{user:userInfo.displayName, id:userInfo.id}, {user:'Eve', id:'4321'}];
+  const users = await fetch(`/api/online/${currentRoomId}`).then(r => r.json());
   // print users to user list
   for (let i=0; i<users.length; i++) {
     document.querySelector('#userList').innerHTML +=
-    `<li>${users[i].user}</li>`;
+    `<li>${users[i].displayName}</li>`;
   }
 }
 
@@ -49,11 +50,11 @@ async function prevMsgs() {
   // TO-DO: load previous messages
   document.querySelector('#msgList').innerHTML = '';
   // GET REQUEST: previous messages
-  const prev = [{user:'Adam', msg:'Test'}, {user:'Eve', msg:'Test 2'}];
+  const prev = await fetch(`/api/messages/${currentRoomId}`).then(r => r.json());
   // print messages
   for (let i=0; i<prev.length; i++) {
     document.querySelector('#msgList').innerHTML +=
-    `<li>${prev[i].user}: ${prev[i].msg}</li>`;
+    `<li>${prev[i].displayName}: ${prev[i].msg}</li>`;
   }
 }
 

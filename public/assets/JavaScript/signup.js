@@ -1,4 +1,6 @@
 const el_username = document.querySelector('#username');
+const el_firstname = document.querySelector('#firstname');
+const el_lastname = document.querySelector('#lastname');
 const el_password = document.querySelector('#password');
 const el_password2 = document.querySelector('#passwordConfirm');
 let el_avatar;
@@ -7,6 +9,8 @@ const el_second = document.querySelector('#second');
 const el_error1 = document.querySelector('#error1');
 const el_error2 = document.querySelector('#error2');
 const el_error3 = document.querySelector('#error3');
+const el_error4 = document.querySelector('#error4');
+const el_error5 = document.querySelector('#error5');
 const el_noerror1 = document.querySelector('#noerror1');
 
 function fetchJSON( url, method='get', data={} ){
@@ -21,6 +25,7 @@ function fetchJSON( url, method='get', data={} ){
     return fetch( url, postUser ).then( res=>res.json() )
 }
 
+// onblur function on username input box...
 async function checkUsername(){
     if (el_username.value === ''){
         el_error2.classList.remove('d-none');
@@ -42,14 +47,23 @@ async function checkUsername(){
     }
 }
 
+//When user clicks "continue" button...
 async function checkUser(event){
     event.preventDefault();
     el_error2.classList.add('d-none');
     el_error3.classList.add('d-none');
+    el_error4.classList.add('d-none');
+    el_error5.classList.add('d-none');
 
     if (el_username.value === ''){
         el_error2.classList.remove('d-none');
         el_noerror1.classList.add('d-none');
+    }
+    if (el_firstname.value === ''){
+        el_error4.classList.remove('d-none');
+    }
+    if (el_lastname.value === ''){
+        el_error5.classList.remove('d-none');
     }
     if (el_password.value !== el_password2.value){
         el_error3.classList.remove('d-none');
@@ -57,7 +71,7 @@ async function checkUser(event){
     if (el_password.value === ''){
         el_error3.classList.remove('d-none');
     }
-    if (!(el_error1.classList.contains('d-none')) || !(el_error2.classList.contains('d-none')) || !(el_error3.classList.contains('d-none'))){
+    if ( !(el_error1.classList.contains('d-none')) || !(el_error2.classList.contains('d-none')) || !(el_error3.classList.contains('d-none')) || !(el_error4.classList.contains('d-none')) || !(el_error5.classList.contains('d-none')) ){
         return;
     }
     el_second.classList.remove('d-none');
@@ -97,6 +111,8 @@ async function register(event) {
     event.preventDefault();
     let newUser = {
         username: el_username.value,
+        firstname: el_firstname.value,
+        lastname: el_lastname.value,
         password: el_password.value,
         avatar: el_avatar,
     };
@@ -104,5 +120,5 @@ async function register(event) {
     if( response.message ) {
         alert( response.message )
     }
-    window.location.replace( '/index.html' );
+    window.location.replace( '/' );
 }
