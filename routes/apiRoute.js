@@ -48,7 +48,7 @@ function routes(app, onlineUsers) {
         res.send({ message: 'Registration successful' });
     })
 
-    // login request -- SAM
+    // login request
     app.post('/api/login', async (req, res) => {
         const inputUser = req.body.username;
         const inputPassword = req.body.password;
