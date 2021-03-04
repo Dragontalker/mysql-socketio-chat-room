@@ -4,7 +4,7 @@
   "description": "The group project 2 for coding bootcamp",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha || exit 0",
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/Dragontalker/BootCamp_Project2#readme",
   "devDependencies": {
+    "chai": "^4.3.3",
+    "mocha": "^8.3.0",
     "nodemon": "^2.0.7"
   },
   "dependencies": {
