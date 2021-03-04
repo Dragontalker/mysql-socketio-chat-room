@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const login = require('../models/login_info');
 const user = require('../models/user');
+const messages = require('../models/messages');
 
 function routes(app, onlineUsers) {
     // access index
@@ -71,19 +72,18 @@ function routes(app, onlineUsers) {
     })
 
     // request previous messages -- SAM
-    app.get('/api/messages/:room', async (req, res) => {
+    app.get('/api/messages/:roomId', async (req, res) => {
 
-        console.log(`GET REQUEST: fetching previous messages for room ${req.params.room}`);
-        const data = /* ORM command */[{displayName:'Adam', msg:'Test'}, {displayName:'Eve', msg:'Test 2'}];
+        console.log(`GET REQUEST: fetching previous messages for room ${req.params.roomId}`);
+        const data = await messages.getRoomMsgs(roomId);
         res.send(data);
     })
 
     // request online users array 
     app.get('/api/online/:roomId', async (req, res) => {
         console.log(`GET REQUEST: fetching list of online users for room ${req.params.roomId}`);
-        // TO-DO: filter out users with same roomId as input
+        // filter out users with same roomId as input
         let roomUsers = [];
-        console.log(onlineUsers);
         for (let i=0; i<onlineUsers.length; i++) {
             if (onlineUsers[i].roomId == req.params.roomId) roomUsers.push(onlineUsers[i]);
         }
@@ -99,11 +99,23 @@ function routes(app, onlineUsers) {
         res.send(userInfo);
     })
 
-    // TO-DO: add message to DB
+    // add message to DB
+    app.post('/api/messages', async (req, res) => {
+        console.log(`POST REQUEST: adding message to DB ${req.body}`);
+        // ...
+    })
 
-    // TO-DO: add rooms
+    // add rooms
+    app.post('/api/rooms', async (req, res) => {
+        console.log(`POST REQUEST: adding room to DB ${req.body}`);
+        // ...
+    })
 
-    // TO-DO: delete rooms
+    // delete rooms
+    app.delete('/api/rooms/:roomId', async (req, res) => {
+        console.log(`DELETE REQUEST: removing room and all messages from DB ${req.params.roomId}`);
+        // ...
+    })
 }
 
 module.exports = routes;
