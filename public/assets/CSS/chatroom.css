@@ -57,11 +57,14 @@ ul {
 .chatroom-main {
 	padding: 30px 40px;
 	background: rgb(209, 244, 255); 
+  border-style: solid;
+	border-color:rgb(75, 188, 226);
 }
 
 .chatroomBtn {
 	margin-top: 20px;
-	width: 80%;
+	width: 75%;
+  color: black;
 }
 .chatroomBtnDelete {
 	margin-top: 20px;
@@ -79,3 +82,8 @@ body{
 .btnFeature{
   background-color: white;
 }
+
+/* .leftMessage {
+  border-style: solid;
+	border-color:rgb(75, 188, 226);
+} */

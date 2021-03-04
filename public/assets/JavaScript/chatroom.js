@@ -13,7 +13,7 @@ socket.on('connect', () => {
 
 async function checkAccesskey() {
   // redirect to noaccess if no accesskey
-  if (!sessionStorage.accesskey) window.location.replace('/noaccess');
+  // if (!sessionStorage.accesskey) window.location.replace('/noaccess');
   // grab user info using accessKey
   const accesskey = window.sessionStorage.accesskey;
   // save user info
@@ -33,10 +33,10 @@ async function roomList() {
     // print rooms to room list
     for (let i=0; i<rooms.length; i++) {
         document.querySelector('#roomList').innerHTML +=
-    `<li><button class="btn" id="room-${rooms[i].id}">${rooms[i].room_name}</button>
-      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">Delete</button></li>`;
+    `<li><button class="btn btn-outline-info chatroomBtn" id="room-${rooms[i].id}">${rooms[i].room_name}</button>
+      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">X</button></li>`;
         document.querySelector('#overlayRoomList').innerHTML +=
-    `<li><button class="btn btn-info" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
+    `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
       <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">Delete</button></li>`;
     }
     // add event listeners
