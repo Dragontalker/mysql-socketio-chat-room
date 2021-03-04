@@ -13,7 +13,7 @@ socket.on('connect', () => {
 
 async function checkAccesskey() {
   // redirect to noaccess if no accesskey
-  if (!sessionStorage.accesskey) window.location.replace('/noaccess');
+  // if (!sessionStorage.accesskey) window.location.replace('/noaccess');
   // grab user info using accessKey
   const accesskey = window.sessionStorage.accesskey;
   // save user info
