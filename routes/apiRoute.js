@@ -50,7 +50,7 @@ function routes(app, onlineUsers) {
     // login request -- SAM
     app.post('/api/login', async (req, res) => {
         const inputUser = req.body.username;
-        const inputPassword =req.body.password
+        const inputPassword = req.body.password;
         console.log(`GET REQUEST: trying to login as user ${inputUser}, pass: ${inputPassword}`);
         // ORM command to search for user & return username as accesskey
         if (true /* IF you get back a result */) res.send( { message: 'Login successful', accesskey:'1234'} );
@@ -66,12 +66,13 @@ function routes(app, onlineUsers) {
 
     // request previous messages -- SAM
     app.get('/api/messages/:room', async (req, res) => {
+
         console.log(`GET REQUEST: fetching previous messages for room ${req.params.room}`);
         const data = /* ORM command */[{displayName:'Adam', msg:'Test'}, {displayName:'Eve', msg:'Test 2'}];;
         res.send(data);
     })
 
-    // request online users array 
+    // request online users array
     app.get('/api/online/:room', async (req, res) => {
         console.log(`GET REQUEST: fetching list of online users for room ${req.params.room}`);
         // TO-DO: filter out users with same room as input
