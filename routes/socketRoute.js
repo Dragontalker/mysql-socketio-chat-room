@@ -40,8 +40,14 @@ var socketIO = function (io, socket, onlineUsers) {
   // track disconnects
   socket.on('disconnect', () => {
     console.log(`user ${socket.id} disconnected`);
-    // delete user from online list
-    for (let i=0; i<onlineUsers.length; i++) if (onlineUsers[i].socketId === socket.id) onlineUsers.splice(i,1);
+    for (let i=0; i<onlineUsers.length; i++) {
+      if (onlineUsers[i].socketId === socket.id) {
+        // let clients know user disconnected
+        io.to(onlineUsers[i].roomId).emit('disconnected', onlineUsers[i]);
+        // delete user from online list
+        onlineUsers.splice(i,1);
+      }
+    }
   })
 }
 
