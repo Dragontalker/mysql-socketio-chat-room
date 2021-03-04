@@ -30,6 +30,9 @@ function fetchJSON( url, method='get', data={} ){
 async function checkUsername(){
     if (el_username.value.includes(" ")){
         el_error1c.classList.remove('d-none');
+        el_error1.classList.add('d-none');
+        el_error1b.classList.add('d-none');
+        el_noerror1.classList.add('d-none');
         return;
     } else {
         el_error1c.classList.add('d-none');
