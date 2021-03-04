@@ -98,7 +98,7 @@ async function showAvatars() {
     const checkUser = await fetchJSON ('/api/avatars'); //picture array fetching
     console.log(checkUser);
     checkUser.forEach(image => {
-        document.querySelector('#avatars').innerHTML += `<a id="${image}" onClick="getAvatar(this.id)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" /></a>`
+        document.querySelector('#avatars').innerHTML += `<a id="${image}" onClick="getAvatar(this.id)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image"/></a>`
     });
 }
 

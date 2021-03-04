@@ -1,3 +1,7 @@
+body{
+	background-image: url("../background/wallpaper.jpg");
+}
+
 .home-container {
 	max-width: 500px;
 	margin: 80px auto;
@@ -21,7 +25,7 @@
 	width: 100%;
 }
 
-.home-main input[type='text'] {
+.home-main input {
 	font-size: 16px;
 	padding: 5px;
 	height: 40px;
