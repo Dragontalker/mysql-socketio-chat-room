@@ -58,11 +58,11 @@ async function userList() {
   }
 }
 
-async function prevMsgs() {
+async function prevMsgs(roomId) {
   // TO-DO: load previous messages
   document.querySelector('#msgList').innerHTML = '';
   // GET REQUEST: previous messages
-  const prev = await fetch(`/api/messages/${currentRoomId}`).then(r => r.json())
+  const prev = await fetch(`/api/messages/${roomId}`).then(r => r.json())
     .catch(err => [{ display_name: 'Error', message_body: err }]);
   // print messages
   for (let i = 0; i < prev.length; i++) {
@@ -76,14 +76,15 @@ async function prevMsgs() {
 async function joinRoom(room) {
   // leave old room
   if (currentRoomId) socket.emit('leave', { roomId: currentRoomId, userId: userInfo.id, socketId: socket.id });
+  // load old messages in new room
+  await prevMsgs(room.id);
   // join new room
   socket.emit('join', { roomId: room.id, userId: userInfo.id, socketId: socket.id });
   currentRoomId = room.id;
   // hide room overlay
   hideRoomOverlay();
-  // print new elements to UI
+  // print new room name
   document.querySelector('#roomName').innerHTML = room.room_name;
-  prevMsgs();
 }
 
 function hideRoomOverlay() {
