@@ -18,10 +18,12 @@ function routes(app, onlineUsers) {
 
     //userlist - SAM
     app.get('/api/usercheck/:username', async (req, res) => {
-        if( true ){
-            res.status(202).send( {code: 202, message:'continue to avatar choices.'} );
+        const result = await login.checkExistingUsername(req.params.username)
+        console.log(result);
+        if( !result ){
+            res.status(202).send( {code: 202, message:'Username is available...'} );
         } else {
-            res.status(404).send( {code: 404, message: 'username already taken.'});
+            res.status(404).send( {code: 404, message: 'Username is already taken...'});
         }
     })
 
@@ -33,10 +35,15 @@ function routes(app, onlineUsers) {
 
     // registration request
     app.post('/api/register', async (req, res) => {
-        console.log(`POST REQUEST: Adding [NEW USER]: username ${req.body.username}, firstname: ${req.body.firstname}, lastname: ${req.body.lastname}, password: ${req.body.password}, avatar: ${req.body.avatar}`);
+        const username = req.body.username;
+        const firstname = req.body.firstname;
+        const lastname = req.body.lastname;
+        const password = req.body.password;
+        const avatar = req.body.avatar;
+        console.log(`POST REQUEST: Adding [NEW USER]: username ${username}, firstname: ${firstname}, lastname: ${lastname}, password: ${password}, avatar: ${avatar}`);
         // ORM command to search for user
-
-        // const result = await db.query( `INSERT INTO users (id, login_id, first_name, last_name, display_name, avatar_dirct) VALUES (?, ?, ?, ?, ?, ?)`, [req.body.username, req.body.firstname, req.body.lastname, req.body.password, req.body.avatar])
+        // const result = await db.query( `INSERT INTO login_info (user_name, user_password) VALUES (?, ?)`, [req.body.username, req.body.password])
+        const result2 = await user.addNew(loginID, firstname, lastname, username, avatar)
         if (/* user exists */ false) {
             res.send({ message: 'Registration failed' });
         } else {

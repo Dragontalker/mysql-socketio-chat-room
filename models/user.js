@@ -8,9 +8,9 @@ const user = {
         return result;
     },
 
-    addNew: async function(loginID, firstName, lastName, displayName) {
-        const vars = '(login_id, first_name, last_name, display_name)';
-        const data = `(${loginID}, '${firstName}', '${lastName}', '${displayName}')`;
+    addNew: async function(loginID, firstName, lastName, displayName, avatarPNG) {
+        const vars = '(login_id, first_name, last_name, display_name, avatar_dirct)';
+        const data = `(${loginID}, '${firstName}', '${lastName}', '${displayName}', '${avatarPNG}')`;
         await orm.insertOne(this.name, vars, data);
     },
 
@@ -31,11 +31,6 @@ const user = {
         const index = `login_id = ${loginID}`;
         await orm.updateOne(this.name, change, index);
     }
-
-    /* SAM TO-DO
-    new function: new user INPUT: login_info id
-    add login_id = login_info id, displayname = username, avatar = avatar;
-    */
 };
 
 module.exports = user;
