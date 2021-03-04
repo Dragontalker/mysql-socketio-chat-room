@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const login = require('../models/login_info');
 const user = require('../models/user');
+const Room = require('../models/rooms');
 
 function routes(app, onlineUsers) {
     // access index
@@ -63,11 +64,11 @@ function routes(app, onlineUsers) {
         }
     })
 
-    // request room list -- SAM
+    // request room list
     app.get('/api/rooms', async (req, res) => {
         console.log('GET REQUEST: fetching rooms information');
-        const data = /* ORM command */[{id:1, displayName:'Room 1'},{id:2, displayName:'Room 2'},{id:3, displayName:'Room 3'}];
-        res.send(data);
+        const data = await Room.listAll();
+        res.status(200).json(data);
     })
 
     // request previous messages -- SAM
