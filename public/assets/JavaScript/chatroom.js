@@ -25,7 +25,7 @@ async function roomList() {
     document.querySelector('#roomList').innerHTML +=
     `<li><button class="btn" id="room-${rooms[i].id}">${rooms[i].displayName}</button></li>`;
     document.querySelector('#overlayRoomList').innerHTML +=
-    `<li><button class="btn btn-info" id="overlayRoom-${rooms[i].id}">${rooms[i].displayName}</button></li>`;
+    `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].displayName}</button><button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">Delete</li>`;
   }
   // add event listeners
   for (let i=0; i<rooms.length; i++) {
