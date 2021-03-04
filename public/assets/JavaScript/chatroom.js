@@ -33,15 +33,21 @@ async function roomList() {
     // print rooms to room list
     for (let i=0; i<rooms.length; i++) {
         document.querySelector('#roomList').innerHTML +=
-    `<li><button class="btn" id="room-${rooms[i].id}">${rooms[i].displayName}</button></li>`;
-    document.querySelector('#overlayRoomList').innerHTML +=
-    `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].displayName}</button><button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">Delete</li>`;
-  }
-  // add event listeners
-  for (let i=0; i<rooms.length; i++) {
-    document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
-    document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
-  }
+    `<li><button class="btn" id="room-${rooms[i].id}">${rooms[i].room_name}</button>
+      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">Delete</button></li>`;
+        document.querySelector('#overlayRoomList').innerHTML +=
+    `<li><button class="btn btn-info" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
+      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">Delete</button></li>`;
+    }
+    // add event listeners
+    for (let i=0; i<rooms.length; i++) {
+        document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => {
+            joinRoom(rooms[i])
+        });
+        document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => {
+            joinRoom(rooms[i])
+        });
+    }
 }
 
 async function userList() {
@@ -92,14 +98,21 @@ function hideRoomOverlay() {
 }
 
 // send message to server
-function sendMsg(e) {
+async function sendMsg(e) {
   e.preventDefault();
   const msg = document.querySelector('#msg').value;
   if (msg) {
     socket.emit('message', {roomId:currentRoomId, displayName:userInfo.displayName, msg:msg});
     document.querySelector('#msg').value = '';
   }
-  //TO-DO: save message to DB
+
+  // save message to DB
+  const response = await fetch('/api/messages', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: { userId:userInfo.id, roomId: currentRoomId, msg:msg }
+  })
+
 }
 
 // logout

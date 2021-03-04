@@ -25,11 +25,4 @@ const messages = {
     // delete all messages for 1 room output: { message: 'success' or 'failure' }
 };
 
-// Test
-const testApp = async () => {
-    console.log(await messages.listAll());
-};
-
-testApp();
-
 module.exports = messages;
