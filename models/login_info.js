@@ -30,17 +30,6 @@ const login_info = {
         return result[0];
     }
 
-    /* SAM TO-DO
-    different function: INPUT: username + password
-    OUTPUT: id where username + password combination is found in DB
-    */
-
-    /* SAM TO-DO
-    new function: INPUT: username + password
-    save to DB: username = username, password = password, accessKey = username
-    OUTPUT: id
-    */
-
 };
 
 module.exports = login_info;

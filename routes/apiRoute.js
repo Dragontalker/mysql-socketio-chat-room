@@ -41,39 +41,37 @@ function routes(app, onlineUsers) {
         const password = req.body.password;
         const avatar = req.body.avatar;
         console.log(`POST REQUEST: Adding [NEW USER]: username ${username}, firstname: ${firstname}, lastname: ${lastname}, password: ${password}, avatar: ${avatar}`);
-        // ORM command to register user
         await login.addNew(username, password);
         const loginID = await login.matchWithUser(username); // find id # of table login_id
         await user.addNew(loginID.id, firstname, lastname, username, avatar)
         res.send({ message: 'Registration successful' });
     })
 
-    // login request
+    // login request -- SAM
     app.post('/api/login', async (req, res) => {
         const inputUser = req.body.username;
         const inputPassword =req.body.password
         console.log(`GET REQUEST: trying to login as user ${inputUser}, pass: ${inputPassword}`);
-        // ORM command to search for user & return accesskey
-        // Request for accessKey
-        if (true) res.send( { message: 'Login Successed!', accesskey:'1234'} );
-        else res.send({ message: 'Incorret Password!' });
+        // ORM command to search for user & return username as accesskey
+        if (true /* IF you get back a result */) res.send( { message: 'Login successful', accesskey:'1234'} );
+        else res.send({ message: 'Login failed' });
     })
 
-    // request room list
+    // request room list -- SAM
     app.get('/api/rooms', async (req, res) => {
         console.log('GET REQUEST: fetching rooms information');
         const data = /* ORM command */[{id:1, displayName:'Room 1'},{id:2, displayName:'Room 2'},{id:3, displayName:'Room 3'}];
         res.send(data);
     })
 
-    // request previous messages
+    // request previous messages -- SAM
     app.get('/api/messages/:room', async (req, res) => {
         console.log(`GET REQUEST: fetching previous messages for room ${req.params.room}`);
         const data = /* ORM command */[{displayName:'Adam', msg:'Test'}, {displayName:'Eve', msg:'Test 2'}];;
         res.send(data);
     })
 
-    // request online users array
+    // request online users array 
     app.get('/api/online/:room', async (req, res) => {
         console.log(`GET REQUEST: fetching list of online users for room ${req.params.room}`);
         // TO-DO: filter out users with same room as input

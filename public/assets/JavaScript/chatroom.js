@@ -84,7 +84,7 @@ function sendMsg(e) {
   e.preventDefault();
   const msg = document.querySelector('#msg').value;
   if (msg) {
-    socket.emit('message', {room:currentRoomId, user:userInfo.id, msg:msg, id:socket.id});
+    socket.emit('message', {room:currentRoomId, user:userInfo.displayName, msg:msg, id:socket.id});
     document.querySelector('#msg').value = '';
   }
   //TO-DO: save message to DB
