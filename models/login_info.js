@@ -24,7 +24,7 @@ const login_info = {
     },
 
     matchWithUser: async function(username){
-        const column = 'id';
+        const column = '*';
         const where = `(user_name = '${username}')`;
         const result = await orm.findOne(this.name, column, where );
         return result[0];
