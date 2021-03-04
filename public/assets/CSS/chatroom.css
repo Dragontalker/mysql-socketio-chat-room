@@ -38,7 +38,38 @@ ul {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgb(204, 233, 238);
+  background-image: url("../background/wallpaper.jpg");
   padding: 0 200px;
   padding-top: 60px;
+}
+
+.chatroom-container {
+	max-width: 500px;
+	margin: 80px auto;
+}
+
+.chatroom-header {
+	text-align: center;
+	padding: 20px;
+	background: rgb(75, 188, 226);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.chatroom-main {
+	padding: 30px 40px;
+	background: rgb(209, 244, 255); 
+}
+
+.chatroom-main .btn {
+	margin-top: 20px;
+	width: 100%;
+}
+
+body{
+  background: rgb(209, 244, 255); 
+}
+
+.roomlist {
+  background: rgb(150, 230, 255); 
 }
