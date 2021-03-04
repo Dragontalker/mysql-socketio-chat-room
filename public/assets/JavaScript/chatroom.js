@@ -27,43 +27,47 @@ async function checkAccesskey() {
 }
 
 async function roomList() {
-  document.querySelector('#roomList').innerHTML = '';
-  // GET REQUEST: room list
-  const rooms = await fetch('/api/rooms').then(r => r.json());
-  // print rooms to room list
-  for (let i=0; i<rooms.length; i++) {
-    document.querySelector('#roomList').innerHTML +=
+    document.querySelector('#roomList').innerHTML = '';
+    // GET REQUEST: room list
+    const rooms = await fetch('/api/rooms').then(r => r.json());
+    // print rooms to room list
+    for (let i=0; i<rooms.length; i++) {
+        document.querySelector('#roomList').innerHTML +=
     `<li><button class="btn" id="room-${rooms[i].id}">${rooms[i].displayName}</button></li>`;
-    document.querySelector('#overlayRoomList').innerHTML +=
+        document.querySelector('#overlayRoomList').innerHTML +=
     `<li><button class="btn btn-info" id="overlayRoom-${rooms[i].id}">${rooms[i].displayName}</button></li>`;
-  }
-  // add event listeners
-  for (let i=0; i<rooms.length; i++) {
-    document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
-    document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
-  }
+    }
+    // add event listeners
+    for (let i=0; i<rooms.length; i++) {
+        document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => {
+            joinRoom(rooms[i])
+        });
+        document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => {
+            joinRoom(rooms[i])
+        });
+    }
 }
 
 async function userList() {
-  // TO-DO: load online users list (#userList)
-  document.querySelector('#userList').innerHTML = '';
-  // GET REQUEST: users list
-  const users = await fetch(`/api/online/${currentRoomId}`).then(r => r.json());
-  // print users to user list
-  for (let i=0; i<users.length; i++) {
-    document.querySelector('#userList').innerHTML +=
+    // TO-DO: load online users list (#userList)
+    document.querySelector('#userList').innerHTML = '';
+    // GET REQUEST: users list
+    const users = await fetch(`/api/online/${currentRoomId}`).then(r => r.json());
+    // print users to user list
+    for (let i=0; i<users.length; i++) {
+        document.querySelector('#userList').innerHTML +=
     `<li>${users[i].displayName}</li>`;
-  }
+    }
 }
 
 async function prevMsgs() {
-  // TO-DO: load previous messages
-  document.querySelector('#msgList').innerHTML = '';
-  // GET REQUEST: previous messages
-  const prev = await fetch(`/api/messages/${currentRoomId}`).then(r => r.json());
-  // print messages
-  for (let i=0; i<prev.length; i++) {
-    document.querySelector('#msgList').innerHTML +=
+    // TO-DO: load previous messages
+    document.querySelector('#msgList').innerHTML = '';
+    // GET REQUEST: previous messages
+    const prev = await fetch(`/api/messages/${currentRoomId}`).then(r => r.json());
+    // print messages
+    for (let i=0; i<prev.length; i++) {
+        document.querySelector('#msgList').innerHTML +=
     `<li>${prev[i].displayName}: ${prev[i].msg}</li>`;
   }
   // scroll to bottom of message box
@@ -86,9 +90,9 @@ async function joinRoom(room) {
 }
 
 function hideRoomOverlay() {
-  if (!document.querySelector('#roomOverlay').classList.contains('d-none')) {
-    document.querySelector('#roomOverlay').classList.add('d-none');
-  }
+    if (!document.querySelector('#roomOverlay').classList.contains('d-none')) {
+        document.querySelector('#roomOverlay').classList.add('d-none');
+    }
 }
 
 // send message to server
