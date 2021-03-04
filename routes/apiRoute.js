@@ -3,7 +3,7 @@ const path = require('path');
 const login = require('../models/login_info');
 const user = require('../models/user');
 const messages = require('../models/messages');
-const room = require('../models/rooms');
+const rooms = require('../models/rooms');
 
 function routes(app, onlineUsers) {
     // access index
@@ -68,14 +68,14 @@ function routes(app, onlineUsers) {
     // request room list
     app.get('/api/rooms', async (req, res) => {
         console.log('GET REQUEST: fetching rooms information');
-        const data = await room.listAll();
-        res.status(200).json(data);
+        const data = await rooms.listAll();
+        res.status(200).send(data);
     })
 
     // request previous messages
     app.get('/api/messages/:roomId', async (req, res) => {
         console.log(`GET REQUEST: fetching previous messages for room ${req.params.roomId}`);
-        const data = await messages.getRoomMsgs(roomId);
+        const data = await messages.getRoomMsgs(req.params.roomId);
         res.send(data);
     })
 
@@ -102,7 +102,8 @@ function routes(app, onlineUsers) {
     // add message to DB
     app.post('/api/messages', async (req, res) => {
         console.log(`POST REQUEST: adding message to DB ${req.body}`);
-        // ...
+        messages.addMsgToRoom(req.body.userId, req.body.roomId, req.body.msg);
+        res.send({ message:'success' });
     })
 
     // add rooms
