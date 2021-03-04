@@ -23,6 +23,13 @@ const login_info = {
         await orm.insertOne(this.name, vars, data);
     },
 
+    matchWithUser: async function(username){
+        const column = 'id';
+        const where = `(user_name = '${username}')`;
+        const result = await orm.findOne(this.name, column, where );
+        return result[0];
+    }
+
     /* SAM TO-DO
     different function: INPUT: username + password
     OUTPUT: id where username + password combination is found in DB

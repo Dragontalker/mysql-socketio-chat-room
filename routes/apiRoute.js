@@ -43,8 +43,8 @@ function routes(app, onlineUsers) {
         console.log(`POST REQUEST: Adding [NEW USER]: username ${username}, firstname: ${firstname}, lastname: ${lastname}, password: ${password}, avatar: ${avatar}`);
         // ORM command to register user
         await login.addNew(username, password);
-        const loginID = Math.floor(Math.random() * 100); // <===NEEDS TO BE REPLACED
-        await user.addNew(loginID, firstname, lastname, username, avatar)
+        const loginID = await login.matchWithUser(username); // find id # of table login_id
+        await user.addNew(loginID.id, firstname, lastname, username, avatar)
         res.send({ message: 'Registration successful' });
     })
 
