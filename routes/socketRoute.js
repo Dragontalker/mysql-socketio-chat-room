@@ -9,16 +9,18 @@ var socketIO = function (io, socket, onlineUsers) {
     socket.join(data.roomId);
     // let room know someone joined
     for (let i=0; i<onlineUsers.length; i++) {
-      if (onlineUsers[i].socketId === data.socketId) onlineUsers[i].roomId = data.roomId;
-      io.to(data.roomId).emit('enteredRoom', onlineUsers[i]);
-      break;
+      if (onlineUsers[i].socketId === data.socketId) {
+        onlineUsers[i].roomId = data.roomId;
+        io.to(data.roomId).emit('enteredRoom', onlineUsers[i]);
+        break;
+      }
     }
   })
 
   // send/receive message
   socket.on('message', (data) => {
     console.log(`message from room ${data.roomId} - ${data.displayName}: ${data.msg}`);
-    io.to(data.roomId).emit('receivedMsg', { displayName: data.displayName, msg: data.msg });
+    io.to(data.roomId).emit('receivedMsg', { displayName:data.displayName, msg:data.msg });
   });
 
   // leave rooms

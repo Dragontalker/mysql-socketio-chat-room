@@ -4,7 +4,7 @@ const user = {
     name: 'users',
 
     listAll: async function() {
-        const result = await orm.selectAll(this.name)
+        const result = await orm.selectAll(this.name);
         return result;
     },
 
@@ -30,6 +30,15 @@ const user = {
         const change = `display_name = '${newDisplayName}'`;
         const index = `login_id = ${loginID}`;
         await orm.updateOne(this.name, change, index);
+    },
+
+    getUserInfo: async function(accesskey) {
+        const result = await orm.findOne(
+            'users LEFT JOIN login_info ON login_info.id = login_id',
+            'users.id, users.display_name, users.avatar_dirct',
+            `login_info.user_name = \'${accesskey}\';`
+        )
+        return result[0];
     }
 };
 

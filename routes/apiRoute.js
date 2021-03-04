@@ -22,11 +22,8 @@ function routes(app, onlineUsers) {
     app.get('/api/usercheck/:username', async (req, res) => {
         const result = await login.checkExistingUsername(req.params.username)
         console.log(result);
-        if( !result ){
-            res.status(202).send( {code: 202, message:'Username is available...'} );
-        } else {
-            res.status(404).send( {code: 404, message: 'Username is already taken...'});
-        }
+        if( !result ) res.status(202).send( {code: 202, message:'Username is available...'} );
+        else res.status(404).send( {code: 404, message: 'Username is already taken...'});
     })
 
     //avatarlist
@@ -56,7 +53,7 @@ function routes(app, onlineUsers) {
         const inputPassword = req.body.password;
         console.log(`GET REQUEST: trying to login as username: ${inputUser}, password: ${inputPassword}`);
         const loginID = await login.getId(inputUser, inputPassword);
-        console.log('this is loginid', loginID.id);
+        console.log('response:', loginID);
         if (loginID) res.send({ code: 202, accesskey:`${inputUser}` });
         else res.send({ code: 404 });
     })
@@ -65,6 +62,7 @@ function routes(app, onlineUsers) {
     app.get('/api/rooms', async (req, res) => {
         console.log('GET REQUEST: fetching rooms information');
         const data = await rooms.listAll();
+        console.table(data);
         res.status(200).send(data);
     })
 
@@ -72,7 +70,7 @@ function routes(app, onlineUsers) {
     app.get('/api/messages/:roomId', async (req, res) => {
         console.log(`GET REQUEST: fetching previous messages for room ${req.params.roomId}`);
         const data = await messages.getRoomMsgs(req.params.roomId);
-        console.log(data);
+        console.table(data);
         res.send(data);
     })
 
@@ -84,6 +82,7 @@ function routes(app, onlineUsers) {
         for (let i=0; i<onlineUsers.length; i++) {
             if (onlineUsers[i].roomId == req.params.roomId) roomUsers.push(onlineUsers[i]);
         }
+        console.table(roomUsers);
         res.send(roomUsers);
     })
 
@@ -91,8 +90,8 @@ function routes(app, onlineUsers) {
     app.get('/api/users/:accesskey', async (req, res) => {
         console.log(`GET REQUEST: fetching userinfo using accesskey ${req.params.accesskey}`);
         // find login_id using accesskey
-        // find displayName/avatar using login_id
-        const userInfo = { id:1, displayName:'Adam', avatar:'user.png' };
+        const userInfo = await user.getUserInfo(req.params.accesskey);
+        console.table(userInfo);
         res.send(userInfo);
     })
 
@@ -103,13 +102,13 @@ function routes(app, onlineUsers) {
         res.send({ message:'success' });
     })
 
-    // add rooms - SAM
+    // add rooms
     app.post('/api/rooms', async (req, res) => {
         console.log(`POST REQUEST: adding room to DB ${req.body}`);
         // ...
     })
 
-    // delete rooms - SAM
+    // delete rooms
     app.delete('/api/rooms/:roomId', async (req, res) => {
         console.log(`DELETE REQUEST: removing room and all messages from DB ${req.params.roomId}`);
         // ...

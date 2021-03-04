@@ -2,7 +2,7 @@ const socket = io();
 let currentRoomId = null;
 let userInfo = { id:null, displayName:null, avatar:null, roomId:null, socketId:null};
 
-document.querySelector('#msgForm').addEventListener('click', sendMsg);
+document.querySelector('#msgForm').addEventListener('submit', sendMsg);
 document.querySelector('#logoutBtn').addEventListener('click', logOut);
 
 // INITIALIZATION OF CHATROOM
@@ -17,10 +17,10 @@ async function checkAccesskey() {
   // grab user info using accessKey
   const accesskey = window.sessionStorage.accesskey;
   // save user info
-  const {id, displayName, avatar} = await fetch(`/api/users/${accesskey}`).then(r => r.json());
+  const {id, display_name, avatar_dirct} = await fetch(`/api/users/${accesskey}`).then(r => r.json());
   userInfo.id = id;
-  userInfo.displayName = displayName;
-  userInfo.avatar = avatar;
+  userInfo.displayName = display_name;
+  userInfo.avatar = avatar_dirct;
   userInfo.socketId = socket.id;
   // send connected status to server
   socket.emit('connectToServer', userInfo);
@@ -55,10 +55,10 @@ async function userList() {
     document.querySelector('#userList').innerHTML = '';
     // GET REQUEST: users list
     const users = await fetch(`/api/online/${currentRoomId}`).then(r => r.json());
+    console.log('users:', users);
     // print users to user list
     for (let i=0; i<users.length; i++) {
-        document.querySelector('#userList').innerHTML +=
-    `<li>${users[i].displayName}</li>`;
+        document.querySelector('#userList').innerHTML += `<li>${users[i].displayName}</li>`;
     }
 }
 
@@ -66,11 +66,12 @@ async function prevMsgs() {
     // TO-DO: load previous messages
     document.querySelector('#msgList').innerHTML = '';
     // GET REQUEST: previous messages
-    const prev = await fetch(`/api/messages/${currentRoomId}`).then(r => r.json());
+    const prev = await fetch(`/api/messages/${currentRoomId}`).then(r => r.json())
+    .catch(err => [{display_name:'Error', message_body:err}]);
     // print messages
     for (let i=0; i<prev.length; i++) {
-        document.querySelector('#msgList').innerHTML +=
-    `<li>${prev[i].displayName}: ${prev[i].msg}</li>`;
+      document.querySelector('#msgList').innerHTML +=
+    `<li>${prev[i].display_name}: ${prev[i].message_body}</li>`;
   }
   // scroll to bottom of message box
   document.querySelector('#msgList').scrollTop = document.querySelector('#msgList').scrollHeight;
@@ -86,8 +87,7 @@ async function joinRoom(room) {
   // hide room overlay
   hideRoomOverlay();
   // print new elements to UI
-  document.querySelector('#roomName').innerHTML = room.displayName;
-  userList();
+  document.querySelector('#roomName').innerHTML = room.room_name;
   prevMsgs();
 }
 
@@ -110,7 +110,7 @@ async function sendMsg(e) {
   const response = await fetch('/api/messages', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: { userId:userInfo.id, roomId: currentRoomId, msg:msg }
+    body: JSON.stringify({ userId:userInfo.id, roomId:currentRoomId, msg:msg })
   })
 
 }
@@ -132,10 +132,12 @@ socket.on('receivedMsg', (data) => {
 // receive connected event from server
 socket.on('enteredRoom', (data) => {
   msgList.innerHTML += `<li>User ${data.displayName} has entered the room</li>`;
+  userList();
 })
 
 // receive disconnect event from server
 socket.on('disconnected', (data) => {
   console.log(`User ${data.userId} has left the room`);
   msgList.innerHTML += `<li>User ${data.displayName} has left the room</li>`;
+  // TO-DO: remove user from #userList
 })
