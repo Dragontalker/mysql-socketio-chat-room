@@ -10,7 +10,7 @@ roomList();
 
 async function checkAccesskey() {
   // redirect to noaccess if no accesskey
-  if (!sessionStorage.accesskey) window.location.replace('/noaccess');
+  // if (!sessionStorage.accesskey) window.location.replace('/noaccess');
   // grab user info using accessKey
   const accesskey = window.sessionStorage.accesskey;
   userInfo = await fetch(`/api/users/${accesskey}`).then(r => r.json());
@@ -25,7 +25,7 @@ async function roomList() {
     document.querySelector('#roomList').innerHTML +=
     `<li><button class="btn" id="room-${rooms[i].id}">${rooms[i].displayName}</button></li>`;
     document.querySelector('#overlayRoomList').innerHTML +=
-    `<li><button class="btn" id="overlayRoom-${rooms[i].id}">${rooms[i].displayName}</button></li>`;
+    `<li><button class="btn btn-info" id="overlayRoom-${rooms[i].id}">${rooms[i].displayName}</button></li>`;
   }
   // add event listeners
   for (let i=0; i<rooms.length; i++) {
