@@ -32,9 +32,9 @@ function routes(app, onlineUsers) {
 
     // registration request
     app.post('/api/register', async (req, res) => {
-        console.log(`POST REQUEST: trying to add new user ${req.body.username}, pass: ${req.body.password}, avatar: ${req.body.avatar}`);
+        console.log(`POST REQUEST: Adding [NEW USER]: username ${req.body.username}, firstname: ${req.body.firstname}, lastname: ${req.body.lastname}, password: ${req.body.password}, avatar: ${req.body.avatar}`);
         // ORM command to search for user
-        // const result = await db.query( `INSERT INTO `, [])
+        // const result = await db.query( `INSERT INTO users (id, login_id, first_name, last_name, display_name, avatar_dirct) VALUES (?, ?, ?, ?, ?, ?)`, [req.body])
         if (/* user exists */ false) {
             res.send({ message: 'Registration failed' });
         } else {

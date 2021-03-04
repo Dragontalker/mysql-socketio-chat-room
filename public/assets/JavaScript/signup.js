@@ -111,6 +111,8 @@ async function register(event) {
     event.preventDefault();
     let newUser = {
         username: el_username.value,
+        firstname: el_firstname.value,
+        lastname: el_lastname.value,
         password: el_password.value,
         avatar: el_avatar,
     };
