@@ -119,26 +119,23 @@ async function createRoom(){
     const rooms = await fetch('/api/rooms').then(r => r.json());
     const el_error1 = document.querySelector('#error1');
     const el_roomName = document.querySelector('#addRoom').value;
-    console.log('roomname', el_roomName)
-    if( el_roomName === '' || el_roomName.includes(' ') ){
+
+    const checkDuplicate = rooms.filter(room=>(room.room_name === el_roomName));
+
+    if (el_roomName === '' || el_roomName.includes(' ') || !checkDuplicate.length===0){
+        console.log('This is duplicate: ', checkDuplicate);
         el_error1.classList.remove('d-none');
         return;
-    }
-    const checkDuplicate = rooms.filter(room=>(room.room_name === el_roomName));
-    console.log('rooms', checkDuplicate)
-    if (!checkDuplicate.length==0){
-        console.log('this is duplicate', checkDuplicate);
-
     } else {
-        console.log ('This room is available.')
+        el_error1.classList.add('d-none');
+        console.log ('This room is available.');
         const response = await fetch('/api/rooms', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ room_name: el_roomName })
-        })
-        console.log(res)
-    }
-    document.querySelector('#exampleModal').classList.remove('d-none');
+        }).then( res=>res.json() )
+        console.log( 'The room is added.');
+      };
     roomList();
 }
 

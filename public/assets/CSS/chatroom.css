@@ -54,7 +54,7 @@ ul {
 
 .chatroom-container {
 	max-width: 500px;
-	margin: 5vh auto;
+	margin: 8vh auto;
 }
 
 .chatroom-header {
@@ -176,7 +176,7 @@ html, body{
 
 #overlayRoomList {
   overflow-y: scroll;
-  max-height: 30vh;
+  max-height: calc(50vh - 8rem);
 }
 
 #overlayRoomList::-webkit-scrollbar {
