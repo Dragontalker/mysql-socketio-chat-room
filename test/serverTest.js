@@ -1,11 +1,13 @@
 const { assert } = require('chai');
 const request = require('supertest');
 const { jsdom } = require('jsdom');
-const app = require('../routes/apiRoute');
+const app = require('../server');
 
-describe('the homepage', () => {
-    it('returns the correct content', async () => {
-        const response = await request(app);
-        console.log(response);
-    })
-})
+
+describe('GET /api/rooms', () => {
+    it('responds with json', (done) => {
+        request(app)
+            .get('/api/rooms')
+            .expect(200, done);
+    });
+});

@@ -3,9 +3,14 @@ const orm = require('../config/orm');
 const login_info = {
     name: 'login_info',
 
+    listAll: async function() {
+        const result = await orm.selectAll(this.name);
+        return result;
+    },
+
     matchPassword: async function(userName, inputPassword) {
         let target = 'user_password';
-        let index = `(user_email = '${userName}')`;
+        let index = `(user_name = '${userName}')`;
         let result = await orm.findOne(this.name, target, index);
         return result[0].user_password === inputPassword;
     },
