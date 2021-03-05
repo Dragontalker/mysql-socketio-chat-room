@@ -118,7 +118,9 @@ function routes(app, onlineUsers) {
         rooms.removeRoom(id)
             .then(result => console.log(`Room: ${roomInput} is deleted from database!`))
             .catch(error => console.log(error));
-        // ...
+        messages.removeMsgByRoom(id)
+            .then(result => console.log(`All messages in room: ${roomInput} are deleted from database!`))
+            .catch(error => console.log(error));
     })
 }
 
