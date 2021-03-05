@@ -21,10 +21,11 @@ ul {
 }
 
 .msg-list {
-  height: calc(83vh - 48px);
+  height: calc(100vh - 10.7rem);
   background: rgb(209, 244, 255); 
   overflow-y: scroll;
   word-wrap: break-word;
+  
 }
 
 .msg-list::-webkit-scrollbar {
@@ -48,12 +49,13 @@ ul {
   width: 100vw;
   height: 100vh;
   background-image: url("../background/wallpaper.jpg");
-  padding: 0 200px;
   padding-top: 60px;
 }
 
 .chatroom-container {
 	max-width: 500px;
+  /* min-width: 500px;
+  position: center; */
 	margin: 80px auto;
 }
 
@@ -72,12 +74,12 @@ ul {
 
 .chatroomBtn {
 	margin-top: 20px;
-	width: 75%;
+	width: 70%;
   color: black;
 }
 .chatroomBtnDelete {
 	margin-top: 20px;
-	width: 20%;
+	width: 25%;
 }
 
 html, body{
@@ -115,15 +117,16 @@ html, body{
 }
 
 .sidepanel  {
-  width: 150px;
+  width: 100vw;
   position: fixed;
-  z-index: 1;
+  z-index: 15;
   height: 100vh;
   top: 0;
   left: 0;
   background-color: #111;
   overflow-x: hidden;
   padding-top: 60px;
+  position:absolute;
 }
 
 .sidepanel a {
@@ -143,4 +146,27 @@ html, body{
   top: 0;
   right: 25px;
   font-size: 20px;
+}
+
+.btnChatRoomsize {
+  width: 100%;
+}
+
+.textEnd {
+  text-align: end
+}
+
+.center {
+  margin:auto;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.paddingLeft{
+  padding-left: 20px
+}
+
+.btnSize {
+  width: 100%;
 }
