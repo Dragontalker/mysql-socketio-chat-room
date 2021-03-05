@@ -8,6 +8,9 @@
   <link href="assets/CSS/signup.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
   <script src="./assets/JavaScript/signup.js" defer></script>
   <title>FluxIM</title>
 </head>
@@ -64,23 +67,30 @@
             class="d-none">Passwords do not match or are blank.</span>
         </div>
       </form>
-      <div id="continue" class="text-center"><button type="button" class="btn btn-info"
-          onClick="checkUser(event)">Continue</button></div>
+      <!-- Button trigger modal -->
+      <button id="continue" type="button" class="btn btn-primary" data-bs-toggle="modal" onClick="checkUser(event)">Continue</button>
     </main>
-
-  </div>
-  <div id="second" class="px-5 container-fluid d-none">
-    <h1 class="text-center">Avatar Choices</h1>
-    <div class="row" id="avatars">
-      <!-- <img src="..." class="img-thumbnail" alt="..."> -->
-    </div>
-    <div id="register" class="text-center d-none">
-      <button type="button" onClick="register(event)">Register</button>
-      <span id="error4" class="d-none">Choose an avatar to register.</span>
-    </div>
   </div>
 
+  <!-- Modal Avatar -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="modal-body" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <div id="register" class="text-center d-none"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button onClick="register(event)" type="button" class="btn btn-primary">Register</button><span id="error4" class="d-none">Choose an avatar to register.</span></div>
+      </div>
+    </div>
   </div>
+</div>
+
 </body>
 
 </html>
