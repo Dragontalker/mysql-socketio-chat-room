@@ -146,18 +146,18 @@ function hideRoomOverlay() {
 
 // send message to server
 async function sendMsg(e) {
-    e.preventDefault();
-    const msg = document.querySelector('#msg').value;
-    if (msg) {
-        socket.emit('message', { roomId: currentRoomId, displayName: userInfo.displayName, msg: msg });
-        document.querySelector('#msg').value = '';
-    }
-    // save message to DB
-    const response = await fetch('/api/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: userInfo.id, roomId: currentRoomId, msg: msg })
-    })
+  e.preventDefault();
+  const msg = document.querySelector('#msg').value;
+  if (msg) {
+    socket.emit('message', { roomId: currentRoomId, avatar: userInfo.avatar, displayName: userInfo.displayName, msg: msg });
+    document.querySelector('#msg').value = '';
+  }
+  // save message to DB
+  await fetch('/api/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: userInfo.id, roomId: currentRoomId, msg: msg })
+  })
 }
 
 // logout
@@ -168,19 +168,35 @@ function logOut() {
 
 // receive message from server
 socket.on('receivedMsg', (data) => {
+<<<<<<< HEAD
     msgList = document.querySelector('#msgList');
     msgList.innerHTML += `<li>${data.displayName}: ${data.msg}</li>`;
     msgList.scrollTop = msgList.scrollHeight;
+=======
+  msgList = document.querySelector('#msgList');
+  msgList.innerHTML += `<li><img src="./assets/avatars/${data.avatar}" /> ${data.displayName}: ${data.msg}</li>`;
+  msgList.scrollTop = msgList.scrollHeight;
+>>>>>>> 809bec1a1be9bcbddb2d035ef1b5fa87a0c1d1cf
 })
 
 // receive connected event from server
 socket.on('enteredRoom', (data) => {
+<<<<<<< HEAD
     msgList.innerHTML += `<li>User ${data.displayName} has entered the room</li>`;
     userList();
+=======
+  msgList.innerHTML += `<li class="system-msg">User ${data.displayName} has entered the room</li>`;
+  userList();
+>>>>>>> 809bec1a1be9bcbddb2d035ef1b5fa87a0c1d1cf
 })
 
 // receive disconnect event from server
 socket.on('disconnected', (data) => {
+<<<<<<< HEAD
     msgList.innerHTML += `<li>User ${data.displayName} has left the room</li>`;
     userList();
+=======
+  msgList.innerHTML += `<li class="system-msg">User ${data.displayName} has left the room</li>`;
+  userList();
+>>>>>>> 809bec1a1be9bcbddb2d035ef1b5fa87a0c1d1cf
 })

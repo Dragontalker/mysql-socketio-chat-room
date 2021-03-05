@@ -20,7 +20,7 @@ var socketIO = function (io, socket, onlineUsers) {
   // send/receive message
   socket.on('message', (data) => {
     console.log(`message from room ${data.roomId} - ${data.displayName}: ${data.msg}`);
-    io.to(data.roomId).emit('receivedMsg', { displayName:data.displayName, msg:data.msg });
+    io.to(data.roomId).emit('receivedMsg', { avatar:data.avatar, displayName:data.displayName, msg:data.msg });
   });
 
   // leave rooms
