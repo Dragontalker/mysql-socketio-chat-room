@@ -112,6 +112,7 @@ async function joinRoom(room) {
     hideRoomOverlay();
     // print new room name
     document.querySelector('#roomName').innerHTML = room.room_name;
+    document.querySelector('#msgList').scrollTop = document.querySelector('#msgList').scrollHeight;
 }
 
 // creating a room
