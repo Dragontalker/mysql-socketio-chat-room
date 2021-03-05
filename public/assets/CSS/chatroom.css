@@ -91,6 +91,9 @@ html, body{
 
 .btnFeature{
   background-color: white;
+  margin-top: 20px;
+	width: 96.25%;
+  
 }
 
 .border {
