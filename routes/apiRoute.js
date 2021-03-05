@@ -113,7 +113,11 @@ function routes(app, onlineUsers) {
 
     // delete rooms
     app.delete('/api/rooms/:roomId', async (req, res) => {
-        console.log(`DELETE REQUEST: removing room and all messages from DB ${req.params.roomId}`);
+        const id = req.params.roomId;
+        console.log(`DELETE REQUEST: removing room and all messages from DB ${id}`);
+        await rooms.removeRoom(id)
+            .then(result => console.log(`Room: ${roomInput} is deleted from database!`))
+            .catch(error => console.log(error));
         // ...
     })
 }
