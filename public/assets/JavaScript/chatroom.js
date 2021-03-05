@@ -37,14 +37,12 @@ async function roomList() {
   // print rooms to room list
   for (let i = 0; i < rooms.length; i++) {
     document.querySelector('#roomList').innerHTML +=
-      `<li><button class="btn btn-color chatroomBtn" id="room-${rooms[i].id}">${rooms[i].room_name}</button>
-      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">X</button></li>`;
+      `<li><button class="btn btn-color chatroomBtn" id="room-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
         document.querySelector('#overlayRoomList').innerHTML +=
       `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
       <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoomDel-${rooms[i].id}">Delete</button></li>`;
     document.querySelector('#sbRoomList').innerHTML +=
-      `<li><button class="btn btn-info chatroomBtn" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button>
-      </li>`;
+      `<li class="center"><button class="btn btn-info chatroomBtn btnSize" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
   }
   // add event listeners
   for (let i = 0; i < rooms.length; i++) {
