@@ -25,7 +25,7 @@ CREATE TABLE users (
 CREATE TABLE messages (
   id INTEGER AUTO_INCREMENT NOT NULL,
   user_id INTEGER NOT NULL,
-  channel_id INTEGER NOT NULL,
+  room_id INTEGER NOT NULL,
   message_body VARCHAR(300),
   PRIMARY KEY(id)
 );
