@@ -129,12 +129,12 @@ async function createRoom(){
     } else {
         el_error1.classList.add('d-none');
         console.log ('This room is available.');
-        const response = await fetch('/api/rooms', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ room_name: el_roomName })
-        }).then( res=>res.json() )
-        console.log( 'The room is added.');
+        // const response = await fetch('/api/rooms', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ room_name: el_roomName })
+        // }).then( res=>res.json() )
+        // console.log( 'The room is added.');
       };
 }
 
