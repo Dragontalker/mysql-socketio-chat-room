@@ -38,7 +38,7 @@ ul {
 
 .msg-list > li {
   padding: 0.5rem 0.2rem;
-  border-bottom: 1px solid rgb(10,10,10);
+  border-bottom: 1px solid rgba(10,10,10,0.2);
 }
 
 .room-overlay {
@@ -169,4 +169,7 @@ html, body{
 
 .btnSize {
   width: 100%;
+.system-msg {
+  color: rgb(91, 116, 145);
+  text-align: center;
 }
