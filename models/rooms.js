@@ -7,14 +7,17 @@ const room = {
         const result = await orm.selectAll(this.name)
         return result;
     },
-    
+
     addNewRoom: async function(roomInput) {
         const varName = '(room_name)';
         const data = `('${roomInput}')`;
         await orm.insertOne(this.name, varName, data);
-    }
+    },
 
-    // delete room output: {id, room name}
+    removeRoom: async function(roomID) {
+        const index = `id = ${roomID}`;
+        await orm.deleteOne(this.name, index);
+    }
 };
 
 module.exports = room;

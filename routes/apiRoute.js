@@ -105,13 +105,22 @@ function routes(app, onlineUsers) {
     // add rooms
     app.post('/api/rooms', async (req, res) => {
         console.log(`POST REQUEST: adding room to DB ${req.body}`);
-        // ...
-    })
+        let roomInput = req.body.name;
+        rooms.addNewRoom(roomInput)
+            .then(result => console.log(`Room: ${roomInput} is added to database!`))
+            .catch(error => console.log(error));
+    });
 
     // delete rooms
     app.delete('/api/rooms/:roomId', async (req, res) => {
-        console.log(`DELETE REQUEST: removing room and all messages from DB ${req.params.roomId}`);
-        // ...
+        const id = req.params.roomId;
+        console.log(`DELETE REQUEST: removing room and all messages from DB ${id}`);
+        rooms.removeRoom(id)
+            .then(result => console.log(`Room: ${roomInput} is deleted from database!`))
+            .catch(error => console.log(error));
+        messages.removeMsgByRoom(id)
+            .then(result => console.log(`All messages in room: ${roomInput} are deleted from database!`))
+            .catch(error => console.log(error));
     })
 }
 
