@@ -28,6 +28,7 @@ async function checkAccesskey() {
 
 async function roomList() {
   document.querySelector('#roomList').innerHTML = '';
+  document.querySelector('#overlayRoomList').innerHTML = '';
   document.querySelector('#sbRoomList').innerHTML = '';
   // GET REQUEST: room list
   const rooms = await fetch('/api/rooms').then(r => r.json());
@@ -38,7 +39,7 @@ async function roomList() {
       <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">X</button></li>`;
     document.querySelector('#overlayRoomList').innerHTML +=
       `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
-      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">Delete</button></li>`;
+      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoomDel-${rooms[i].id}">Delete</button></li>`;
     document.querySelector('#sbRoomList').innerHTML +=
       `<li><button class="btn btn-info chatroomBtn" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button>
       </li>`;
@@ -48,6 +49,7 @@ async function roomList() {
     document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
     document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
     document.querySelector(`#sbRoom-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
+    document.querySelector(`#overlayRoomDel-${rooms[i].id}`).addEventListener('click', () => { delRoom(rooms[i]) });
   }
 }
 
@@ -100,6 +102,13 @@ async function joinRoom(room) {
   hideRoomOverlay();
   // print new room name
   document.querySelector('#roomName').innerHTML = room.room_name;
+}
+
+// deleting a room
+async function delRoom(room) {
+  console.log(room);
+  await fetch(`/api/rooms/${room.id}`, { method: 'DELETE' }).catch((err) => console.log(err));
+  roomList();
 }
 
 function hideRoomOverlay() {

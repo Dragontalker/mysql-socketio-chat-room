@@ -109,6 +109,7 @@ function routes(app, onlineUsers) {
         rooms.addNewRoom(roomInput)
             .then(result => console.log(`Room: ${roomInput} is added to database!`))
             .catch(error => console.log(error));
+        res.send({ message: 'success' });
     });
 
     // delete rooms
@@ -116,11 +117,12 @@ function routes(app, onlineUsers) {
         const id = req.params.roomId;
         console.log(`DELETE REQUEST: removing room and all messages from DB ${id}`);
         rooms.removeRoom(id)
-            .then(result => console.log(`Room: ${roomInput} is deleted from database!`))
+            .then(result => console.log(`Room: ${id} is deleted from database!`))
             .catch(error => console.log(error));
         messages.removeMsgByRoom(id)
-            .then(result => console.log(`All messages in room: ${roomInput} are deleted from database!`))
+            .then(result => console.log(`All messages in room: ${id} are deleted from database!`))
             .catch(error => console.log(error));
+        res.send({ message: 'success' });
     })
 }
 
