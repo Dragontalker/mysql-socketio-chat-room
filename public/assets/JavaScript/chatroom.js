@@ -117,6 +117,7 @@ async function joinRoom(room) {
 // creating a room
 async function createRoom(){
     const rooms = await fetch('/api/rooms').then(r => r.json());
+    console.log('room', rooms)
     const el_error1 = document.querySelector('#error1');
     const el_roomName = document.querySelector('#addRoom').value;
 
@@ -130,7 +131,7 @@ async function createRoom(){
         return;
     } else {
         console.log ('This room is available.');
-        const response = await fetch('/api/rooms', {
+        await fetch('/api/rooms', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ room_name: el_roomName })
@@ -138,6 +139,7 @@ async function createRoom(){
         console.log( 'The room is added.');
         document.querySelector('#addRoomBtn').setAttribute('data-bs-toggle', 'modal');
         document.querySelector('#addRoomBtn').setAttribute('data-bs-target', '#exampleModal');
+        document.querySelector('#addRoomBtn').removeAttribute("onClick");
         document.querySelector('#addRoomBtn').click();
         roomList();
     }
