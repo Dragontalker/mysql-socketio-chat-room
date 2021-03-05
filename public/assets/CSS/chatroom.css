@@ -43,7 +43,7 @@ ul {
 
 .room-overlay {
   z-index: 10;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100vw;
@@ -54,9 +54,7 @@ ul {
 
 .chatroom-container {
 	max-width: 500px;
-  /* min-width: 500px;
-  position: center; */
-	margin: 80px auto;
+	margin: 8vh auto;
 }
 
 .chatroom-header {
@@ -174,4 +172,17 @@ html, body{
 .system-msg {
   color: rgb(91, 116, 145);
   text-align: center;
+}
+
+#overlayRoomList {
+  overflow-y: scroll;
+  max-height: calc(50vh - 8rem);
+}
+
+#overlayRoomList::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0,0,0,0.1);
+}
+#overlayRoomList::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
 }

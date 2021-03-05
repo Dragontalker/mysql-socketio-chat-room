@@ -30,33 +30,35 @@ async function checkAccesskey() {
 
 async function roomList() {
   document.querySelector('#roomList').innerHTML = '';
+  document.querySelector('#overlayRoomList').innerHTML = '';
   document.querySelector('#sbRoomList').innerHTML = '';
   // GET REQUEST: room list
   const rooms = await fetch('/api/rooms').then(r => r.json());
   // print rooms to room list
   for (let i = 0; i < rooms.length; i++) {
     document.querySelector('#roomList').innerHTML +=
-      `<li><button class="btn btn-color chatroomBtn btnChatRoomsize" id="room-${rooms[i].id}">${rooms[i].room_name}</button>
-      </li>`;
-    document.querySelector('#overlayRoomList').innerHTML +=
+      `<li><button class="btn btn-color chatroomBtn btnChatRoomsize" id="room-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
+        document.querySelector('#overlayRoomList').innerHTML +=
       `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
-      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">Delete</button></li>`;
+      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoomDel-${rooms[i].id}">Delete</button></li>`;
     document.querySelector('#sbRoomList').innerHTML +=
-      `<li class="center"><button class="btn btn-info chatroomBtn btnSize" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button>
-      </li>`;
-    }
-    // add event listeners
-    for (let i = 0; i < rooms.length; i++) {
-        document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => {
-            joinRoom(rooms[i])
-        });
-        document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => {
-            joinRoom(rooms[i])
-        });
-        document.querySelector(`#sbRoom-${rooms[i].id}`).addEventListener('click', () => {
-            joinRoom(rooms[i])
-        });
-    }
+      `<li class="center"><button class="btn btn-info chatroomBtn btnSize" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
+  }
+  // add event listeners
+  for (let i = 0; i < rooms.length; i++) {
+    document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => { 
+      joinRoom(rooms[i]) 
+    });
+    document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => { 
+      joinRoom(rooms[i]) 
+    });
+    document.querySelector(`#sbRoom-${rooms[i].id}`).addEventListener('click', () => { 
+      joinRoom(rooms[i]) 
+    });
+    document.querySelector(`#overlayRoomDel-${rooms[i].id}`).addEventListener('click', () => { 
+      delRoom(rooms[i]) 
+    });
+  }
 }
 
 function hideMenu(event){
@@ -117,25 +119,31 @@ async function createRoom(){
     const rooms = await fetch('/api/rooms').then(r => r.json());
     const el_error1 = document.querySelector('#error1');
     const el_roomName = document.querySelector('#addRoom').value;
-    console.log('roomname', el_roomName)
-    if( el_roomName === '' || el_roomName.includes(' ') ){
+
+    const checkDuplicate = rooms.filter(room=>(room.room_name === el_roomName));
+
+    if (el_roomName === '' || el_roomName.includes(' ') || !checkDuplicate.length===0){
+        console.log('This is duplicate: ', checkDuplicate);
         el_error1.classList.remove('d-none');
         return;
-    }
-    const checkDuplicate = rooms.filter(room=>(room.room_name === el_roomName));
-    console.log('rooms', checkDuplicate)
-    if (!checkDuplicate.length==0){
-        console.log('this is duplicate', checkDuplicate);
-
     } else {
-        console.log ('This room is available.')
+        el_error1.classList.add('d-none');
+        console.log ('This room is available.');
         const response = await fetch('/api/rooms', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ room_name: el_roomName })
-        })
-        console.log (res)
-    }
+        }).then( res=>res.json() )
+        console.log( 'The room is added.');
+        roomList();
+      };
+}
+
+// deleting a room
+async function delRoom(room) {
+  console.log(room);
+  await fetch(`/api/rooms/${room.id}`, { method: 'DELETE' }).catch((err) => console.log(err));
+  roomList();
 }
 
 function hideRoomOverlay() {
