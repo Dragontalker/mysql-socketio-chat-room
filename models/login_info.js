@@ -3,6 +3,11 @@ const orm = require('../config/orm');
 const login_info = {
     name: 'login_info',
 
+    listAll: async function() {
+        const result = await orm.selectAll(this.name);
+        return result;
+    },
+
     matchPassword: async function(userName, inputPassword) {
         let target = 'user_password';
         let index = `(user_name = '${userName}')`;
