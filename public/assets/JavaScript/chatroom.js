@@ -120,9 +120,11 @@ async function createRoom(){
     const el_error1 = document.querySelector('#error1');
     const el_roomName = document.querySelector('#addRoom').value;
 
+    el_error1.classList.add('d-none');
+
     const checkDuplicate = rooms.filter(room=>(room.room_name === el_roomName));
 
-    if (el_roomName === '' || el_roomName.includes(' ') || !checkDuplicate.length===0){
+    if ( el_roomName === '' || el_roomName.includes(' ') || checkDuplicate.length !== 0){
         console.log('This is duplicate: ', checkDuplicate);
         el_error1.classList.remove('d-none');
         return;
@@ -135,6 +137,9 @@ async function createRoom(){
             body: JSON.stringify({ room_name: el_roomName })
         }).then( res=>res.json() )
         console.log( 'The room is added.');
+        document.querySelector("#addRoomBtn").setAttribute("data-bs-toggle", "modal");
+        document.querySelector("#addRoomBtn").setAttribute("data-bs-target", "#exampleModal");
+        document.querySelector('#addRoomBtn').click();
         roomList();
       };
 }
