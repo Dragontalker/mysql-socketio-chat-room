@@ -118,26 +118,22 @@ async function createRoom(){
     const el_error1 = document.querySelector('#error1');
     const el_roomName = document.querySelector('#addRoom').value;
 
-    if( el_roomName === '' || el_roomName.includes(' ') ){
-        el_error1.classList.remove('d-none');
-        return;
-    }
-
     const checkDuplicate = rooms.filter(room=>(room.room_name === el_roomName));
 
-    if (!checkDuplicate.length===0){
+    if (el_roomName === '' || el_roomName.includes(' ') || !checkDuplicate.length===0){
         console.log('This is duplicate: ', checkDuplicate);
         el_error1.classList.remove('d-none');
+        return;
     } else {
         el_error1.classList.add('d-none');
-        console.log ('This room is available.')
+        console.log ('This room is available.');
         const response = await fetch('/api/rooms', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ room_name: el_roomName })
-        })
+        }).then( res=>res.json() )
         console.log( 'The room is added.');
-    }
+      };
 }
 
 function hideRoomOverlay() {
