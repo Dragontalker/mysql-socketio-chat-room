@@ -144,3 +144,7 @@ html, body{
   right: 25px;
   font-size: 20px;
 }
+
+#roomName {
+  width: 100%;
+}
