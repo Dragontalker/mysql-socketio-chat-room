@@ -1,29 +1,23 @@
 -- For table: login_info
 INSERT INTO login_info (user_name, user_password, isAdmin) 
-VALUES ('chang.xiao@flux.com','adminPassword', true);
+VALUES ('admin','admin', true);
 
 INSERT INTO login_info (user_name, user_password) 
-VALUES ('sam.kim@flux.com','guessPassword1');
+VALUES ('guest','guest');
 
 INSERT INTO login_info (user_name, user_password) 
-VALUES ('micheal.wong@flux.com','guessPassword2');
-
-INSERT INTO login_info (user_name, user_password) 
-VALUES ('richard.yang@flux.com','guestPassword3');
+VALUES ('guest2','guest2');
 
 
 -- For table: users
 INSERT INTO users (login_id, first_name, last_name, display_name)
-VALUES (1, 'Chang', 'Xiao', 'Adminstrator');
+VALUES (1, 'Admin', 'Istrator', 'Adminstrator');
 
 INSERT INTO users (login_id, first_name, last_name, display_name)
-VALUES (2, 'Sam', 'Kim', 'Guest 1');
+VALUES (2, 'Guest', 'One', 'Guest 1');
 
 INSERT INTO users (login_id, first_name, last_name, display_name)
-VALUES (3, 'Micheal', 'Wong', 'Guest 2');
-
-INSERT INTO users (login_id, first_name, last_name, display_name)
-VALUES (4, 'Richard', 'Yang', 'Guest 3');
+VALUES (3, 'Guest', 'Two', 'Guest 2');
 
 
 -- For table: messages
