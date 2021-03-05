@@ -130,7 +130,6 @@ async function createRoom(){
         el_error1.classList.remove('d-none');
         return;
     } else {
-        el_error1.classList.add('d-none');
         console.log ('This room is available.');
         const response = await fetch('/api/rooms', {
             method: 'POST',
