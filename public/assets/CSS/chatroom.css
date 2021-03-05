@@ -3,8 +3,17 @@
 }
 
 .container {
-  height: 83vh;
+  border-style: solid;
+	border-color:rgb(75, 188, 226);
 }
+
+/* .container-fluid {
+  padding-right:0;
+  padding-left:0;
+  margin-right:auto;
+  margin-left:auto
+} */
+
 
 ul {
   list-style-type: none;
@@ -13,7 +22,7 @@ ul {
 
 .msg-list {
   height: calc(83vh - 48px);
-  background-color: rgb(139, 192, 223);
+  background: rgb(209, 244, 255); 
   overflow-y: scroll;
   word-wrap: break-word;
 }
@@ -71,19 +80,25 @@ ul {
 	width: 20%;
 }
 
-body{
+html, body{
   background: rgb(209, 244, 255); 
+  height: 100%;
 }
 
-.roomlist {
-  background: rgb(150, 230, 255); 
+.side{
+  background-color: rgb(139, 192, 223);
 }
 
 .btnFeature{
   background-color: white;
 }
 
-/* .leftMessage {
+.border {
   border-style: solid;
 	border-color:rgb(75, 188, 226);
+}
+
+/* .fill-height {
+  min-height: 100%;
+  height: 100%;
 } */

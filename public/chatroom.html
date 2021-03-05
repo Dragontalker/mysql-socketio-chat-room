@@ -15,22 +15,22 @@
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Flux IM</a>
+      <a class="navbar-brand" href="/"><b>Flux IM</b></a>
       <div id="navbarNav" class="navbar-nav">
         <button class="btn nav-link active" aria-current="page" id="logoutBtn">Log out</button>
       </div>
     </div>
   </nav>
   <!-- CHAT ROOM DISPLAY -->
-  <div class="container-fluid">
-    <div class="row mt-2">
+  <div class="container-fluid fill-height">
+    <div class="row">
       <!-- LEFT HAND SIDE (ROOMS) -->
-      <div class="col-1 col-md-2 color leftMessage">
+      <div class="col-lg-2 color side">
         <h4>Room List</h4>
         <ul id="roomList"></ul>
       </div>
       <!-- MAIN FOCUS (MESSAGES) -->
-      <div class="col-12 col-md-8 color">
+      <div class="col-lg-8 color">
         <h3 id="roomName">Room name</h3>
         <ul class="msg-list" id="msgList"></ul>
         <!-- INPUT AREA -->
@@ -40,7 +40,8 @@
         </form>
       </div>
       <!-- RIGHT HAND SIDE (USERS) -->
-      <div class="col-1 col-md-2 text-end">
+      <!-- hide this column if screen size is less than large -->
+      <div class="col-lg-2 d-none d-lg-block d-xl-nonetext-end side">
         <h4>Online Users</h4>
         <ul id="userList"></ul>
       </div>
