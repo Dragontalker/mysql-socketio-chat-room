@@ -29,36 +29,34 @@ async function checkAccesskey() {
 }
 
 async function roomList() {
-  document.querySelector('#roomList').innerHTML = '';
-  document.querySelector('#overlayRoomList').innerHTML = '';
-  document.querySelector('#sbRoomList').innerHTML = '';
-  // GET REQUEST: room list
-  const rooms = await fetch('/api/rooms').then(r => r.json());
-  // print rooms to room list
-  for (let i = 0; i < rooms.length; i++) {
-    document.querySelector('#roomList').innerHTML +=
+    document.querySelector('#roomList').innerHTML = '';
+    document.querySelector('#overlayRoomList').innerHTML = '';
+    document.querySelector('#sbRoomList').innerHTML = '';
+    // GET REQUEST: room list
+    const rooms = await fetch('/api/rooms').then(r => r.json());
+    // print rooms to room list
+    for (let i = 0; i < rooms.length; i++) {
+        document.querySelector('#roomList').innerHTML +=
       `<li><button class="btn btn-color chatroomBtn btnChatRoomsize" id="room-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
         document.querySelector('#overlayRoomList').innerHTML +=
       `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
-      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoomDel-${rooms[i].id}">Delete</button></li>`;
-    document.querySelector('#sbRoomList').innerHTML +=
+      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoomDel-${rooms[i].id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Delete</button></li>`;
+        document.querySelector('#sbRoomList').innerHTML +=
       `<li class="center"><button class="btn btn-info chatroomBtn btnSize" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
-  }
-  // add event listeners
-  for (let i = 0; i < rooms.length; i++) {
-    document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => { 
-      joinRoom(rooms[i]) 
-    });
-    document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => { 
-      joinRoom(rooms[i]) 
-    });
-    document.querySelector(`#sbRoom-${rooms[i].id}`).addEventListener('click', () => { 
-      joinRoom(rooms[i]) 
-    });
-    document.querySelector(`#overlayRoomDel-${rooms[i].id}`).addEventListener('click', () => { 
-      delRoom(rooms[i]) 
-    });
-  }
+    }
+    // add event listeners
+    for (let i = 0; i < rooms.length; i++) {
+        document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => {
+            joinRoom(rooms[i])
+        });
+        document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => {
+            joinRoom(rooms[i])
+        });
+        document.querySelector(`#sbRoom-${rooms[i].id}`).addEventListener('click', () => {
+            joinRoom(rooms[i])
+        });
+        document.querySelector('#deleteRoomBtn').addEventListener('click', delRoom(rooms[i]));
+    }
 }
 
 function hideMenu(event){
@@ -136,18 +134,18 @@ async function createRoom(){
             body: JSON.stringify({ room_name: el_roomName })
         }).then( res=>res.json() )
         console.log( 'The room is added.');
-        document.querySelector("#addRoomBtn").setAttribute("data-bs-toggle", "modal");
-        document.querySelector("#addRoomBtn").setAttribute("data-bs-target", "#exampleModal");
+        document.querySelector('#addRoomBtn').setAttribute('data-bs-toggle', 'modal');
+        document.querySelector('#addRoomBtn').setAttribute('data-bs-target', '#exampleModal');
         document.querySelector('#addRoomBtn').click();
         roomList();
-      };
+    }
 }
 
 // deleting a room
 async function delRoom(room) {
-  console.log(room);
-  await fetch(`/api/rooms/${room.id}`, { method: 'DELETE' }).catch((err) => console.log(err));
-  roomList();
+    console.log(room);
+    await fetch(`/api/rooms/${room.id}`, { method: 'DELETE' }).catch((err) => console.log(err));
+    roomList();
 }
 
 function hideRoomOverlay() {
@@ -158,18 +156,18 @@ function hideRoomOverlay() {
 
 // send message to server
 async function sendMsg(e) {
-  e.preventDefault();
-  const msg = document.querySelector('#msg').value;
-  if (msg) {
-    socket.emit('message', { roomId: currentRoomId, avatar: userInfo.avatar, displayName: userInfo.displayName, msg: msg });
-    document.querySelector('#msg').value = '';
-  }
-  // save message to DB
-  await fetch('/api/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userId: userInfo.id, roomId: currentRoomId, msg: msg })
-  })
+    e.preventDefault();
+    const msg = document.querySelector('#msg').value;
+    if (msg) {
+        socket.emit('message', { roomId: currentRoomId, avatar: userInfo.avatar, displayName: userInfo.displayName, msg: msg });
+        document.querySelector('#msg').value = '';
+    }
+    // save message to DB
+    await fetch('/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: userInfo.id, roomId: currentRoomId, msg: msg })
+    })
 }
 
 // logout
@@ -180,19 +178,19 @@ function logOut() {
 
 // receive message from server
 socket.on('receivedMsg', (data) => {
-  msgList = document.querySelector('#msgList');
-  msgList.innerHTML += `<li><img src="./assets/avatars/${data.avatar}" /> ${data.displayName}: ${data.msg}</li>`;
-  msgList.scrollTop = msgList.scrollHeight;
+    msgList = document.querySelector('#msgList');
+    msgList.innerHTML += `<li><img src="./assets/avatars/${data.avatar}" /> ${data.displayName}: ${data.msg}</li>`;
+    msgList.scrollTop = msgList.scrollHeight;
 })
 
 // receive connected event from server
 socket.on('enteredRoom', (data) => {
-  msgList.innerHTML += `<li class="system-msg">User ${data.displayName} has entered the room</li>`;
-  userList();
+    msgList.innerHTML += `<li class="system-msg">User ${data.displayName} has entered the room</li>`;
+    userList();
 })
 
 // receive disconnect event from server
 socket.on('disconnected', (data) => {
-  msgList.innerHTML += `<li class="system-msg">User ${data.displayName} has left the room</li>`;
-  userList();
+    msgList.innerHTML += `<li class="system-msg">User ${data.displayName} has left the room</li>`;
+    userList();
 })
