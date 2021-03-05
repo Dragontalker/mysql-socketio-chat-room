@@ -136,10 +136,6 @@ async function createRoom(){
         }).then( res=>res.json() )
         console.log( 'The room is added.');
       };
-        })
-        console.log (res)
-    }
-
 }
 
 // deleting a room
