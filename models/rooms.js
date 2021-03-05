@@ -6,8 +6,13 @@ const room = {
     listAll: async function() {
         const result = await orm.selectAll(this.name)
         return result;
+    },
+
+    addNewRoom: async function(roomInput) {
+        const varName = '(room_name)';
+        const data = `('${roomInput}')`;
+        await orm.insertOne(this.name, varName, data);
     }
-    // add room output: {id, room name}
 
     // delete room output: {id, room name}
 };
