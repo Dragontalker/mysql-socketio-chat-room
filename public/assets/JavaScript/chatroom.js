@@ -117,24 +117,26 @@ async function createRoom(){
     const rooms = await fetch('/api/rooms').then(r => r.json());
     const el_error1 = document.querySelector('#error1');
     const el_roomName = document.querySelector('#addRoom').value;
-    console.log('roomname', el_roomName)
+
     if( el_roomName === '' || el_roomName.includes(' ') ){
         el_error1.classList.remove('d-none');
         return;
     }
-    const checkDuplicate = rooms.filter(room=>(room.room_name === el_roomName));
-    console.log('rooms', checkDuplicate)
-    if (!checkDuplicate.length==0){
-        console.log('this is duplicate', checkDuplicate);
 
+    const checkDuplicate = rooms.filter(room=>(room.room_name === el_roomName));
+
+    if (!checkDuplicate.length===0){
+        console.log('This is duplicate: ', checkDuplicate);
+        el_error1.classList.remove('d-none');
     } else {
+        el_error1.classList.add('d-none');
         console.log ('This room is available.')
         const response = await fetch('/api/rooms', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ room_name: el_roomName })
         })
-        console.log (res)
+        console.log( 'The room is added.');
     }
 }
 
@@ -168,35 +170,19 @@ function logOut() {
 
 // receive message from server
 socket.on('receivedMsg', (data) => {
-<<<<<<< HEAD
-    msgList = document.querySelector('#msgList');
-    msgList.innerHTML += `<li>${data.displayName}: ${data.msg}</li>`;
-    msgList.scrollTop = msgList.scrollHeight;
-=======
   msgList = document.querySelector('#msgList');
   msgList.innerHTML += `<li><img src="./assets/avatars/${data.avatar}" /> ${data.displayName}: ${data.msg}</li>`;
   msgList.scrollTop = msgList.scrollHeight;
->>>>>>> 809bec1a1be9bcbddb2d035ef1b5fa87a0c1d1cf
 })
 
 // receive connected event from server
 socket.on('enteredRoom', (data) => {
-<<<<<<< HEAD
-    msgList.innerHTML += `<li>User ${data.displayName} has entered the room</li>`;
-    userList();
-=======
   msgList.innerHTML += `<li class="system-msg">User ${data.displayName} has entered the room</li>`;
   userList();
->>>>>>> 809bec1a1be9bcbddb2d035ef1b5fa87a0c1d1cf
 })
 
 // receive disconnect event from server
 socket.on('disconnected', (data) => {
-<<<<<<< HEAD
-    msgList.innerHTML += `<li>User ${data.displayName} has left the room</li>`;
-    userList();
-=======
   msgList.innerHTML += `<li class="system-msg">User ${data.displayName} has left the room</li>`;
   userList();
->>>>>>> 809bec1a1be9bcbddb2d035ef1b5fa87a0c1d1cf
 })
