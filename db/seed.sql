@@ -21,19 +21,19 @@ VALUES (3, 'Guest', 'Two', 'Guest 2');
 
 
 -- For table: messages
-INSERT INTO messages (user_id, channel_id, message_body)
+INSERT INTO messages (user_id, room_id, message_body)
 VALUES (1, 1, 'Hello everybody!');
 
-INSERT INTO messages (user_id, channel_id, message_body)
+INSERT INTO messages (user_id, room_id, message_body)
 VALUES (2, 1, 'Hello Chang!');
 
-INSERT INTO messages (user_id, channel_id, message_body)
+INSERT INTO messages (user_id, room_id, message_body)
 VALUES (3, 1, 'Morning guys!');
 
-INSERT INTO messages (user_id, channel_id, message_body)
+INSERT INTO messages (user_id, room_id, message_body)
 VALUES (4, 1, 'Hey people, how is it going?');
 
-INSERT INTO messages (user_id, channel_id, message_body)
+INSERT INTO messages (user_id, room_id, message_body)
 VALUES (1, 1, 'Good! We can start our project now!');
 
 

@@ -28,6 +28,7 @@ async function checkAccesskey() {
 
 async function roomList() {
   document.querySelector('#roomList').innerHTML = '';
+  document.querySelector('#sbRoomList').innerHTML = '';
   // GET REQUEST: room list
   const rooms = await fetch('/api/rooms').then(r => r.json());
   // print rooms to room list
@@ -38,23 +39,37 @@ async function roomList() {
     document.querySelector('#overlayRoomList').innerHTML +=
       `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
       <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">Delete</button></li>`;
+    document.querySelector('#sbRoomList').innerHTML +=
+      `<li><button class="btn btn-info chatroomBtn" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button>
+      </li>`;
   }
   // add event listeners
   for (let i = 0; i < rooms.length; i++) {
     document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
     document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
+    document.querySelector(`#sbRoom-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
+  }
+}
+
+function hideMenu(event){
+  console.log(event.target.id)
+
+  if(event.target.id.indexOf('sbRoom') > -1){
+    document.querySelector('#mySidepanel').classList.remove('show')
   }
 }
 
 async function userList() {
   // TO-DO: load online users list (#userList)
   document.querySelector('#userList').innerHTML = '';
+  document.querySelector('#sbUserList').innerHTML = '';
   // GET REQUEST: users list
   const users = await fetch(`/api/online/${currentRoomId}`).then(r => r.json());
   console.log('users:', users);
   // print users to user list
   for (let i = 0; i < users.length; i++) {
     document.querySelector('#userList').innerHTML += `<li>${users[i].displayName}</li>`;
+    document.querySelector('#sbUserList').innerHTML += `<li>${users[i].displayName}</li>`;
   }
 }
 

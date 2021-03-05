@@ -20,9 +20,13 @@ const messages = {
         const variableQuery = `(user_id, channel_id, message_body)`;
         const dataQuery = `(${userId}, ${roomId}, \'${msg}\')`;
         await orm.insertOne(this.name,variableQuery,dataQuery);
-    }
+    },
 
     // delete all messages for 1 room output: { message: 'success' or 'failure' }
+    removeMsgByRoom: async function(roomID) {
+        const index = `room_id = ${roomID}`;
+        await orm.deleteOne(this.name, index);
+    }
 };
 
 module.exports = messages;
