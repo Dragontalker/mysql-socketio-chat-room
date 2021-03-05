@@ -108,8 +108,8 @@ function routes(app, onlineUsers) {
         let roomInput = req.body.room_name;
         rooms.addNewRoom(roomInput)
             .then(result => console.log(`Room: ${roomInput} is added to database!`))
-            .catch(error => console.log(error));
-        res.send({ message: 'success' });
+            .catch(error => console.log(error))
+            .res.send({ message: 'success' });
     });
 
     // delete rooms
