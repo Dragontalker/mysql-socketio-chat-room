@@ -95,7 +95,7 @@ async function showAvatars() {
     const checkUser = await fetchJSON ('/api/avatars'); //picture array fetching
     console.log(checkUser);
     checkUser.forEach(image => {
-        document.querySelector('#modal-body').innerHTML += `<a id="${image}" onClick="getAvatar(this.id)"><img class="img-responsive" style="margin:0 auto;" src="./assets/avatars/${image}" alt="avatar image"/></a>`
+        document.querySelector('#modal-body').innerHTML += `<div class="col-3"><a id="${image}" onClick="getAvatar(this.id)"><img class="img-responsive" style="margin:0 auto;" src="./assets/avatars/${image}" alt="avatar image"/></a></div>`
     });
 }
 
@@ -104,7 +104,7 @@ async function showAvatars() {
 function getAvatar(image){
     console.log('chosen image: ', image);
     el_avatar = `${image}`;
-    document.querySelector('#modal-body').innerHTML = `<div><img src="./assets/avatars/${image}" class="me-2 col-2 col-md" alt="avatar image" /></div>`;
+    document.querySelector('#modal-body').innerHTML = `<div class="text-center"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md" alt="avatar image" /></div>`;
     document.querySelector('#register').classList.remove('d-none');
 }
 
