@@ -1,8 +1,8 @@
 const socket = io();
 let currentRoomId = null;
-let userInfo = { id:null, displayName:null, avatar:null, roomId:null, socketId:null};
+let userInfo = { id: null, displayName: null, avatar: null, roomId: null, socketId: null };
 
-document.querySelector('#msgForm').addEventListener('click', sendMsg);
+document.querySelector('#msgForm').addEventListener('submit', sendMsg);
 document.querySelector('#logoutBtn').addEventListener('click', logOut);
 
 // INITIALIZATION OF CHATROOM
@@ -13,64 +13,60 @@ socket.on('connect', () => {
 
 async function checkAccesskey() {
   // redirect to noaccess if no accesskey
-  // if (!sessionStorage.accesskey) window.location.replace('/noaccess');
+  if (!sessionStorage.accesskey) window.location.replace('/noaccess');
   // grab user info using accessKey
   const accesskey = window.sessionStorage.accesskey;
   // save user info
-  const {id, displayName, avatar} = await fetch(`/api/users/${accesskey}`).then(r => r.json());
+  const { id, display_name, avatar_dirct } = await fetch(`/api/users/${accesskey}`).then(r => r.json());
   userInfo.id = id;
-  userInfo.displayName = displayName;
-  userInfo.avatar = avatar;
+  userInfo.displayName = display_name;
+  userInfo.avatar = avatar_dirct;
   userInfo.socketId = socket.id;
   // send connected status to server
   socket.emit('connectToServer', userInfo);
 }
 
 async function roomList() {
-    document.querySelector('#roomList').innerHTML = '';
-    // GET REQUEST: room list
-    const rooms = await fetch('/api/rooms').then(r => r.json());
-    // print rooms to room list
-    for (let i=0; i<rooms.length; i++) {
-        document.querySelector('#roomList').innerHTML +=
-    `<li><button class="btn btn-outline-info chatroomBtn" id="room-${rooms[i].id}">${rooms[i].room_name}</button>
+  document.querySelector('#roomList').innerHTML = '';
+  // GET REQUEST: room list
+  const rooms = await fetch('/api/rooms').then(r => r.json());
+  // print rooms to room list
+  for (let i = 0; i < rooms.length; i++) {
+    document.querySelector('#roomList').innerHTML +=
+      `<li><button class="btn btn-outline-info chatroomBtn" id="room-${rooms[i].id}">${rooms[i].room_name}</button>
       <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">X</button></li>`;
-        document.querySelector('#overlayRoomList').innerHTML +=
-    `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
+    document.querySelector('#overlayRoomList').innerHTML +=
+      `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
       <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">Delete</button></li>`;
-    }
-    // add event listeners
-    for (let i=0; i<rooms.length; i++) {
-        document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => {
-            joinRoom(rooms[i])
-        });
-        document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => {
-            joinRoom(rooms[i])
-        });
-    }
+  }
+  // add event listeners
+  for (let i = 0; i < rooms.length; i++) {
+    document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
+    document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => { joinRoom(rooms[i]) });
+  }
 }
 
 async function userList() {
-    // TO-DO: load online users list (#userList)
-    document.querySelector('#userList').innerHTML = '';
-    // GET REQUEST: users list
-    const users = await fetch(`/api/online/${currentRoomId}`).then(r => r.json());
-    // print users to user list
-    for (let i=0; i<users.length; i++) {
-        document.querySelector('#userList').innerHTML +=
-    `<li>${users[i].displayName}</li>`;
-    }
+  // TO-DO: load online users list (#userList)
+  document.querySelector('#userList').innerHTML = '';
+  // GET REQUEST: users list
+  const users = await fetch(`/api/online/${currentRoomId}`).then(r => r.json());
+  console.log('users:', users);
+  // print users to user list
+  for (let i = 0; i < users.length; i++) {
+    document.querySelector('#userList').innerHTML += `<li>${users[i].displayName}</li>`;
+  }
 }
 
-async function prevMsgs() {
-    // TO-DO: load previous messages
-    document.querySelector('#msgList').innerHTML = '';
-    // GET REQUEST: previous messages
-    const prev = await fetch(`/api/messages/${currentRoomId}`).then(r => r.json());
-    // print messages
-    for (let i=0; i<prev.length; i++) {
-        document.querySelector('#msgList').innerHTML +=
-    `<li>${prev[i].displayName}: ${prev[i].msg}</li>`;
+async function prevMsgs(roomId) {
+  // TO-DO: load previous messages
+  document.querySelector('#msgList').innerHTML = '';
+  // GET REQUEST: previous messages
+  const prev = await fetch(`/api/messages/${roomId}`).then(r => r.json())
+    .catch(err => [{ display_name: 'Error', message_body: err }]);
+  // print messages
+  for (let i = 0; i < prev.length; i++) {
+    document.querySelector('#msgList').innerHTML += `<li>${prev[i].display_name}: ${prev[i].message_body}</li>`;
   }
   // scroll to bottom of message box
   document.querySelector('#msgList').scrollTop = document.querySelector('#msgList').scrollHeight;
@@ -79,22 +75,22 @@ async function prevMsgs() {
 // joining a room
 async function joinRoom(room) {
   // leave old room
-  if (currentRoomId) socket.emit('leave', {roomId:currentRoomId, userId:userInfo.id, socketId:socket.id});
+  if (currentRoomId) socket.emit('leave', { roomId: currentRoomId, userId: userInfo.id, socketId: socket.id });
+  // load old messages in new room
+  await prevMsgs(room.id);
   // join new room
-  socket.emit('join', {roomId:room.id, userId:userInfo.id, socketId:socket.id});
+  socket.emit('join', { roomId: room.id, userId: userInfo.id, socketId: socket.id });
   currentRoomId = room.id;
   // hide room overlay
   hideRoomOverlay();
-  // print new elements to UI
-  document.querySelector('#roomName').innerHTML = room.displayName;
-  userList();
-  prevMsgs();
+  // print new room name
+  document.querySelector('#roomName').innerHTML = room.room_name;
 }
 
 function hideRoomOverlay() {
-    if (!document.querySelector('#roomOverlay').classList.contains('d-none')) {
-        document.querySelector('#roomOverlay').classList.add('d-none');
-    }
+  if (!document.querySelector('#roomOverlay').classList.contains('d-none')) {
+    document.querySelector('#roomOverlay').classList.add('d-none');
+  }
 }
 
 // send message to server
@@ -102,17 +98,15 @@ async function sendMsg(e) {
   e.preventDefault();
   const msg = document.querySelector('#msg').value;
   if (msg) {
-    socket.emit('message', {roomId:currentRoomId, displayName:userInfo.displayName, msg:msg});
+    socket.emit('message', { roomId: currentRoomId, displayName: userInfo.displayName, msg: msg });
     document.querySelector('#msg').value = '';
   }
-
   // save message to DB
   const response = await fetch('/api/messages', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: { userId:userInfo.id, roomId: currentRoomId, msg:msg }
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: userInfo.id, roomId: currentRoomId, msg: msg })
   })
-
 }
 
 // logout
@@ -124,7 +118,6 @@ function logOut() {
 // receive message from server
 socket.on('receivedMsg', (data) => {
   msgList = document.querySelector('#msgList');
-  console.log(data);
   msgList.innerHTML += `<li>${data.displayName}: ${data.msg}</li>`;
   msgList.scrollTop = msgList.scrollHeight;
 })
@@ -132,10 +125,11 @@ socket.on('receivedMsg', (data) => {
 // receive connected event from server
 socket.on('enteredRoom', (data) => {
   msgList.innerHTML += `<li>User ${data.displayName} has entered the room</li>`;
+  userList();
 })
 
 // receive disconnect event from server
 socket.on('disconnected', (data) => {
-  console.log(`User ${data.userId} has left the room`);
   msgList.innerHTML += `<li>User ${data.displayName} has left the room</li>`;
+  userList();
 })

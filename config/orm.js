@@ -31,7 +31,7 @@ const orm = {
     },
 
     async directQuery(str) {
-        await db.query(str);
+        return await db.query(str);
     }
 };
 

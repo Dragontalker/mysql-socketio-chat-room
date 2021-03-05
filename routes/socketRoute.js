@@ -9,16 +9,18 @@ var socketIO = function (io, socket, onlineUsers) {
     socket.join(data.roomId);
     // let room know someone joined
     for (let i=0; i<onlineUsers.length; i++) {
-      if (onlineUsers[i].socketId === data.socketId) onlineUsers[i].roomId = data.roomId;
-      io.to(data.roomId).emit('enteredRoom', onlineUsers[i]);
-      break;
+      if (onlineUsers[i].socketId === data.socketId) {
+        onlineUsers[i].roomId = data.roomId;
+        io.to(data.roomId).emit('enteredRoom', onlineUsers[i]);
+        break;
+      }
     }
   })
 
   // send/receive message
   socket.on('message', (data) => {
     console.log(`message from room ${data.roomId} - ${data.displayName}: ${data.msg}`);
-    io.to(data.roomId).emit('receivedMsg', { displayName: data.displayName, msg: data.msg });
+    io.to(data.roomId).emit('receivedMsg', { displayName:data.displayName, msg:data.msg });
   });
 
   // leave rooms
@@ -38,8 +40,14 @@ var socketIO = function (io, socket, onlineUsers) {
   // track disconnects
   socket.on('disconnect', () => {
     console.log(`user ${socket.id} disconnected`);
-    // delete user from online list
-    for (let i=0; i<onlineUsers.length; i++) if (onlineUsers[i].socketId === socket.id) onlineUsers.splice(i,1);
+    for (let i=0; i<onlineUsers.length; i++) {
+      if (onlineUsers[i].socketId === socket.id) {
+        // let clients know user disconnected
+        io.to(onlineUsers[i].roomId).emit('disconnected', onlineUsers[i]);
+        // delete user from online list
+        onlineUsers.splice(i,1);
+      }
+    }
   })
 }
 
