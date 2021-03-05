@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const Login = require('../models/login_info');
+const login = require('../models/login_info');
+const user = require('../models/user');
+const messages = require('../models/messages');
+const rooms = require('../models/rooms');
 
 function routes(app, onlineUsers) {
     // access index
@@ -15,68 +18,100 @@ function routes(app, onlineUsers) {
         res.sendFile(`${req.params.page}.html`, { root: './public' });
     })
 
-    //userlist - SAM
+    //check new username against existing usernames in database
     app.get('/api/usercheck/:username', async (req, res) => {
-        if( true ){
-            res.status(202).send( {code: 202, message:'continue to avatar choices.'} );
-        } else {
-            res.status(404).send( {code: 404, message: 'username already taken.'});
-        }
+        const result = await login.checkExistingUsername(req.params.username)
+        console.log(result);
+        if( !result ) res.status(202).send( {code: 202, message:'Username is available...'} );
+        else res.status(404).send( {code: 404, message: 'Username is already taken...'});
     })
 
-    //avatarlist - SAM
-    app.get("/api/avatars", async (req, res) => { 
+    //avatarlist
+    app.get('/api/avatars', async (req, res) => {
         const avatars = fs.readdirSync('./public/assets/avatars');
         res.status(202).send(avatars);
     });
 
     // registration request
     app.post('/api/register', async (req, res) => {
-        console.log(`POST REQUEST: trying to add new user ${req.body.username}, pass: ${req.body.password}, avatar: ${req.body.avatar}`);
-        // ORM command to search for user
-        if (/* user exists */ false) {
-            res.send({ message: 'Registration failed' });
-        } else {
-            res.send({ message: 'Registration successful' });
-        }
+        const username = req.body.username;
+        const firstname = req.body.firstname;
+        const lastname = req.body.lastname;
+        const password = req.body.password;
+        const avatar = req.body.avatar;
+        console.log(`POST REQUEST: Adding [NEW USER]: username ${username}, firstname: ${firstname}, lastname: ${lastname}, password: ${password}, avatar: ${avatar}`);
+        await login.addNew(username, password);
+        const loginID = await login.matchWithUser(username); // find id # of table login_id
+        console.log('loginid', loginID);
+        await user.addNew(loginID.id, firstname, lastname, username, avatar)
+        res.send({ message: 'Registration successful' });
     })
 
     // login request
     app.post('/api/login', async (req, res) => {
         const inputUser = req.body.username;
-        const inputPassword =req.body.password
-        console.log(`GET REQUEST: trying to login as user ${inputUser}, pass: ${inputPassword}`);
-        // ORM command to search for user
-        Login.matchPassword(inputUser, inputPassword)
-            .then(result => {
-                if (result) {
-                    res.send({ message: 'Login Successed!', accessKey: '1234' });
-                } else {
-                    res.send({ message: 'Incorret Password!' });
-                }
-            })
-            .catch(err => res.json(err));
+        const inputPassword = req.body.password;
+        console.log(`GET REQUEST: trying to login as username: ${inputUser}, password: ${inputPassword}`);
+        const loginID = await login.getId(inputUser, inputPassword);
+        console.log('response:', loginID);
+        if (loginID) res.send({ code: 202, accesskey:`${inputUser}` });
+        else res.send({ code: 404 });
     })
 
     // request room list
     app.get('/api/rooms', async (req, res) => {
         console.log('GET REQUEST: fetching rooms information');
-        const data = /* ORM command */[{}];
-        res.send({ data });
+        const data = await rooms.listAll();
+        console.table(data);
+        res.status(200).send(data);
     })
 
     // request previous messages
-    app.get('/api/messages/:room', async (req, res) => {
-        console.log(`GET REQUEST: fetching previous messages for room ${req.params.room}`);
-        const data = /* ORM command */[{}];
-        res.send({ data });
+    app.get('/api/messages/:roomId', async (req, res) => {
+        console.log(`GET REQUEST: fetching previous messages for room ${req.params.roomId}`);
+        const data = await messages.getRoomMsgs(req.params.roomId);
+        console.table(data);
+        res.send(data);
     })
 
-    // request online users array
-    app.get('/api/online/:room', async (req, res) => {
-        console.log(`GET REQUEST: fetching list of online users for room ${req.params.room}`);
-        // TO-DO: filter out users with same room as input
-        res.send(onlineUsers);
+    // request online users array 
+    app.get('/api/online/:roomId', async (req, res) => {
+        console.log(`GET REQUEST: fetching list of online users for room ${req.params.roomId}`);
+        // filter out users with same roomId as input
+        let roomUsers = [];
+        for (let i=0; i<onlineUsers.length; i++) {
+            if (onlineUsers[i].roomId == req.params.roomId) roomUsers.push(onlineUsers[i]);
+        }
+        console.table(roomUsers);
+        res.send(roomUsers);
+    })
+
+    // request user info using accesskey
+    app.get('/api/users/:accesskey', async (req, res) => {
+        console.log(`GET REQUEST: fetching userinfo using accesskey ${req.params.accesskey}`);
+        // find login_id using accesskey
+        const userInfo = await user.getUserInfo(req.params.accesskey);
+        console.table(userInfo);
+        res.send(userInfo);
+    })
+
+    // add message to DB
+    app.post('/api/messages', async (req, res) => {
+        console.log(`POST REQUEST: adding message to DB ${req.body}`);
+        messages.addMsgToRoom(req.body.userId, req.body.roomId, req.body.msg);
+        res.send({ message:'success' });
+    })
+
+    // add rooms
+    app.post('/api/rooms', async (req, res) => {
+        console.log(`POST REQUEST: adding room to DB ${req.body}`);
+        // ...
+    })
+
+    // delete rooms
+    app.delete('/api/rooms/:roomId', async (req, res) => {
+        console.log(`DELETE REQUEST: removing room and all messages from DB ${req.params.roomId}`);
+        // ...
     })
 }
 

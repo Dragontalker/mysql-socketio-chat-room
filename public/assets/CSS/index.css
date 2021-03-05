@@ -1,19 +1,23 @@
+body{
+	background-image: url("../background/wallpaper.jpg");
+}
+
 .home-container {
 	max-width: 500px;
 	margin: 80px auto;
+	border-style: solid;
+	border-color:rgb(75, 188, 226);
 }
 
 .home-header {
 	text-align: center;
 	padding: 20px;
 	background: rgb(75, 188, 226);
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
 }
 
 .home-main {
 	padding: 30px 40px;
-	background: lightblue; 
+	background: rgb(209, 244, 255); 
 }
 
 .home-main .btn {
@@ -21,7 +25,7 @@
 	width: 100%;
 }
 
-.home-main input[type='text'] {
+.home-main input {
 	font-size: 16px;
 	padding: 5px;
 	height: 40px;

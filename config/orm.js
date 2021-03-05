@@ -29,6 +29,10 @@ const orm = {
         const query = `UPDATE ${tableName} SET ${changeQuery} WHERE ${indexQuery}`;
         await db.query(query);
     },
+
+    async directQuery(str) {
+        return await db.query(str);
+    }
 };
 
 module.exports = orm;

@@ -15,22 +15,22 @@
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Flux IM</a>
+      <a class="navbar-brand" href="/"><b>Flux IM</b></a>
       <div id="navbarNav" class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/">Log out</a>
+        <button class="btn nav-link active" aria-current="page" id="logoutBtn">Log out</button>
       </div>
     </div>
   </nav>
   <!-- CHAT ROOM DISPLAY -->
-  <div class="container-fluid">
-    <div class="row mt-2">
+  <div class="container-fluid fill-height">
+    <div class="row">
       <!-- LEFT HAND SIDE (ROOMS) -->
-      <div class="col-1 col-md-2">
+      <div class="col-lg-2 color side padding">
         <h4>Room List</h4>
         <ul id="roomList"></ul>
       </div>
       <!-- MAIN FOCUS (MESSAGES) -->
-      <div class="col-12 col-md-8">
+      <div class="col-lg-8 color padding">
         <h3 id="roomName">Room name</h3>
         <ul class="msg-list" id="msgList"></ul>
         <!-- INPUT AREA -->
@@ -40,7 +40,8 @@
         </form>
       </div>
       <!-- RIGHT HAND SIDE (USERS) -->
-      <div class="col-1 col-md-2 text-end">
+      <!-- hide this column if screen size is less than large -->
+      <div class="col-lg-2 d-none d-lg-block d-xl-nonetext-end side padding">
         <h4>Online Users</h4>
         <ul id="userList"></ul>
       </div>
@@ -48,9 +49,14 @@
   </div>
   <!-- ROOM LIST OVERLAY -->
   <div class="room-overlay" id="roomOverlay">
-    <div class="container-md text-center mt-3">
-      <h4 >Room List</h4>
+    <div class="chatroom-container">
+      <header class="chatroom-header">
+        <h2>Room List</h4>
+      </header>
+      <main class="chatroom-main">
       <ul id="overlayRoomList"></ul>
+      </main>
+      <button onClick="" type="button" class="btn btn-info btnFeature">Add Room</button>
     </div>
   </div>
 
