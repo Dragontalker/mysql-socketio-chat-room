@@ -113,11 +113,11 @@ async function sendMsg(e) {
   e.preventDefault();
   const msg = document.querySelector('#msg').value;
   if (msg) {
-    socket.emit('message', { roomId: currentRoomId, displayName: userInfo.displayName, msg: msg });
+    socket.emit('message', { roomId: currentRoomId, avatar: userInfo.avatar, displayName: userInfo.displayName, msg: msg });
     document.querySelector('#msg').value = '';
   }
   // save message to DB
-  const response = await fetch('/api/messages', {
+  await fetch('/api/messages', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ userId: userInfo.id, roomId: currentRoomId, msg: msg })
@@ -133,13 +133,13 @@ function logOut() {
 // receive message from server
 socket.on('receivedMsg', (data) => {
   msgList = document.querySelector('#msgList');
-  msgList.innerHTML += `<li>${data.displayName}: ${data.msg}</li>`;
+  msgList.innerHTML += `<li><img src="./assets/avatars/${data.avatar}" /> ${data.displayName}: ${data.msg}</li>`;
   msgList.scrollTop = msgList.scrollHeight;
 })
 
 // receive connected event from server
 socket.on('enteredRoom', (data) => {
-  msgList.innerHTML += `<li>User ${data.displayName} has entered the room</li>`;
+  msgList.innerHTML += `<li style="color:rgb(120, 170, 200)">User ${data.displayName} has entered the room</li>`;
   userList();
 })
 
