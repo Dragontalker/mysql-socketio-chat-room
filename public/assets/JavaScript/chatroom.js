@@ -40,7 +40,7 @@ async function roomList() {
       `<li><button class="btn btn-color chatroomBtn btnChatRoomsize" id="room-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
         document.querySelector('#overlayRoomList').innerHTML +=
       `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
-      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoomDel-${rooms[i].id}">Delete</button></li>`;
+      <button class="btn btn-outline-danger chatroomBtnDelete" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="overlayRoomDel-${rooms[i].id}">Delete</button></li>`;
         document.querySelector('#sbRoomList').innerHTML +=
       `<li class="center"><button class="btn btn-info chatroomBtn btnSize" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
     }
@@ -56,7 +56,7 @@ async function roomList() {
             joinRoom(rooms[i])
         });
         document.querySelector(`#overlayRoomDel-${rooms[i].id}`).addEventListener('click', () => {
-            delRoom(rooms[i])
+          document.querySelector("#deleteRoomBtn").setAttribute("onClick", `delRoom(${rooms[i]})`);
         });
     }
 }
