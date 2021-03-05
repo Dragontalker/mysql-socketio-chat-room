@@ -136,9 +136,10 @@ async function createRoom(){
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ room_name: el_roomName })
         })
-        console.log (res)
+        console.log(res)
     }
-
+    document.querySelector('#exampleModal').classList.remove('d-none');
+    roomList();
 }
 
 // deleting a room
