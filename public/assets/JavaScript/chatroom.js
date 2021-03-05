@@ -139,12 +139,12 @@ socket.on('receivedMsg', (data) => {
 
 // receive connected event from server
 socket.on('enteredRoom', (data) => {
-  msgList.innerHTML += `<li style="color:rgb(120, 170, 200)">User ${data.displayName} has entered the room</li>`;
+  msgList.innerHTML += `<li class="system-msg">User ${data.displayName} has entered the room</li>`;
   userList();
 })
 
 // receive disconnect event from server
 socket.on('disconnected', (data) => {
-  msgList.innerHTML += `<li>User ${data.displayName} has left the room</li>`;
+  msgList.innerHTML += `<li class="system-msg">User ${data.displayName} has left the room</li>`;
   userList();
 })
