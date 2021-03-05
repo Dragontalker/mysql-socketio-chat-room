@@ -105,7 +105,7 @@ function routes(app, onlineUsers) {
     // add rooms
     app.post('/api/rooms', async (req, res) => {
         console.log(`POST REQUEST: adding room to DB ${req.body}`);
-        let roomInput = req.body.name;
+        let roomInput = req.body.room_name;
         rooms.addNewRoom(roomInput)
             .then(result => console.log(`Room: ${roomInput} is added to database!`))
             .catch(error => console.log(error));
