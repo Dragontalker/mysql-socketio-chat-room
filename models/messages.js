@@ -17,7 +17,7 @@ const messages = {
 
     // add message output: { user, channel, msg }
     addMsgToRoom: async function(userId, roomId, msg) {
-        const variableQuery = `(user_id, channel_id, message_body)`;
+        const variableQuery = `(user_id, room_id, message_body)`;
         const dataQuery = `(${userId}, ${roomId}, \'${msg}\')`;
         await orm.insertOne(this.name,variableQuery,dataQuery);
     },
