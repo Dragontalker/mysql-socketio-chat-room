@@ -30,33 +30,35 @@ async function checkAccesskey() {
 
 async function roomList() {
   document.querySelector('#roomList').innerHTML = '';
+  document.querySelector('#overlayRoomList').innerHTML = '';
   document.querySelector('#sbRoomList').innerHTML = '';
   // GET REQUEST: room list
   const rooms = await fetch('/api/rooms').then(r => r.json());
   // print rooms to room list
   for (let i = 0; i < rooms.length; i++) {
     document.querySelector('#roomList').innerHTML +=
-      `<li><button class="btn btn-color chatroomBtn btnChatRoomsize" id="room-${rooms[i].id}">${rooms[i].room_name}</button>
-      </li>`;
-    document.querySelector('#overlayRoomList').innerHTML +=
+      `<li><button class="btn btn-color chatroomBtn btnChatRoomsize" id="room-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
+        document.querySelector('#overlayRoomList').innerHTML +=
       `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
-      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoom">Delete</button></li>`;
+      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoomDel-${rooms[i].id}">Delete</button></li>`;
     document.querySelector('#sbRoomList').innerHTML +=
-      `<li class="center"><button class="btn btn-info chatroomBtn btnSize" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button>
-      </li>`;
-    }
-    // add event listeners
-    for (let i = 0; i < rooms.length; i++) {
-        document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => {
-            joinRoom(rooms[i])
-        });
-        document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => {
-            joinRoom(rooms[i])
-        });
-        document.querySelector(`#sbRoom-${rooms[i].id}`).addEventListener('click', () => {
-            joinRoom(rooms[i])
-        });
-    }
+      `<li class="center"><button class="btn btn-info chatroomBtn btnSize" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
+  }
+  // add event listeners
+  for (let i = 0; i < rooms.length; i++) {
+    document.querySelector(`#room-${rooms[i].id}`).addEventListener('click', () => { 
+      joinRoom(rooms[i]) 
+    });
+    document.querySelector(`#overlayRoom-${rooms[i].id}`).addEventListener('click', () => { 
+      joinRoom(rooms[i]) 
+    });
+    document.querySelector(`#sbRoom-${rooms[i].id}`).addEventListener('click', () => { 
+      joinRoom(rooms[i]) 
+    });
+    document.querySelector(`#overlayRoomDel-${rooms[i].id}`).addEventListener('click', () => { 
+      delRoom(rooms[i]) 
+    });
+  }
 }
 
 function hideMenu(event){
@@ -134,6 +136,17 @@ async function createRoom(){
         }).then( res=>res.json() )
         console.log( 'The room is added.');
       };
+        })
+        console.log (res)
+    }
+
+}
+
+// deleting a room
+async function delRoom(room) {
+  console.log(room);
+  await fetch(`/api/rooms/${room.id}`, { method: 'DELETE' }).catch((err) => console.log(err));
+  roomList();
 }
 
 function hideRoomOverlay() {
