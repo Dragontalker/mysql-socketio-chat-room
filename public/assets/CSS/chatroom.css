@@ -1,0 +1,188 @@
+.navbar {
+  z-index: 20;
+}
+
+.container {
+  border-style: solid;
+	border-color:rgb(75, 188, 226);
+}
+
+/* .container-fluid {
+  padding-right:0;
+  padding-left:0;
+  margin-right:auto;
+  margin-left:auto
+} */
+
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.msg-list {
+  height: calc(100vh - 10.7rem);
+  background: rgb(209, 244, 255); 
+  overflow-y: scroll;
+  word-wrap: break-word;
+  
+}
+
+.msg-list::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0,0,0,0.1);
+}
+.msg-list::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+}
+
+.msg-list > li {
+  padding: 0.5rem 0.2rem;
+  border-bottom: 1px solid rgba(10,10,10,0.2);
+}
+
+.room-overlay {
+  z-index: 10;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../background/wallpaper.jpg");
+  padding-top: 60px;
+}
+
+.chatroom-container {
+	max-width: 500px;
+	margin: 8vh auto;
+}
+
+.chatroom-header {
+	text-align: center;
+	padding: 20px;
+	background: rgb(75, 188, 226);
+}
+
+.chatroom-main {
+	padding: 30px 40px;
+	background: rgb(209, 244, 255); 
+  border-style: solid;
+	border-color:rgb(75, 188, 226);
+}
+
+.chatroomBtn {
+	margin-top: 20px;
+	width: 70%;
+  color: black;
+}
+.chatroomBtnDelete {
+	margin-top: 20px;
+	width: 25%;
+}
+
+html, body{
+  background: rgb(209, 244, 255); 
+  height: 100%;
+}
+
+.side{
+  background-color: rgb(139, 192, 223);
+}
+
+.btnFeature{
+  background-color: white;
+  margin-top: 20px;
+	width: 96.25%;
+  
+}
+
+.border {
+  border-style: solid;
+	border-color:rgb(75, 188, 226);
+}
+
+/* .fill-height {
+  min-height: 100%;
+  height: 100%;
+} */
+
+.btn-color {
+  background-color: rgb(75, 188, 226);
+}
+
+.padding {
+  padding-top: 10px
+}
+
+.sidepanel  {
+  width: 100vw;
+  position: fixed;
+  z-index: 15;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  position:absolute;
+}
+
+.sidepanel a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+}
+
+.sidepanel a:hover {
+  color: #f1f1f1;
+}
+
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 20px;
+}
+
+.btnChatRoomsize {
+  width: 100%;
+}
+
+.textEnd {
+  text-align: end
+}
+
+.center {
+  margin:auto;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.paddingLeft{
+  padding-left: 20px
+}
+
+.btnSize {
+  width: 100%;
+}
+
+.system-msg {
+  color: rgb(91, 116, 145);
+  text-align: center;
+}
+
+#overlayRoomList {
+  overflow-y: scroll;
+  max-height: calc(50vh - 8rem);
+}
+
+#overlayRoomList::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0,0,0,0.1);
+}
+#overlayRoomList::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+}

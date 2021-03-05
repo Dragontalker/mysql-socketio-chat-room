@@ -133,7 +133,7 @@ async function createRoom(){
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ room_name: el_roomName })
-        }).then( res=>res.json() );
+        }).then( res=>res.json() )
         console.log( 'The room is added.');
         roomList();
       };
