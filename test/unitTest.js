@@ -1,7 +1,9 @@
 const Login = require('../models/login_info');
+const Room = require('../models/rooms');
 
 const testApp = async() => {
-    console.log(await Login.listAll());
+    await Room.addNewRoom('TestRoom1');
+    console.log(await Room.listAll());
 };
 
 testApp();
