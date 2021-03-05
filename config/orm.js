@@ -35,7 +35,7 @@ const orm = {
     },
 
     async deleteOne(tableName, indexQuery) {
-        const query = `DELETE from ${tableName} WHERE ${indexQuery}`;
+        const query = `DELETE FROM ${tableName} WHERE ${indexQuery}`;
         await db.query(query);
     }
 
