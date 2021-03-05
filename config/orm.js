@@ -32,7 +32,13 @@ const orm = {
 
     async directQuery(str) {
         return await db.query(str);
+    },
+
+    async deleteOne(tableName, indexQuery) {
+        const query = `DELETE from ${tableName} WHERE ${indexQuery}`;
+        await db.query(query);
     }
+
 };
 
 module.exports = orm;
