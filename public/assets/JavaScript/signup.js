@@ -4,8 +4,6 @@ const el_lastname = document.querySelector('#lastname');
 const el_password = document.querySelector('#password');
 const el_password2 = document.querySelector('#passwordConfirm');
 let el_avatar;
-const el_first = document.querySelector('#first');
-const el_second = document.querySelector('#second');
 const el_error1 = document.querySelector('#error1');
 const el_error1b = document.querySelector('#error1b');
 const el_error1c = document.querySelector('#error1c');
@@ -86,36 +84,27 @@ async function checkUser(event){
     if ( !(el_error1.classList.contains('d-none')) || !(el_error1b.classList.contains('d-none')) || !(el_error1c.classList.contains('d-none')) || !(el_error3.classList.contains('d-none')) || !(el_error4.classList.contains('d-none')) || !(el_error5.classList.contains('d-none')) ){
         return;
     }
-    el_second.classList.remove('d-none');
-    document.querySelector('#continue').classList.add('d-none');
+    document.querySelector("#continue").setAttribute("data-bs-target", "#staticBackdrop");
+    document.querySelector("#continue").removeAttribute("onClick");
     showAvatars();
-    showNext();
+    document.querySelector('#continue').click();
 }
 
 // make an array of avatar URL paths
 async function showAvatars() {
-    document.querySelector('#avatars').innerHTML = ''; //empty the section first
     const checkUser = await fetchJSON ('/api/avatars'); //picture array fetching
     console.log(checkUser);
     checkUser.forEach(image => {
-        document.querySelector('#avatars').innerHTML += `<div class="col-3"><a id="${image}" onClick="getAvatar(this.id)"><img src="./assets/avatars/${image}" alt="avatar image"/></a></div>`
+        document.querySelector('#modal-body').innerHTML += `<div class="col-3"><a id="${image}" onClick="getAvatar(this.id)"><img class="img-responsive" style="margin:0 auto;" src="./assets/avatars/${image}" alt="avatar image"/></a></div>`
     });
 }
 
-// Get the note data from the inputs, save it to the db and update the view
-async function showNext(){
-    console.log( 'next...no going back...');
-    el_second.scrollIntoView();
-    el_username.setAttribute('readonly', true);
-    el_password.setAttribute('readonly', true);
-    el_password2.setAttribute('readonly', true);
 
-}
 // make the clicked avatar the only remaining image on HTML
 function getAvatar(image){
     console.log('chosen image: ', image);
     el_avatar = `${image}`;
-    document.querySelector('#avatars').innerHTML = `<div><a id="${image}" onClick="getAvatar(this.id)"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md image" alt="avatar image" /></a></div>`;
+    document.querySelector('#modal-body').innerHTML = `<div class="text-center"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md" alt="avatar image" /></div>`;
     document.querySelector('#register').classList.remove('d-none');
 }
 
