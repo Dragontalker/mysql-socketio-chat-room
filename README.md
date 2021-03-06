@@ -3,13 +3,31 @@
 ## Deployed on Heroku
 https://flux-im.herokuapp.com/
 
+## Description
+A light weighted chat room application ultilizing the power of Socket.IO and MVC design pattern. Flux-IM aims to deliver the best user experience to people who wants to jump in interesting conversion anywhere, anytime. 
+
+## Technology Used
+* Node.js
+* Express.js
+* MySQL
+* HTML 5
+* CSS 3
+* Javascript
+* jQuery
+* Ajax
+* Bootstrap 5
+* Heroku
+* RESTful API
+* Macha.js
+* Chai.js
+* ESlint
+
+
 ## Team Members:
 * Chang Xiao - Project Manager, visit his [GitHub](https://github.com/sinsinkun)
 * Sam Kim - Full Stack Developer, visit his [GitHub](https://github.com/TalkingSkunk)
 * Micheal Wong - Front End Developer, visit his [GitHub](https://github.com/Mwong228)
 * Tong (Richard) Yang - Back End Developer/DevOps, visit his [GitHub](https://github.com/Dragontalker)
-
-## Description
 
 ## Contact
 If you have any questions, email me at richard.yang.tong@gmail.com.
