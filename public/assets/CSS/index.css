@@ -4,7 +4,8 @@ body{
 
 .home-container {
 	max-width: 500px;
-	margin: 80px auto;
+	margin: 0 auto;
+	margin-top: 10vh;
 	border-style: solid;
 	border-color:rgb(75, 188, 226);
 }
