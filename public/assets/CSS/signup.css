@@ -60,3 +60,13 @@ span {
 .pw {
     width: 100%;
 }
+
+.avatar {
+	cursor: pointer;
+}
+
+.chosen {
+	transform: scale(1.1);
+	border: 1px solid rgba(0,0,0,0.2);
+	border-radius: 0.2rem;
+}

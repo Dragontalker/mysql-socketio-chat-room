@@ -95,17 +95,21 @@ async function showAvatars() {
     const checkUser = await fetchJSON ('/api/avatars'); //picture array fetching
     console.log(checkUser);
     checkUser.forEach(image => {
-        document.querySelector('#modal-body').innerHTML += `<div class="col-3"><a id="${image}" onClick="getAvatar(this.id)"><img class="img-responsive" style="margin:0 auto;" src="./assets/avatars/${image}" alt="avatar image"/></a></div>`
+        let imageName = image.replace('.png','');
+        document.querySelector('#modal-body').innerHTML += 
+        `<div class="col-3">
+            <img class="img-responsive avatar" style="margin:0 auto;" src="./assets/avatars/${image}" 
+            alt="avatar image" id="${imageName}" onClick="getAvatar('${imageName}')"/>
+        </div>`
     });
 }
 
 
 // make the clicked avatar the only remaining image on HTML
-function getAvatar(image){
-    console.log('chosen image: ', image);
-    el_avatar = `${image}`;
-    document.querySelector('#modal-body').innerHTML = `<div class="text-center"><img src="./assets/avatars/${image}" class="me-2 col-2 col-md" alt="avatar image" /></div>`;
-    document.querySelector('#register').classList.remove('d-none');
+function getAvatar(imageName){
+    if (el_avatar) document.querySelector(`#${el_avatar}`).classList.remove('chosen');
+    el_avatar = imageName;
+    document.querySelector(`#${imageName}`).classList.add('chosen');
 }
 
 //when clicking the register button...
@@ -116,7 +120,7 @@ async function register(event) {
         firstname: el_firstname.value.trim(),
         lastname: el_lastname.value.trim(),
         password: el_password.value,
-        avatar: el_avatar,
+        avatar: `${el_avatar}.png`,
     };
     const response = await fetchJSON( '/api/register', 'post', newUser )
     if( response.message ) {
