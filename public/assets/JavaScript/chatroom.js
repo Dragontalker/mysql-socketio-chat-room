@@ -142,6 +142,9 @@ async function createRoom(){
         document.querySelector('#addRoomBtn').setAttribute('data-bs-target', '#exampleModal');
         document.querySelector('#addRoomBtn').removeAttribute('onClick');
         document.querySelector('#addRoomBtn').click();
+        document.querySelector('#addRoomBtn').removeAttribute('data-bs-target');
+        document.querySelector('#addRoomBtn').removeAttribute('data-bs-toggle');
+        document.querySelector('#addRoomBtn').setAttribute('onClick', 'createRoom()');
         roomList();
     }
 }
