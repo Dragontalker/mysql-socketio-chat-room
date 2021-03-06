@@ -16,7 +16,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mySidepanel">
-      <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="/"><b>Flux IM</b></a>
       <div id="navbarNav" class="navbar-nav">
@@ -28,9 +28,9 @@
   <!-- Side  -->
   <div onClick="hideMenu(event)" id="mySidepanel" class="sidepanel bg-dark collapse">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <ul id="sbRoomList" class="mb-5"></ul>
-    <h4 class="text-light">Online Users</h4>
-    <ul class="text-light" id="sbUserList"></ul>
+    <ul id="sbRoomList" class="mb-5 center"></ul>
+    <h4 class="text-light paddingLeft">Online Users</h4>
+    <ul class="text-light paddingLeft" id="sbUserList"></ul>
   </div>
 
 
@@ -60,7 +60,7 @@
       </div>
       <!-- RIGHT HAND SIDE (USERS) -->
       <!-- hide this column if screen size is less than large -->
-      <div class="col-lg-2 d-none d-lg-block d-xl-nonetext-end side padding">
+      <div class="col-lg-2 d-none d-lg-block d-xl-nonetext-end side padding textEnd">
         <h4>Online Users</h4>
         <ul id="userList"></ul>
       </div>
@@ -73,15 +73,62 @@
         <h2>Room List</h4>
       </header>
       <main class="chatroom-main">
-      <ul id="overlayRoomList"></ul>
-      <button onClick="" type="button" class="btn btn-info btnFeature">Add Room</button>
+        <ul id="overlayRoomList"></ul>
+        <button type="button" class="btn btn-info btnFeature" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
+          Room</button>
       </main>
+    </div>
+  </div>
+
+  <!-- ADD ROOM MODAL-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add a Room</h5>
+        </div>
+        <div class="modal-body">
+          <form class="login">
+            <div class="form-group">
+              <label for="addRoom">Room Name:</label>
+              <input id="addRoom" type="text" placeholder="Room Name">
+              <br />
+              <span id="error1" class="d-none">The Room Name already exists, or contains a space. Try again.</span>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button id="addRoomBtn" onClick="createRoom()" type="button" class="btn btn-primary">Add Room</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE ROOM CONFIRM MODAL -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Delete Confirmation</h5>
+        </div>
+        <div class="modal-body">
+          Woah! Are you sure you want to delete the Room?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button id="deleteRoomBtn" type="button" class="btn btn-primary">DELETE</button>
+        </div>
+      </div>
     </div>
   </div>
 
   <script src="assets/JavaScript/socket.io.js"></script>
   <script src="assets/JavaScript/chatroom.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
 
 </body>
 

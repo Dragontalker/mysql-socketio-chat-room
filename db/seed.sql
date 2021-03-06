@@ -10,14 +10,14 @@ VALUES ('guest2','guest2');
 
 
 -- For table: users
-INSERT INTO users (login_id, first_name, last_name, display_name)
-VALUES (1, 'Admin', 'Istrator', 'Adminstrator');
+INSERT INTO users (login_id, first_name, last_name, display_name, avatar_dirct)
+VALUES (1, 'Admin', 'Istrator', 'Adminstrator', 'wolf.png');
 
-INSERT INTO users (login_id, first_name, last_name, display_name)
-VALUES (2, 'Guest', 'One', 'Guest 1');
+INSERT INTO users (login_id, first_name, last_name, display_name, avatar_dirct)
+VALUES (2, 'Guest', 'One', 'Guest 1', 'frog.png');
 
-INSERT INTO users (login_id, first_name, last_name, display_name)
-VALUES (3, 'Guest', 'Two', 'Guest 2');
+INSERT INTO users (login_id, first_name, last_name, display_name, avatar_dirct)
+VALUES (3, 'Guest', 'Two', 'Guest 2', 'pizza.png');
 
 
 -- For table: messages
