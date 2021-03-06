@@ -40,9 +40,27 @@ async function roomList() {
       `<li><button class="btn btn-color chatroomBtn btnChatRoomsize" id="room-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
         document.querySelector('#overlayRoomList').innerHTML +=
       `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
-      <button class="btn btn-outline-danger chatroomBtnDelete" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="overlayRoomDel-${rooms[i].id}">Delete</button></li>`;
+      <button class="btn btn-outline-danger chatroomBtnDelete" data-bs-toggle="modal" data-bs-target="#staticBackdrop${i}" id="overlayRoomDel-${rooms[i].id}">Delete</button></li>`;
         document.querySelector('#sbRoomList').innerHTML +=
       `<li class="center"><button class="btn btn-info chatroomBtn btnSize" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
+        document.querySelector('body').innerHTML +=
+        `<div class="modal fade" id="staticBackdrop${i}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Delete Confirmation</h5>
+            </div>
+            <div class="modal-body">
+              Woah! Are you sure you want to delete the Room?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button id="deleteRoomBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal" onClick="delRooom(${rooms[i]})">DELETE</button>
+            </div>
+          </div>
+        </div>
+      </div>`
     }
     // add event listeners
     for (let i = 0; i < rooms.length; i++) {
@@ -55,9 +73,9 @@ async function roomList() {
         document.querySelector(`#sbRoom-${rooms[i].id}`).addEventListener('click', () => {
             joinRoom(rooms[i])
         });
-        document.querySelector(`#overlayRoomDel-${rooms[i].id}`).addEventListener('click', () => {
-          document.querySelector("#deleteRoomBtn").setAttribute("onClick", `delRoom(${rooms[i]})`);
-        });
+        // document.querySelector(`#overlayRoomDel-${rooms[i].id}`).addEventListener('click', () => {
+        //     delRooom(rooms[i])
+        // });
     }
 }
 
@@ -139,7 +157,7 @@ async function createRoom(){
         console.log( 'The room is added.');
         document.querySelector('#addRoomBtn').setAttribute('data-bs-toggle', 'modal');
         document.querySelector('#addRoomBtn').setAttribute('data-bs-target', '#exampleModal');
-        document.querySelector('#addRoomBtn').removeAttribute("onClick");
+        document.querySelector('#addRoomBtn').removeAttribute('onClick');
         document.querySelector('#addRoomBtn').click();
         roomList();
     }
