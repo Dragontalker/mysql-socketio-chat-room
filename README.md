@@ -36,10 +36,10 @@ This app can be installed locally by downloading the repo, and requires an exist
 ## Usage
 Run 'node server' to start the server, then navigate to http://localhost:8080 in any browser to view the app.
 
-![Homepage](./screenshots/login.png =250x)
-![Signup](./screenshots/signup.png =250x)
-![Room Select](./screenshots/roomlist.png =250x)
-![Chatroom](./screenshots/chatroom.png =250x)
+<img src="./screenshots/login.png" alt="homepage" width="400" />
+<img src="./screenshots/signup.png" alt="sign up" width="400" />
+<img src="./screenshots/roomlist.png" alt="room list" width="400" />
+<img src="./screenshots/chatroom.png" alt="chatroom" width="400" />
 
 ## Contact
 If you have any questions, email me at richard.yang.tong@gmail.com.
