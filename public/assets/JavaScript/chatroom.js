@@ -40,7 +40,7 @@ async function roomList() {
       `<li><button class="btn btn-color chatroomBtn btnChatRoomsize" id="room-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
         document.querySelector('#overlayRoomList').innerHTML +=
       `<li><button class="btn btn-info chatroomBtn" id="overlayRoom-${rooms[i].id}">${rooms[i].room_name}</button>
-      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoomDel-${rooms[i].id}">Delete</button></li>`;
+      <button class="btn btn-outline-danger chatroomBtnDelete" id="overlayRoomDel-${rooms[i].id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick="triggerModal('${rooms[i].id}')">Delete</button></li>`;
         document.querySelector('#sbRoomList').innerHTML +=
       `<li class="center"><button class="btn btn-info chatroomBtn btnSize" id="sbRoom-${rooms[i].id}">${rooms[i].room_name}</button></li>`;
     }
@@ -55,10 +55,11 @@ async function roomList() {
         document.querySelector(`#sbRoom-${rooms[i].id}`).addEventListener('click', () => {
             joinRoom(rooms[i])
         });
-        document.querySelector(`#overlayRoomDel-${rooms[i].id}`).addEventListener('click', () => {
-            delRoom(rooms[i])
-        });
     }
+}
+
+function triggerModal(id){
+    document.querySelector('#deleteRoomBtn').setAttribute('onClick', `delRoom(${id})`);
 }
 
 function hideMenu(event){
@@ -139,16 +140,19 @@ async function createRoom(){
         console.log( 'The room is added.');
         document.querySelector('#addRoomBtn').setAttribute('data-bs-toggle', 'modal');
         document.querySelector('#addRoomBtn').setAttribute('data-bs-target', '#exampleModal');
-        document.querySelector('#addRoomBtn').removeAttribute("onClick");
+        document.querySelector('#addRoomBtn').removeAttribute('onClick');
         document.querySelector('#addRoomBtn').click();
+        document.querySelector('#addRoomBtn').removeAttribute('data-bs-target');
+        document.querySelector('#addRoomBtn').removeAttribute('data-bs-toggle');
+        document.querySelector('#addRoomBtn').setAttribute('onClick', 'createRoom()');
         roomList();
     }
 }
 
 // deleting a room
-async function delRoom(room) {
-    console.log(room);
-    await fetch(`/api/rooms/${room.id}`, { method: 'DELETE' }).catch((err) => console.log(err));
+async function delRoom(roomid) {
+    console.log(roomid);
+    await fetch(`/api/rooms/${roomid}`, { method: 'DELETE' }).catch((err) => console.log(err));
     roomList();
 }
 

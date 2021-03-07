@@ -54,7 +54,8 @@ ul {
 
 .chatroom-container {
 	max-width: 500px;
-	margin: 8vh auto;
+	margin: 0 auto;
+  margin-top: 10vh;
 }
 
 .chatroom-header {
