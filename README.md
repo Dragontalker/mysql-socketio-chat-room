@@ -2,7 +2,7 @@
 
 # Flux-IM
 
-## Deployed on Heroku
+## Try out our web application:
 https://flux-im.herokuapp.com/
 
 ---
@@ -93,15 +93,15 @@ Switch to any other rooms you want by clicking on them on the left side! See who
 ---
 
 ## Team Members
-* Chang Xiao - Project Manager, visit his [GitHub](https://github.com/sinsinkun)
-* Sam Kim - Full Stack Developer, visit his [GitHub](https://github.com/TalkingSkunk)
-* Micheal Wong - Front End Developer, visit his [GitHub](https://github.com/Mwong228)
-* Tong (Richard) Yang - Back End Developer/DevOps, visit his [GitHub](https://github.com/Dragontalker)
+* __Chang Xiao__ - Project Manager, visit his [GitHub](https://github.com/sinsinkun)
+* __Sam Kim__ - Full Stack Developer, visit his [GitHub](https://github.com/TalkingSkunk)
+* __Micheal Wong__ - Front End Developer, visit his [GitHub](https://github.com/Mwong228)
+* __Tong (Richard) Yang__ - Back End Developer/DevOps, visit his [GitHub](https://github.com/Dragontalker)
 
 ---
 
 ## License
-Copyright (c) [2021] [Team Flux Capacitor]
+Copyright (c) [2021] [ISC, __Team Flux Capacitor__]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
