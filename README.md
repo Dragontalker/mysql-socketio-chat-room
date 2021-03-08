@@ -13,21 +13,28 @@ A light weighted chat room application ultilizing the power of Socket.IO and MVC
 ---
 
 ## Technology Used
-* Socket.io
-* Node.js
-* Express.js
-* MySQL
-* HTML 5
-* CSS 3
-* Javascript
-* jQuery
-* Ajax
-* Bootstrap 5
-* Heroku
-* RESTful API
-* Macha.js
-* Chai.js
-* ESlint
+* __Core:__
+    * Socket.io
+* __Front End:__
+    * HTML 5
+    * CSS 3
+    * Javascript
+    * jQuery
+    * Ajax
+    * Bootstrap 5
+* __Back End:__
+    * Node.js
+    * Express.js
+    * RESTful API
+* __Relational Database:__
+    * MySQL
+* __Unit Test__
+    * Macha.js
+    * Chai.js
+* __Deployment__
+    * Heroku
+* __Coding Standard__
+    * ESlint
 
 ---
 
