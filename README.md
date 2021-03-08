@@ -70,7 +70,7 @@ npm start
 ```
 then navigate to http://localhost:8080 in any browser to view the app.
 
-<img src="./screenshots/login.png" alt="homepage" width="400" />
+<img src="./screenshots/login.png" alt="homepage"  />
 
 In the login screen, you can either sign up to create your own login information or use the existing testing login infromation:
 ```
@@ -78,15 +78,15 @@ User Name: guest
 Password: guest
 ```
 
-<img src="./screenshots/signup.png" alt="sign up" width="400" />
+<img src="./screenshots/signup.png" alt="sign up"  />
 
 This is the sign up screen, fill all the inform and your account will be created!
 
-<img src="./screenshots/roomlist.png" alt="room list" width="400" />
+<img src="./screenshots/roomlist.png" alt="room list"  />
 
 After you logged into the application, choose a room to start conversation or just create a new one!
 
-<img src="./screenshots/chatroom.png" alt="chatroom" width="400" />
+<img src="./screenshots/chatroom.png" alt="chatroom"  />
 
 Switch to any other rooms you want by clicking on them on the left side! See who is online on the right and meet more interesting people.
 
